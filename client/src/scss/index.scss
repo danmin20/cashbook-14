@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500&display=swap');
+@font-face {
+  font-family: 'BMDOHYEON';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMDOHYEON.woff')
+    format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'BMYEONSUNG';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMYEONSUNG.woff')
+    format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@import 'reset';
+@import 'theme';
+@import 'animation';
+
+html {
+  font-size: 10px;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+::-webkit-scrollbar {
+  display: none !important;
+}
+
+body {
+  height: 100vh;
+  width: 100%;
+  #app {
+    height: 100vh;
+    width: 100%;
+  }
+}
