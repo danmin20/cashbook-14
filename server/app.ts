@@ -2,12 +2,11 @@ import express, { Request, Response, NextFunction } from 'express';
 import morgan from 'morgan';
 import path from 'path';
 import 'dotenv/config';
-// const { sequelize } = require('./models');
 
 import router from './routes';
+import { createConnection } from 'typeorm';
 
 const app = express();
-// sequelize.sync();
 
 app.set('port', process.env.PORT || 3000);
 
@@ -35,3 +34,9 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
     error: err.message,
   });
 });
+
+// createConnection().then(() => {
+app.listen(app.get('port'), () => {
+  console.log(app.get('port'), '번 포트에서 대기중');
+});
+// });
