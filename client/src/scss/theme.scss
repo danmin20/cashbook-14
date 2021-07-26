@@ -1,0 +1,51 @@
+// color
+$title-active: #222222;
+$grey1: #888888;
+$grey2: #bbbbbb;
+$grey3: #d7d7d7;
+$off-white: #f6f6f6;
+$white: #ffffff;
+$primary: #2ac1bc;
+$primary2: #a0e1e0;
+$primary3: #219a95;
+$red: #f45452;
+
+$shadow: 0 0 0.4rem rgba(204, 204, 204, 0.5),
+  0 0.2rem 0.4rem rgba(0, 0, 0, 0.25);
+
+// typography
+@mixin text-large {
+  font-weight: 400;
+  font-size: 1.8rem;
+  line-height: 2.4rem;
+}
+@mixin text-medium {
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 2.2rem;
+}
+@mixin text-small {
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 2rem;
+}
+@mixin text-x-small {
+  font-weight: 400;
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+}
+@mixin link-medium {
+  font-weight: 500;
+  font-size: 1.6rem;
+  line-height: 2.2rem;
+}
+@mixin link-small {
+  font-weight: 500;
+  font-size: 1.4rem;
+  line-height: 2rem;
+}
+@mixin link-x-small {
+  font-weight: 500;
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+}
