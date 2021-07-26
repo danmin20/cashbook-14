@@ -9,7 +9,7 @@ declare global {
   }
 }
 
-const routes = [{ path: '/', component: Main }];
+const routes = [{ path: '/', page: Main }];
 
 const $app = document.querySelector('#app');
 export const updateRealDOM = () => {
@@ -19,7 +19,6 @@ export const updateRealDOM = () => {
 };
 
 if ($app) {
-  console.log($app);
   window.virtualDOM = document.createElement('div');
   window.virtualDOM.id = 'app';
   initRouter({ $app: window.virtualDOM, routes });

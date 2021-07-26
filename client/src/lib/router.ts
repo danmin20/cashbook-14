@@ -1,15 +1,13 @@
+import { updateRealDOM } from '../index';
 import { ClassElement } from 'typescript';
+import Component from '../core/Component';
 
 function isClass(value: ClassElement) {
   return Boolean(value && value.toString().startsWith('class '));
 }
-type RouterType = {
-  $app: any;
-  routes: Route[];
-  fallback?: string;
-};
 type Route = {
-  path: string;
+  path: any;
+  page: any;
   redirect?: string;
   component?: any;
   middlewares?: any;
@@ -18,11 +16,11 @@ type Route = {
 class Router {
   $app: HTMLElement;
   routes: {
-    [key: string]: Route;
+    [key: string]: typeof Component;
   } = {};
   fallback: string = '/';
 
-  constructor({ $app, routes, fallback = '/' }: RouterType) {
+  constructor({ $app, routes, fallback = '/' }: any) {
     this.$app = $app;
     this.fallback = fallback;
 
@@ -31,63 +29,61 @@ class Router {
     this.initEvent();
   }
 
-  generateRoutes(routes: Route[]) {
+  generateRoutes(routes: Route[]): void {
+    this.routes = {};
+
     routes.forEach((route: Route) => {
-      this.routes[route.path] = route;
+      this.routes[route.path] = route.page;
     });
   }
 
   initEvent() {
-    window.addEventListener('hashchange', () => this.onHashChangeHandler());
-  }
-
-  getRoute(path: string) {
-    const route: Route = this.routes[path];
-    if (!route) throw new Error(`Not found route: ${path}`);
-    return route;
+    window.addEventListener('hashchange', () =>
+      this.onHashChangeHandler.bind(this)
+    );
   }
 
   hasRoute(path: string) {
     return typeof this.routes[path] !== 'undefined';
   }
 
-  getComponent(route: Route) {
-    const component = route.component;
-    return component;
+  getNotFoundRouter() {
+    return this.routes['not_found'];
   }
 
-  async onHashChangeHandler() {
-    this.$app.innerHTML = '';
+  getRouter(path: string) {
+    return this.routes[path];
+  }
 
+  // getComponent(route: Route) {
+  //   const component = route.component;
+  //   return component;
+  // }
+
+  onHashChangeHandler() {
     const hash = window.location.hash;
     let path = hash.substr(1);
 
     /* 동적 라우팅 처리 */
 
-    let route;
+    let route = this.getNotFoundRouter();
     const regex = /\w{1,}$/; // 동적 라우팅으로 전달되는 :id 는 모두 [문자열 + 숫자] 조합으로 간주
 
     if (this.hasRoute(path)) {
-      route = this.getRoute(path);
+      route = this.getRouter(path);
     } else if (regex.test(path)) {
       // 주소가 없는 경우를 동적 라우팅으로 간주하고 이를 :id 로 치환
-      route = this.getRoute(path.replace(regex, ':id'));
+      route = this.getRouter(path.replace(regex, ':id'));
     } else {
       // 그 외 입력되지 않은 모든 주소에 대해서는 fallback 실행
-      route = this.getRoute(this.fallback);
+      route = this.getRouter(this.fallback);
     }
 
-    if (route.redirect) {
-      this.push(route.redirect);
-      return;
-    }
-
-    const component = this.getComponent(route);
-    if (isClass(component)) {
-      new component(this.$app);
-    } else {
-      throw new Error('invalid component');
-    }
+    const page = new route({});
+    if (this.$app.lastElementChild)
+      this.$app.replaceChild(page.$dom, this.$app.lastElementChild);
+    else this.$app.appendChild(page.$dom);
+    updateRealDOM();
   }
 
   push(path: string) {
@@ -96,39 +92,32 @@ class Router {
 }
 
 /**
- * - push(path: string): void - navigate
- */
-export let $router: {
-  push: (path: string) => void;
-};
-
-/**
  * @param {{$app: HTMLElement, routes: Route[], fallback?: string}} options
  */
-export function initRouter(options: RouterType) {
-  const { $app } = options;
-
+export function initRouter({
+  $app,
+  routes,
+}: {
+  $app: HTMLElement;
+  routes: Route[];
+}): void {
   // dropdown 영역 밖 클릭 시 드랍다운 제거 이벤트는 최상단 $app에서 관리
-  handleDropdown($app);
+  // handleDropdown($app);
 
-  const router = new Router(options);
-
-  $router = {
-    push: (path) => router.push(path),
-  };
+  const router = new Router({ $app, routes });
 
   router.onHashChangeHandler();
 }
 
-function handleDropdown($app: HTMLElement) {
-  $app.addEventListener('click', (e: MouseEvent) => {
-    const $dropdowns = $app.querySelectorAll<HTMLElement>('.dropdown');
-    $dropdowns.forEach((dropdown) => {
-      const isOpen = dropdown.className.includes('open-dropdown');
+// function handleDropdown($app: HTMLElement) {
+//   $app.addEventListener('click', (e: MouseEvent) => {
+//     const $dropdowns = $app.querySelectorAll<HTMLElement>('.dropdown');
+//     $dropdowns.forEach((dropdown) => {
+//       const isOpen = dropdown.className.includes('open-dropdown');
 
-      if (isOpen) {
-        dropdown.classList.remove('open-dropdown');
-      }
-    });
-  });
-}
+//       if (isOpen) {
+//         dropdown.classList.remove('open-dropdown');
+//       }
+//     });
+//   });
+// }

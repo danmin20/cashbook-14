@@ -68,7 +68,6 @@ const jsx = (
       }
     }
   }
-
   return template.content;
 };
 

@@ -21,7 +21,6 @@ app.use(express.static(path.join(__dirname, '../client/dist/src')));
 
 app.use('/api', router);
 app.get('/', (req: Request, res: Response) => {
-  console.log('asdf');
   res.sendFile(path.join(__dirname, '../client/dist/src', 'index.html'));
 });
 

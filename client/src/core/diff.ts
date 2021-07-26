@@ -1,5 +1,3 @@
-import { cloneNodeWithEvent } from '../util';
-
 export const isDiffrentNode = (node1: Element, node2: Element) => {
   const n1Attributes = node1.attributes;
   const n2Attributes = node2.attributes;
@@ -41,12 +39,12 @@ const applyDiff = (
   }
 
   if (!realNode && virtualNode) {
-    parentNode.appendChild(cloneNodeWithEvent(virtualNode));
+    parentNode.appendChild(virtualNode);
     return;
   }
 
   if (isDiffrentNode(virtualNode, realNode)) {
-    realNode.replaceWith(cloneNodeWithEvent(virtualNode));
+    realNode.replaceWith(virtualNode);
     return;
   }
 
