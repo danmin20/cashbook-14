@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "tsc && cp database/init.sql build/database/init.sql && node build/app",
+    "start": "tsc && node build/app",
     "dev": "nodemon --watch \"**\" --ext \"ts\" --exec \"ts-node\" app"
   },
   "dependencies": {

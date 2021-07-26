@@ -2,14 +2,12 @@ import express, { Request, Response, NextFunction } from 'express';
 import morgan from 'morgan';
 import path from 'path';
 import 'dotenv/config';
-import { initDatabase } from './database/database';
+// const { sequelize } = require('./models');
+
 import router from './routes';
 
 const app = express();
-
-(async function () {
-  await initDatabase();
-})();
+// sequelize.sync();
 
 app.set('port', process.env.PORT || 3000);
 
