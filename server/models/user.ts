@@ -15,7 +15,7 @@ export class User {
   @PrimaryGeneratedColumn({ type: 'bigint', unsigned: true })
   id!: string;
 
-  @Column({ type: 'varchar', length: 31, unique: true })
+  @Column({ type: 'varchar', length: 31 })
   nickname!: string;
 
   @Column({ type: 'varchar', length: 255 })
