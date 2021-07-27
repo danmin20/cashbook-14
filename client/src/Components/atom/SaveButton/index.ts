@@ -20,7 +20,7 @@ export default class SaveButton extends Component<SaveButtonProps> {
 
     return jsx`
       <div onClick=${onClick} class='save-button${isActive ? ' active' : ''}${
-      type === 'large' ? ' large' : ''
+      type === 'large' ? ' button-large' : ''
     }'>
         <img src=${type === 'small' ? checkSmall : checkLarge} />
       </div>

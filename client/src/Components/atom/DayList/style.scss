@@ -1,0 +1,22 @@
+@import '../../../scss/theme';
+
+.day-list {
+  @include flex-center;
+  @include bold-medium;
+  width: 84.8rem;
+  justify-content: space-between;
+  margin-top: 3.2rem;
+  box-sizing: border-box;
+  padding-bottom: 2rem;
+  border-bottom: 0.1rem solid $line;
+  span {
+    color: $body;
+  }
+  &__sum {
+    @include flex-center;
+    color: $body;
+    &--each {
+      margin-left: 0.8rem;
+    }
+  }
+}
