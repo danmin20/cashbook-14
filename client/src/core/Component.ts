@@ -1,10 +1,9 @@
 import { updateRealDOM } from '../index';
 import { stateCmp } from '../util';
-import { parseJSX } from './parse';
+
 export interface PropsType {}
-export interface StateType {
-  date: any;
-}
+export interface StateType {}
+
 type Partial<T> = {
   [P in keyof T]?: T[P];
 };
@@ -24,10 +23,6 @@ export default class Component<
 
   static ID: number = 0;
 
-  $components: {
-    [key: string]: Component;
-  } = {};
-
   constructor(props: P) {
     ++Component.ID;
     this.props = props;
@@ -37,15 +32,8 @@ export default class Component<
 
   onStart() {}
 
-  // addComponent<PT = PropsType>(component: any, props: PT): ComponentId {
-  //   const newComponent = new component(props);
-  //   this.$components[newComponent.id] = newComponent;
-  //   return newComponent.$dom;
-  // }
-
   setDom(): void {
-    this.$dom = parseJSX(this.render(), this.$components);
-    this.addEvents();
+    this.$dom = this.render() as Element;
   }
 
   render(): HTMLElement | ChildNode | DocumentFragment {
@@ -53,27 +41,22 @@ export default class Component<
   }
 
   updateDOM(): void {
-    const $copy = parseJSX(this.render(), this.$components);
-
+    const $copy = this.render();
     this.$dom.parentNode?.replaceChild($copy, this.$dom);
-    this.$dom = $copy;
+    this.$dom = $copy as Element;
   }
 
   update(): void {
     this.onStart();
     this.updateDOM();
-    this.addEvents();
   }
 
-  addEvents(): void {}
-
-  setState(newState: Partial<S>, cb?: Function) {
+  setState(newState: Partial<S>) {
     const nextState = { ...this.state, ...newState };
     if (stateCmp(this.state, nextState) === 'Same') {
       return;
     }
-    this.state = { ...this.state, ...newState };
-    cb?.();
+    this.state = nextState;
     this.update();
     updateRealDOM();
   }
