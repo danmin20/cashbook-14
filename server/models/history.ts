@@ -15,7 +15,7 @@ export class History {
   @PrimaryGeneratedColumn({ type: 'bigint', unsigned: true })
   id!: string;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({ type: 'timestamp' })
   date!: Date;
 
   @Column({ type: 'varchar', length: 255 })
