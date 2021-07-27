@@ -2,6 +2,8 @@ import './scss/index.scss';
 import { initRouter } from './lib/router';
 import diff from './core/diff';
 import Main from './Pages/Main';
+import Calendar from './Pages/Calendar';
+import Chart from './Pages/Chart';
 
 declare global {
   interface Window {
@@ -9,7 +11,11 @@ declare global {
   }
 }
 
-const routes = [{ path: '/', page: Main }];
+const routes = [
+  { path: '/', page: Main },
+  { path: '/calendar', page: Calendar },
+  { path: '/chart', page: Chart },
+];
 
 const $app = document.querySelector('#app');
 export const updateRealDOM = () => {

@@ -6,3 +6,4 @@ export { default as chart } from './chart.svg';
 export { default as delete } from './delete.svg';
 export { default as left } from './left.svg';
 export { default as right } from './right.svg';
+export { default as drop } from './drop.svg';

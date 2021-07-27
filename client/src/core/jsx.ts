@@ -3,14 +3,7 @@ const DIRTY_REGEX = /dirtyindex:(\d+):/;
 const DIRTY_REGEX_G = /dirtyindex:(\d+):/g;
 const DIRTY_SEPERATOR_REGEX_G = /(dirtyindex:\d+:)/g;
 
-/**
- * DOM Element 를 리턴합니다.
- * Element는 Node를 상속받은 클래스고
- * HTMLElement HTMLDivElement등은 Element를 상속받아서 구현합니다.
- *
- * @returns {Element}
- */
-const html = (strings: TemplateStringsArray, ...args: any[]): Element => {
+const jsx = (strings: TemplateStringsArray, ...args: any[]): HTMLElement => {
   if (!strings[0] && args.length) {
     throw new Error('Failed To Parse');
   }
@@ -64,7 +57,11 @@ const html = (strings: TemplateStringsArray, ...args: any[]): Element => {
 
       const arg = args[Number(dirtyIndex)];
       if (arg instanceof Node) return arg;
-
+      if (arg instanceof Array) {
+        const df = document.createDocumentFragment();
+        arg.forEach(($el) => df.appendChild($el));
+        return df;
+      }
       return buildDocumentFragmentWith(arg);
     });
 
@@ -100,7 +97,7 @@ const html = (strings: TemplateStringsArray, ...args: any[]): Element => {
     }
   }
 
-  return template.firstElementChild ?? template;
+  return <HTMLElement>template.firstElementChild ?? template;
 };
 
-export default html;
+export default jsx;

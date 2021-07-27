@@ -5,6 +5,7 @@ import './style';
 export interface CategoryTagProps {
   id: string;
   title: string;
+  color: string;
 }
 
 export default class CategoryTag extends Component<CategoryTagProps> {
@@ -14,9 +15,11 @@ export default class CategoryTag extends Component<CategoryTagProps> {
     this.setDom();
   }
   render() {
+    const { title, color } = this.props;
+
     return jsx`
-      <div class='category-tag ${this.props.id}'>
-        ${this.props.title}
+      <div class='category-tag' style='background-color: ${color}'>
+        ${title}
       </div>
     `;
   }

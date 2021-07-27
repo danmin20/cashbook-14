@@ -9,6 +9,7 @@ import jsx from '../../core/jsx';
 import './style';
 
 export interface MainStates {
+  // 전역 상태로 넣기
   date: Date;
   histories: {
     day: DayListProps;
