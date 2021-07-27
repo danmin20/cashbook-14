@@ -70,8 +70,10 @@ $red: #f45452;
   line-height: 2.4rem;
 }
 
+// custom
 @mixin flex-center {
   display: flex;
   align-items: center;
   justify-content: center;
 }
+$shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.1), 0 0.4rem 2rem rgba(0, 0, 0, 0.1);

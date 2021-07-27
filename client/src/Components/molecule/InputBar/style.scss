@@ -7,8 +7,7 @@
   height: 7.6rem;
   background-color: #fff;
   border-radius: 1rem;
-  box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.1),
-    0 0.4rem 2rem rgba(0, 0, 0, 0.1);
+  box-shadow: $shadow;
   &__input {
     &--label {
       @include bold-small;
