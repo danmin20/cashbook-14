@@ -22,6 +22,7 @@ export default class List extends Component<ListProps> {
     this.$categoryTag = new CategoryTag({
       id: this.props.tagId,
       title: this.props.tagTitle,
+      color: '#4a6cc3',
     }).$dom;
 
     this.setDom();
