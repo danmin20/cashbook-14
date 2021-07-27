@@ -1,0 +1,23 @@
+@import '../../../scss/theme';
+
+input.text-input {
+  background-color: $background;
+  border: 0.1rem solid $line;
+  outline: none;
+  box-sizing: border-box;
+  border-radius: 1rem;
+  width: 100%;
+  padding: 1rem;
+  @include text-small;
+
+  &:focus {
+    border: 0.1rem solid $primary1;
+  }
+  &:disabled {
+    background-color: #fff;
+    color: $title-active;
+  }
+  &::placeholder {
+    color: $placeholder;
+  }
+}

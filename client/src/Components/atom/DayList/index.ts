@@ -1,6 +1,5 @@
 import Component from '../../../core/Component';
 import jsx from '../../../core/jsx';
-import CategoryTag from '../CategoryTag';
 import './style';
 
 export interface DayListProps {
