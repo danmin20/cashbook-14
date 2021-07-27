@@ -1,0 +1,41 @@
+@import '../../../scss/theme';
+
+.alert {
+  @include body-medium;
+  width: 40rem;
+  height: 23rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 4rem;
+  background-color: $off-white;
+  border-radius: 1rem;
+  position: absolute;
+
+  .buttons {
+    @include flex-center;
+    justify-content: space-between;
+  }
+
+  &__btn {
+    cursor: pointer;
+  }
+
+  .inactive {
+    cursor: default;
+    color: $label;
+  }
+  .delete {
+    font-weight: 500;
+    color: $red;
+  }
+  .delete {
+    font-weight: 500;
+    color: $red;
+  }
+  .add {
+    font-weight: 500;
+    color: $primary3;
+  }
+}

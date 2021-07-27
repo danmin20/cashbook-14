@@ -1,5 +1,6 @@
 import DayList, { DayListProps } from '../../Components/atom/DayList';
 import Header from '../../Components/atom/Header';
+import Alert from '../../Components/molecule/Alert';
 import Info from '../../Components/molecule/Info';
 import InputBar from '../../Components/molecule/InputBar';
 import List, { ListProps } from '../../Components/molecule/list';
@@ -20,6 +21,7 @@ export default class Main extends Component<PropsType, MainStates> {
   $inputBar: Element;
   $info: Element;
   $historyList: Element;
+  $alert: Element;
 
   constructor(props: any) {
     super(props);
@@ -92,7 +94,11 @@ export default class Main extends Component<PropsType, MainStates> {
         this.$historyList.append($history);
       });
     });
-    console.log(this.$historyList);
+
+    this.$alert = new Alert({
+      type: 'add',
+      content: 'asdf',
+    }).$dom;
 
     this.setDom();
   }
@@ -110,6 +116,7 @@ export default class Main extends Component<PropsType, MainStates> {
           ${this.$info}
           <div class='list__histories'>
             ${this.$historyList}
+            ${this.$alert}
           </div>
         </div>
       </div>

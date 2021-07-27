@@ -1,6 +1,7 @@
 @import '../../../scss/theme';
 
-input.text-input {
+.text-input {
+  @include body-medium;
   background-color: $background;
   border: 0.1rem solid $line;
   outline: none;
@@ -8,7 +9,6 @@ input.text-input {
   border-radius: 1rem;
   width: 100%;
   padding: 1rem;
-  @include text-small;
 
   &:focus {
     border: 0.1rem solid $primary1;

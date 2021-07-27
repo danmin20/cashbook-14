@@ -1,6 +1,6 @@
 import Component from '../../../core/Component';
 import jsx from '../../../core/jsx';
-import './styles';
+import './style';
 
 export interface TextInputProps {
   invalid: boolean;
@@ -16,7 +16,9 @@ export default class TextInput extends Component<TextInputProps> {
     const { invalid } = this.props;
 
     return jsx`
-      <input autocomplete='off' class='text-input' placeholder='입력하세요' disabled=${invalid} />
+      <input autocomplete='off' class='text-input' placeholder='입력하세요' ${
+        invalid ? 'disabled' : ''
+      } />
     `;
   }
 }
