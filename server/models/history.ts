@@ -39,10 +39,10 @@ export class History {
   @ManyToOne(() => Payment, (payment) => payment.histories, {
     nullable: true,
   })
-  payment!: Payment;
+  payment?: Payment | null;
 
   @ManyToOne(() => Category, (category) => category.histories, {
     nullable: true,
   })
-  category!: Category;
+  category?: Category | null;
 }
