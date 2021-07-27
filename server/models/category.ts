@@ -10,13 +10,16 @@ import {
 import { User } from './user';
 import { History } from './history';
 
-@Entity('payment')
-export class Payment {
+@Entity('category')
+export class Category {
   @PrimaryGeneratedColumn({ type: 'bigint', unsigned: true })
   id!: string;
 
   @Column({ type: 'varchar', length: 31 })
   name!: string;
+
+  @Column({ type: 'varchar', length: 7 })
+  type!: string;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   createdAt!: Date;
@@ -24,9 +27,9 @@ export class Payment {
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamp' })
   updatedAt!: Date;
 
-  @ManyToOne(() => User, (user) => user.payments)
+  @ManyToOne(() => User, (user) => user.categories)
   user!: User;
 
-  @OneToMany(() => History, (history) => history.payment)
+  @OneToMany(() => History, (history) => history.category)
   histories!: History[];
 }
