@@ -10,7 +10,7 @@ const DIRTY_SEPERATOR_REGEX_G = /(dirtyindex:\d+:)/g;
  *
  * @returns {Element}
  */
-const html = (strings: TemplateStringsArray, ...args: any[]): Element => {
+const jsx = (strings: TemplateStringsArray, ...args: any[]): Element => {
   if (!strings[0] && args.length) {
     throw new Error('Failed To Parse');
   }
@@ -103,4 +103,4 @@ const html = (strings: TemplateStringsArray, ...args: any[]): Element => {
   return template.firstElementChild ?? template;
 };
 
-export default html;
+export default jsx;

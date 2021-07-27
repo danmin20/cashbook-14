@@ -1,6 +1,7 @@
 import { calendar, chart, file, left, right } from '../../../../assets';
 import Component from '../../../core/Component';
 import jsx from '../../../core/jsx';
+import { $router } from '../../../lib/router';
 import './style';
 
 export interface HeaderProps {}
@@ -26,9 +27,9 @@ export default class Header extends Component<HeaderProps> {
         </div>
         
         <div class='buttons'>
-          <img src=${file} />
-          <img src=${calendar} />
-          <img src=${chart} />
+          <img onClick=${() => $router.push('/')} src=${file} />
+          <img onClick=${() => $router.push('/calendar')} src=${calendar} />
+          <img onClick=${() => $router.push('/chart')} src=${chart} />
         </div>
       </div>
     `;

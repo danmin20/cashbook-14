@@ -34,9 +34,7 @@ class Router {
   }
 
   initEvent() {
-    window.addEventListener('hashchange', () =>
-      this.onHashChangeHandler.bind(this)
-    );
+    window.addEventListener('hashchange', () => this.onHashChangeHandler());
   }
 
   hasRoute(path: string) {
@@ -78,6 +76,10 @@ class Router {
   }
 }
 
+export let $router: {
+  push: (path: string) => void;
+};
+
 export function initRouter({
   $app,
   routes,
@@ -86,5 +88,10 @@ export function initRouter({
   routes: Route[];
 }): void {
   const router = new Router({ $app, routes });
+
+  $router = {
+    push: (path) => router.push(path),
+  };
+
   router.onHashChangeHandler();
 }
