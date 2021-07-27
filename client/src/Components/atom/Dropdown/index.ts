@@ -1,9 +1,10 @@
 import Component from '../../../core/Component';
 import jsx from '../../../core/jsx';
+import { delete as delbtn } from '../../../../assets';
 import './style';
 
 export interface DropDownProps {
-  items: [];
+  items: string[];
 }
 
 export default class DropDown extends Component<DropDownProps> {
@@ -17,7 +18,10 @@ export default class DropDown extends Component<DropDownProps> {
 
     return jsx`
       <div class='dropdown'>
-        ${items.map((item) => jsx`<div class='dropdown__item'>${item}</div>`)}
+        ${items.map(
+          (item) =>
+            jsx`<div class='dropdown__item'>${item}<img src=${delbtn} /></div>`
+        )}
       </div>
     `;
   }

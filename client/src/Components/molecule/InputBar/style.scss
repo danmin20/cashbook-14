@@ -61,4 +61,13 @@
       margin-right: 1rem;
     }
   }
+
+  .select {
+    @include flex-center;
+    position: relative;
+    img {
+      margin-left: 1.5rem;
+      cursor: pointer;
+    }
+  }
 }

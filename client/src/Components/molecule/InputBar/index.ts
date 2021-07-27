@@ -2,6 +2,8 @@ import dayjs from 'dayjs';
 import Component from '../../../core/Component';
 import jsx from '../../../core/jsx';
 import SaveButton from '../../atom/SaveButton';
+import InputBarInput from './input';
+import InputBarSelect from './select';
 import './style';
 
 export interface InputBarProps {}
@@ -17,6 +19,11 @@ export interface InputBarStates {
 
 export default class InputBar extends Component<InputBarProps, InputBarStates> {
   $saveBtn: Element;
+  $dateInput: Element;
+  $contentInput: Element;
+  $amountInput: Element;
+  $categorySelect: Element;
+  $paymentSelect: Element;
 
   constructor(props: InputBarProps) {
     super(props);
@@ -34,6 +41,28 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
       isActive: true,
       type: 'large',
       onClick: () => {},
+    }).$dom;
+
+    this.$dateInput = new InputBarInput({
+      setContent: (date: string) => this.setState({ date }),
+    }).$dom;
+    this.$contentInput = new InputBarInput({
+      setContent: (content: string) => this.setState({ content }),
+    }).$dom;
+    this.$amountInput = new InputBarInput({
+      setContent: (amount: string) =>
+        this.setState({ amount: parseInt(amount) }),
+    }).$dom;
+
+    this.$categorySelect = new InputBarSelect({
+      content: this.state.category,
+      setContent: (category: string) => this.setState({ category }),
+      items: ['생활', '식비', '교통'],
+    }).$dom;
+    this.$paymentSelect = new InputBarSelect({
+      content: this.state.payment,
+      setContent: (payment: string) => this.setState({ payment }),
+      items: ['월급', '용돈', '기타수입'],
     }).$dom;
 
     this.setDom();
@@ -59,28 +88,32 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
         <div class='input-bar__input'>
           <div class='input-bar__input--label'>일자</div>
           <div class='input-bar__input--content'>
-            ${category || '선택하세요'}
+            ${this.$dateInput}
           </div>
         </div>
         <div class='input-bar__input'>
           <div class='input-bar__input--label'>분류</div>
-          <div class='input-bar__input--content'>20210720</div>
+          <div class='input-bar__input--content'>
+            ${this.$categorySelect}
+          </div>
         </div>
         <div class='input-bar__input'>
           <div class='input-bar__input--label'>내용</div>
           <div class='input-bar__input--content'>
-            <input style='width: 15rem' placeholder='입력하세요' />
+            ${this.$contentInput}
           </div>
         </div>
         <div class='input-bar__input'>
           <div class='input-bar__input--label'>결제수단</div>
-          <div class='input-bar__input--content'>20210720</div>
+          <div class='input-bar__input--content'>
+            ${this.$paymentSelect}
+          </div>
         </div>
         <div class='input-bar__input'>
           <div class='input-bar__input--label'>금액</div>
           <div class='input-bar__input--content amount'>
             <div>${paymentType === 'income' ? '+' : '-'}</div>
-            <input placeholder='입력하세요' /> 원
+            ${this.$amountInput} 원
           </div>
         </div>
         ${this.$saveBtn}
