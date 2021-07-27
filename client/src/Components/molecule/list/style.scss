@@ -1,0 +1,32 @@
+@import '../../../scss/theme';
+
+.list-component {
+  @include flex-center;
+  @include body-medium;
+  justify-content: space-between;
+  width: 37.2rem;
+  box-sizing: border-box;
+  padding: 2rem 1.2rem;
+  border: 0 solid $background;
+  border-bottom: 0.1rem;
+  box-sizing: border-box;
+  padding-bottom: 2rem;
+  border-bottom: 0.1rem solid $line;
+  .title {
+    @include flex-center;
+    .category-tag {
+      margin-right: 1rem;
+    }
+  }
+  .payment {
+    @include body-medium;
+    color: $body;
+  }
+  .amount {
+    font-weight: 500;
+  }
+}
+
+.list-large {
+  width: 84.8rem;
+}

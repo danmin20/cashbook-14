@@ -1,6 +1,7 @@
 @import '../../../scss/theme';
 
 .save-button {
+  cursor: pointer;
   width: 2rem;
   background: $grey2;
   height: 2rem;
@@ -10,7 +11,6 @@
 }
 
 .active {
-  cursor: pointer;
   background: $primary1;
 }
 

@@ -1,5 +1,3 @@
-import './style';
-
 import Component from '../../../core/Component';
 import jsx from '../../../core/jsx';
 import './style';

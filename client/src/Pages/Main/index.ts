@@ -1,3 +1,4 @@
+import DayList, { DayListProps } from '../../Components/atom/DayList';
 import Header from '../../Components/atom/Header';
 import Info from '../../Components/molecule/Info';
 import InputBar from '../../Components/molecule/InputBar';
@@ -8,7 +9,10 @@ import './style';
 
 export interface MainStates {
   date: Date;
-  histories: ListProps[];
+  histories: {
+    day: DayListProps;
+    list: ListProps[];
+  }[];
 }
 
 export default class Main extends Component<PropsType, MainStates> {
@@ -24,12 +28,31 @@ export default class Main extends Component<PropsType, MainStates> {
       date: new Date(),
       histories: [
         {
-          tagId: 'category1',
-          tagTitle: '생활',
-          type: 'large',
-          content: '내용',
-          payment: '신한카드',
-          amount: 10000000,
+          day: {
+            date: new Date(),
+            income: 99999,
+            outcome: 999999,
+          },
+          list: [
+            {
+              tagId: 'category1',
+              tagTitle: '생활',
+              type: 'large',
+              content: '내용',
+              payment: '신한카드',
+              paymentType: 'outcome',
+              amount: 10000000,
+            },
+            {
+              tagId: 'category8',
+              tagTitle: '월급',
+              type: 'large',
+              content: '내용',
+              payment: '현금',
+              paymentType: 'income',
+              amount: 10000000,
+            },
+          ],
         },
       ],
     };
@@ -48,16 +71,26 @@ export default class Main extends Component<PropsType, MainStates> {
     }).$dom;
 
     this.$historyList = document.createElement('div');
-    this.state.histories.forEach((history: ListProps) => {
-      const $history = new List({
-        tagId: history.tagId,
-        tagTitle: history.tagTitle,
-        type: history.type,
-        content: history.content,
-        payment: history.payment,
-        amount: history.amount,
+    this.state.histories.forEach(({ day, list }) => {
+      const $dayList = new DayList({
+        date: day.date,
+        income: day.income,
+        outcome: day.outcome,
       }).$dom;
-      this.$historyList.append($history);
+      this.$historyList.append($dayList);
+
+      list.forEach((history: ListProps) => {
+        const $history = new List({
+          tagId: history.tagId,
+          tagTitle: history.tagTitle,
+          type: history.type,
+          content: history.content,
+          payment: history.payment,
+          paymentType: history.paymentType,
+          amount: history.amount,
+        }).$dom;
+        this.$historyList.append($history);
+      });
     });
     console.log(this.$historyList);
 
@@ -75,7 +108,9 @@ export default class Main extends Component<PropsType, MainStates> {
         </div>
         <div class='list'>
           ${this.$info}
-          ${this.$historyList}
+          <div class='list__histories'>
+            ${this.$historyList}
+          </div>
         </div>
       </div>
     `;
