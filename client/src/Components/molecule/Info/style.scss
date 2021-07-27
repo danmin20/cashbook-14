@@ -1,0 +1,28 @@
+@import '../../../scss/theme';
+
+.info-component {
+  @include flex-center;
+  @include body-large;
+  color: $primary3;
+  justify-content: space-between;
+  width: 84.8rem;
+  margin-top: 9.2rem;
+  .buttons {
+    @include flex-center;
+    @include body-medium;
+    color: $label;
+    &__button {
+      background: none;
+      margin-left: 2rem;
+      display: inline;
+      @include flex-center;
+      span {
+        margin-left: 1.2rem;
+      }
+    }
+  }
+
+  .active {
+    color: $primary3;
+  }
+}
