@@ -35,11 +35,11 @@ export default class Component<
 
   onStart() {}
 
-  addComponent<PT = PropsType>(component: any, props: PT): ComponentId {
-    const newComponent = new component(props);
-    this.$components[newComponent.id] = newComponent;
-    return newComponent.id;
-  }
+  // addComponent<PT = PropsType>(component: any, props: PT): ComponentId {
+  //   const newComponent = new component(props);
+  //   this.$components[newComponent.id] = newComponent;
+  //   return newComponent.$dom;
+  // }
 
   setDom(): void {
     this.$dom = parseJSX(this.render(), this.$components);
