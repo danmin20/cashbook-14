@@ -36,9 +36,13 @@ export class History {
   @ManyToOne(() => User, (user) => user.histories)
   user!: User;
 
-  @ManyToOne(() => Payment, (payment) => payment.histories)
+  @ManyToOne(() => Payment, (payment) => payment.histories, {
+    nullable: true,
+  })
   payment!: Payment;
 
-  @ManyToOne(() => Category, (category) => category.histories)
+  @ManyToOne(() => Category, (category) => category.histories, {
+    nullable: true,
+  })
   category!: Category;
 }
