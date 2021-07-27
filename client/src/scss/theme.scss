@@ -3,6 +3,7 @@ $title-active: #1e2222;
 $body: #626666;
 $label: #8d9393;
 $placeholder: #c1c5c5;
+$grey2: #bbbbbb;
 $line: #ccd3d3;
 $background: #f5f5f5;
 $off-white: #fcfcfc;
@@ -23,14 +24,14 @@ $category10: #e2b765;
 
 // typography
 @mixin display-small {
-  font-family: Do Hyeon;
+  font-family: 'BMDOHYEON';
   font-style: normal;
   font-weight: normal;
   font-size: 2.4rem;
   line-height: 2.4rem;
 }
 @mixin display-large {
-  font-family: Do Hyeon;
+  font-family: 'BMDOHYEON';
   font-style: normal;
   font-weight: normal;
   font-size: 4.8rem;
@@ -77,4 +78,10 @@ $category10: #e2b765;
   font-weight: 500;
   font-size: 1.6rem;
   line-height: 2.4rem;
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

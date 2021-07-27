@@ -2,7 +2,9 @@ import { updateRealDOM } from '../index';
 import { stateCmp } from '../util';
 import { parseJSX } from './parse';
 export interface PropsType {}
-export interface StateType {}
+export interface StateType {
+  date: any;
+}
 type Partial<T> = {
   [P in keyof T]?: T[P];
 };
@@ -35,11 +37,11 @@ export default class Component<
 
   onStart() {}
 
-  addComponent<PT = PropsType>(component: any, props: PT): ComponentId {
-    const newComponent = new component(props);
-    this.$components[newComponent.id] = newComponent;
-    return newComponent.id;
-  }
+  // addComponent<PT = PropsType>(component: any, props: PT): ComponentId {
+  //   const newComponent = new component(props);
+  //   this.$components[newComponent.id] = newComponent;
+  //   return newComponent.$dom;
+  // }
 
   setDom(): void {
     this.$dom = parseJSX(this.render(), this.$components);

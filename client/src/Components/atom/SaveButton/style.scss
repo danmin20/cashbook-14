@@ -1,0 +1,21 @@
+@import '../../../scss/theme';
+
+.save-button {
+  width: 2rem;
+  background: $grey2;
+  height: 2rem;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  @include flex-center;
+}
+
+.active {
+  cursor: pointer;
+  background: $primary1;
+}
+
+.large {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 1rem;
+}
