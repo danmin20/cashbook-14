@@ -3,8 +3,8 @@ import {
   CreateDateColumn,
   Entity,
   OneToMany,
-  PrimaryGeneratedColumn,
   UpdateDateColumn,
+  PrimaryColumn,
 } from 'typeorm';
 import { Payment } from './payment';
 import { Category } from './category';
@@ -12,7 +12,7 @@ import { History } from './history';
 
 @Entity('user')
 export class User {
-  @PrimaryGeneratedColumn({ type: 'bigint', unsigned: true })
+  @PrimaryColumn({ type: 'varchar', length: 31 })
   id!: string;
 
   @Column({ type: 'varchar', length: 31 })
