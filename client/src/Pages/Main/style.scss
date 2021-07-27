@@ -1,7 +1,14 @@
 @import '../../scss/theme';
 
 .top {
+  position: relative;
   width: 100%;
   height: 19.4rem;
   background-color: $primary1;
+  .input-bar-wrapper {
+    @include flex-center;
+    position: absolute;
+    width: 100%;
+    top: 16rem;
+  }
 }
