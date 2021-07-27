@@ -2,7 +2,9 @@ import { updateRealDOM } from '../index';
 import { stateCmp } from '../util';
 import { parseJSX } from './parse';
 export interface PropsType {}
-export interface StateType {}
+export interface StateType {
+  date: any;
+}
 type Partial<T> = {
   [P in keyof T]?: T[P];
 };
