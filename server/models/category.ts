@@ -21,6 +21,9 @@ export class Category {
   @Column({ type: 'varchar', length: 7 })
   type!: string;
 
+  @Column({ type: 'varchar', length: 7 })
+  color!: string;
+
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   createdAt!: Date;
 
