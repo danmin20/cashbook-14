@@ -2,12 +2,31 @@
 
 .input-bar {
   @include flex-center;
-  justify-content: space-around;
   width: 90.4rem;
   height: 7.6rem;
   background-color: #fff;
   border-radius: 1rem;
   box-shadow: $shadow;
+  &__buttons {
+    @include flex-center;
+    flex-direction: column;
+    margin-right: 1.5rem;
+    div {
+      @include bold-small;
+      cursor: pointer;
+      width: 7rem;
+      text-align: center;
+      padding: 0.5rem;
+      box-sizing: border-box;
+      color: $placeholder;
+      border-radius: 0.5rem;
+
+      &.active {
+        background-color: $primary1;
+        color: #fff;
+      }
+    }
+  }
   &__input {
     &--label {
       @include bold-small;
@@ -16,10 +35,30 @@
     &--content {
       @include body-regular;
     }
-    &:not(:first-child) {
-      padding-left: 4rem;
-      border: 0 solid $placeholder;
-      border-left-width: 0.1rem;
+    padding: 0 2em;
+    border: 0 solid $placeholder;
+    border-left-width: 0.1rem;
+  }
+  input {
+    @include body-regular;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+    width: 10rem;
+    &::placeholder {
+      color: $placeholder;
+    }
+  }
+  .amount {
+    @include flex-center;
+    box-sizing: border-box;
+    padding-left: 0.5rem;
+    div {
+      width: 0.5rem;
+    }
+    input {
+      text-align: end;
+      margin-right: 1rem;
     }
   }
 }
