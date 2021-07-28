@@ -37,11 +37,13 @@ export default class Alert extends Component<AlertProps> {
     this.setDom();
   }
   render() {
-    const { content, type } = this.props;
+    const { content, type, select } = this.props;
 
     return jsx`
       <div class='alert'>
-        <div class='alert__header'>${content}${this.$colorPicker}</div>
+        <div class='alert__header'>${content}${
+      select === 'category' ? this.$colorPicker : ''
+    }</div>
         <div onInput=${this.handleDeleteActive}>${this.$textInput}</div>
 
         <div class='buttons'>

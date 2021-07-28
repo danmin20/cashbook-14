@@ -2,6 +2,8 @@
 
 .color-picker {
   @include flex-center;
+  position: relative;
+
   .refresh-btn {
     @include flex-center;
     cursor: pointer;
@@ -24,6 +26,35 @@
     padding: 1rem;
     &:focus {
       border: 0.1rem solid $primary1;
+    }
+  }
+
+  .color-palatte {
+    position: absolute;
+    top: 5rem;
+    right: 0;
+    box-shadow: $shadow;
+    padding: 1rem;
+    border-radius: 0.8rem;
+    background-color: #fff;
+    border: 0.1rem solid $line;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    .color {
+      cursor: pointer;
+      margin: 0.3rem;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 1rem;
+    }
+    .close-btn {
+      cursor: pointer;
+      position: absolute;
+      top: -1rem;
+      right: -1rem;
+      background-color: #fff;
+      padding: 0.5rem;
+      border-radius: 50%;
     }
   }
 }
