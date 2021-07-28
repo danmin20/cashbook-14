@@ -12,5 +12,10 @@ router.get(
   MeController.getMyCategories
 );
 router.get('/histories', authenticateAccessToken, MeController.getMyHistories);
+router.get(
+  '/sum-of-amounts',
+  authenticateAccessToken,
+  MeController.getSumOfAmounts
+);
 
 export default router;

@@ -1,6 +1,10 @@
 import { getRepository } from 'typeorm';
 import { Category } from '../models/category';
 
+// TODO: 필드 유효성 확인 (서비스에서 하는게 맞는듯)
+// 이름 중복 확인(수입/지출 따로)
+// ...
+
 async function findCategory({ id }: { id: string }) {
   const repo = getRepository(Category);
 
@@ -47,9 +51,8 @@ async function createCategory({
   return result;
 }
 
-// type 변경 시 history의 것과 달라질 수 있는 문제!
 async function updateCategory(
-  { id }: { id: string },
+  { id, userId }: { id: string; userId?: string },
   {
     name,
     type,
@@ -63,7 +66,7 @@ async function updateCategory(
   const repo = getRepository(Category);
 
   const result = await repo.update(
-    { id },
+    { id, ...(userId && { user: { id: userId } }) },
     {
       ...(name && { name }),
       ...(type && { type }),
@@ -73,10 +76,13 @@ async function updateCategory(
   return result;
 }
 
-async function deleteCategory({ id }: { id: string }) {
+async function deleteCategory({ id, userId }: { id: string; userId?: string }) {
   const repo = getRepository(Category);
 
-  const result = await repo.delete({ id });
+  const result = await repo.delete({
+    id,
+    ...(userId && { user: { id: userId } }),
+  });
   return result;
 }
 

@@ -5,6 +5,7 @@ export {};
 declare global {
   namespace Express {
     interface Request {
+      // user?: { id: string};
       user?: import('../models/User').default;
     }
   }

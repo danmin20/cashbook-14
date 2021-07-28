@@ -1,11 +1,27 @@
 import { getRepository } from 'typeorm';
 import { Payment } from '../models/payment';
 
-async function findPayment({ id }: { id: string }) {
+// TODO: 필드 유효성 확인 (서비스에서 하는게 맞는듯)
+// 이름 중복 확인
+// ...
+
+async function findPayment({
+  id,
+  name,
+  userId,
+}: {
+  id?: string;
+  name?: string;
+  userId?: string;
+}) {
   const repo = getRepository(Payment);
 
   const result = await repo.findOne({
-    where: { id },
+    where: {
+      ...(id && { id }),
+      ...(name && { name }),
+      ...(userId && { user: { id: userId } }),
+    },
     relations: ['user'],
   });
   return result;
@@ -28,19 +44,17 @@ async function createPayment({
 }: {
   userId: string;
   name: string;
-  type: string;
-  color: string;
 }) {
   const repo = getRepository(Payment);
 
-  const payment = repo.create({ name, user: { id: userId } });
+  const payment = repo.create({ name: name, user: { id: userId } });
 
   const result = await repo.insert(payment);
   return result;
 }
 
 async function updatePayment(
-  { id }: { id: string },
+  { id, userId }: { id: string; userId?: string },
   {
     name,
   }: {
@@ -50,7 +64,7 @@ async function updatePayment(
   const repo = getRepository(Payment);
 
   const result = await repo.update(
-    { id },
+    { id, ...(userId && { user: { id: userId } }) },
     {
       ...(name && { name }),
     }
@@ -58,10 +72,13 @@ async function updatePayment(
   return result;
 }
 
-async function deletePayment({ id }: { id: string }) {
+async function deletePayment({ id, userId }: { id: string; userId?: string }) {
   const repo = getRepository(Payment);
 
-  const result = await repo.delete({ id });
+  const result = await repo.delete({
+    id,
+    ...(userId && { user: { id: userId } }),
+  });
   return result;
 }
 
