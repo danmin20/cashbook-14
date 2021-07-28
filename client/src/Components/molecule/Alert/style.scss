@@ -13,6 +13,11 @@
   border-radius: 1rem;
   position: absolute;
 
+  &__header {
+    @include flex-center;
+    justify-content: space-between;
+  }
+
   .buttons {
     @include flex-center;
     justify-content: space-between;

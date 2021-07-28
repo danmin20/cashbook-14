@@ -1,16 +1,29 @@
 import Component from '../../../core/Component';
 import jsx from '../../../core/jsx';
+import ColorPicker from '../../atom/ColorPicker';
 import TextInput from '../../atom/TextInput';
 import './style';
 
 export interface AlertProps {
+  select: 'category' | 'payment';
   type: 'delete' | 'add';
   content: string;
 }
 
 export default class Alert extends Component<AlertProps> {
   $textInput: Element;
-  handleDeleteActive: Function;
+  $colorPicker: Element;
+  handleDeleteActive = ({ target }: { target: HTMLInputElement }) => {
+    if (target.value.length > 0) {
+      (this.$dom.querySelector('#close') as HTMLDivElement).classList.remove(
+        'inactive'
+      );
+    } else {
+      (this.$dom.querySelector('#close') as HTMLDivElement).classList.add(
+        'inactive'
+      );
+    }
+  };
 
   constructor(props: AlertProps) {
     super(props);
@@ -19,17 +32,7 @@ export default class Alert extends Component<AlertProps> {
       invalid: this.props.type === 'delete' ? true : false,
     }).$dom;
 
-    this.handleDeleteActive = ({ target }: { target: HTMLInputElement }) => {
-      if (target.value.length > 0) {
-        (this.$dom.querySelector('#close') as HTMLDivElement).classList.remove(
-          'inactive'
-        );
-      } else {
-        (this.$dom.querySelector('#close') as HTMLDivElement).classList.add(
-          'inactive'
-        );
-      }
-    };
+    this.$colorPicker = new ColorPicker({}).$dom;
 
     this.setDom();
   }
@@ -38,7 +41,7 @@ export default class Alert extends Component<AlertProps> {
 
     return jsx`
       <div class='alert'>
-        <div>${content}</div>
+        <div class='alert__header'>${content}${this.$colorPicker}</div>
         <div onInput=${this.handleDeleteActive}>${this.$textInput}</div>
 
         <div class='buttons'>

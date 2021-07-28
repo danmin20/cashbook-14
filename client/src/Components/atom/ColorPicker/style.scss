@@ -1,0 +1,29 @@
+@import '../../../scss/theme';
+
+.color-picker {
+  @include flex-center;
+  .refresh-btn {
+    @include flex-center;
+    cursor: pointer;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 0.8rem;
+    margin-right: 1rem;
+    border: 0.1rem solid $line;
+  }
+
+  input {
+    @include bold-medium;
+    height: 4rem;
+    width: 10rem;
+    background-color: #fff;
+    border: 0.1rem solid $line;
+    outline: none;
+    box-sizing: border-box;
+    border-radius: 1rem;
+    padding: 1rem;
+    &:focus {
+      border: 0.1rem solid $primary1;
+    }
+  }
+}

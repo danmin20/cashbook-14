@@ -3,7 +3,7 @@ import jsx from '../../../core/jsx';
 import './style';
 
 export interface TextInputProps {
-  invalid: boolean;
+  invalid?: boolean;
 }
 
 export default class TextInput extends Component<TextInputProps> {
@@ -13,7 +13,7 @@ export default class TextInput extends Component<TextInputProps> {
     this.setDom();
   }
   render() {
-    const { invalid } = this.props;
+    const { invalid = false } = this.props;
 
     return jsx`
       <input autocomplete='off' class='text-input' placeholder='입력하세요' ${
