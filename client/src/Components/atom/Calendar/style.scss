@@ -1,0 +1,53 @@
+@import '../../../scss/theme';
+
+.calendar {
+  @include flex-center;
+  flex-direction: column;
+  width: 100%;
+  position: absolute;
+  top: 16.2rem;
+  &__weekbar {
+    @include flex-center;
+    @include body-regular;
+    justify-content: space-around;
+    width: 84.8rem;
+    height: 4.8rem;
+    box-shadow: $shadow;
+    background-color: $off-white;
+    color: $label;
+    border: 0.1rem solid $line;
+    border-radius: 1rem;
+  }
+  .cal-body {
+    margin-top: 1.6rem;
+    box-shadow: $shadow;
+    background-color: $off-white;
+    color: $label;
+    border: 0.1rem solid $line;
+    border-radius: 1rem;
+    .cal-line {
+      @include flex-center;
+      &:not(:last-child) {
+        border-bottom: 0.1rem solid $line;
+      }
+      .cal-box {
+        position: relative;
+        width: 12rem;
+        height: 12rem;
+        &__date {
+          @include bold-small;
+          color: $label;
+          position: absolute;
+          right: 0.8rem;
+          bottom: 0.8rem;
+        }
+        &:not(:last-child) {
+          border-right: 0.1rem solid $line;
+        }
+      }
+      .today {
+        background-color: $background;
+      }
+    }
+  }
+}
