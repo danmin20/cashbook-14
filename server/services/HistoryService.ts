@@ -1,6 +1,12 @@
 import { getRepository } from 'typeorm';
 import { History } from '../models/history';
 
+// TODO: 필드 유효성 확인 (서비스에서 하는게 맞는듯)
+// 타입이 카테고리의 것과 같은가?
+// 본인의 카테고리인가?
+// 본인의 결제수단인가?
+// ...
+
 async function findHistory({ id }: { id: string }) {
   const repo = getRepository(History);
 
@@ -62,7 +68,7 @@ async function createHistory({
 }
 
 async function updateHistory(
-  { id }: { id: string },
+  { id, userId }: { id: string; userId?: string },
   {
     paymentId,
     categoryId,
@@ -80,7 +86,7 @@ async function updateHistory(
   const repo = getRepository(History);
 
   const result = await repo.update(
-    { id },
+    { id, ...(userId && { user: { id: userId } }) },
     {
       ...(paymentId && { payment: { id: paymentId } }),
       ...(categoryId && { category: { id: categoryId } }),
@@ -92,10 +98,13 @@ async function updateHistory(
   return result;
 }
 
-async function deleteHistory({ id }: { id: string }) {
+async function deleteHistory({ id, userId }: { id: string; userId?: string }) {
   const repo = getRepository(History);
 
-  const result = await repo.delete({ id });
+  const result = await repo.delete({
+    id,
+    ...(userId && { user: { id: userId } }),
+  });
   return result;
 }
 
