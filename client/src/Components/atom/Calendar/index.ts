@@ -9,7 +9,7 @@ export default class Calendar extends Component<PropsType> {
   constructor(props: PropsType) {
     super(props);
 
-    subscribe(dateState, this.$dom.className, this.update.bind(this));
+    subscribe(dateState, 'calendar', this.update.bind(this));
 
     this.setDom();
   }
