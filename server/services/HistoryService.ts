@@ -20,27 +20,86 @@ async function findHistory({ id }: { id: string }) {
 async function findHistories({
   userId,
   categoryId,
-  year,
-  month,
+  type,
+  start,
+  last,
 }: {
   userId?: string;
   categoryId?: string;
-  year: string;
-  month: string;
+  type?: string;
+  start?: { year: number; month: number };
+  last?: { year: number; month: number };
 }) {
   const repo = getRepository(History);
 
-  const result = await repo.find({
+  let result = await repo.find({
     where: {
       ...(userId && { user: { id: userId } }),
       ...(categoryId && { category: { id: categoryId } }),
     },
     relations: ['category', 'payment', 'user'],
   });
-  return result.filter(
-    (history) =>
-      history.date.getFullYear() === +year && history.date.getMonth() === +month
+
+  // TODO: 필터링 개선(DB 수준에서의 필터링을 구현하기) 근데 쿼리 작성하기 귀찮다... ㅎㅎ
+  if (type === '지출') {
+    result = result.filter((history) => +history.amount < 0);
+  }
+  if (type === '수입') {
+    result = result.filter((history) => +history.amount > 0);
+  }
+
+  if (start) {
+    result = result.filter((history) => {
+      const cmpFullYear = history.date.getFullYear() - start.year;
+      const cmpMonth = history.date.getMonth() - start.month;
+      return cmpFullYear > 0 || (cmpFullYear === 0 && cmpMonth >= 0);
+    });
+  }
+  if (last) {
+    result = result.filter((history) => {
+      const cmpFullYear = history.date.getFullYear() - last.year;
+      const cmpMonth = history.date.getMonth() - last.month;
+      return cmpFullYear < 0 || (cmpFullYear === 0 && cmpMonth <= 0);
+    });
+  }
+
+  return result;
+}
+
+async function getSumOfAmountsGroupByMonth({
+  userId,
+  categoryId,
+  type,
+  start,
+  last,
+}: {
+  userId?: string;
+  categoryId?: string;
+  type?: string;
+  start: { year: number; month: number };
+  last: { year: number; month: number };
+}) {
+  let histories = await findHistories({
+    ...(userId && { userId }),
+    ...(categoryId && { categoryId }),
+    ...(type && { type }),
+    start,
+    last,
+  });
+
+  // 그룹화
+  const startValue = start.year * 12 + start.month;
+  const lastValue = last.year * 12 + last.month;
+  const result: number[] = Array.from(
+    { length: lastValue - startValue + 1 },
+    () => 0
   );
+  histories.forEach((history) => {
+    const group = history.date.getFullYear() * 12 + history.date.getMonth();
+    result[group - startValue] += +history.amount;
+  });
+
+  return result;
 }
 
 async function createHistory({
@@ -120,4 +179,5 @@ export const HistoryService = {
   createHistory,
   updateHistory,
   deleteHistory,
+  getSumOfAmountsGroupByMonth,
 };

@@ -54,7 +54,46 @@ async function getMyHistories(req: Request, res: Response, next: NextFunction) {
 
     const { query } = req;
 
-    const result = await HistoryService.findHistories({ userId, ...query });
+    const head = query.date ? new Date(query.date as string) : new Date();
+    const date = { year: head.getFullYear(), month: head.getMonth() };
+
+    const result = await HistoryService.findHistories({
+      userId,
+      ...query,
+      ...(query.date && { start: date }),
+      ...(query.date && { last: date }),
+    });
+
+    res.status(200).json(result);
+  } catch (err) {
+    next(err);
+  }
+}
+
+async function getSumOfAmounts(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const { id: userId } = req.user;
+
+    const { query } = req;
+
+    const head = query.date ? new Date(query.date as string) : new Date();
+    const last = { year: head.getFullYear(), month: head.getMonth() };
+    const isUnderflow = last.month - 11 < 0;
+    const start = {
+      year: last.year - (isUnderflow ? 1 : 0),
+      month: last.month - 11 + (isUnderflow ? 12 : 0),
+    };
+
+    const result = await HistoryService.getSumOfAmountsGroupByMonth({
+      userId,
+      ...query,
+      start,
+      last,
+    });
 
     res.status(200).json(result);
   } catch (err) {
@@ -67,4 +106,5 @@ export const MeController = {
   getMyPayments,
   getMyCategories,
   getMyHistories,
+  getSumOfAmounts,
 };

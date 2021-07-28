@@ -7,7 +7,11 @@ async function createHistory(req: Request, res: Response, next: NextFunction) {
 
     const { body } = req;
 
-    const result = await HistoryService.createHistory({ userId, ...body });
+    const result = await HistoryService.createHistory({
+      userId,
+      ...body,
+      ...(body.date && { date: new Date(body.date) }),
+    });
 
     res.status(200).json(result);
   } catch (err) {
@@ -25,7 +29,7 @@ async function updateHistory(req: Request, res: Response, next: NextFunction) {
 
     const result = await HistoryService.updateHistory(
       { id: historyId, userId },
-      { ...body }
+      { ...body, ...(body.date && { date: new Date(body.date) }) }
     );
 
     res.status(200).json(result);
