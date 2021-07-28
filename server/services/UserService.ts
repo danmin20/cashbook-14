@@ -1,32 +1,43 @@
-export type UserType = {
+import { getRepository } from 'typeorm';
+import { User } from '../models/user';
+
+async function findUser({ id }: { id: string }) {
+  const repo = getRepository(User);
+
+  const result = await repo.findOne({
+    where: { id },
+  });
+  return result;
+}
+
+async function findUsers({ nickname }: { nickname?: string }) {
+  const repo = getRepository(User);
+
+  const result = await repo.find({
+    where: { ...(nickname && { nickname }) },
+  });
+  return result;
+}
+
+async function createUser({
+  id,
+  nickname,
+  password,
+}: {
+  id: string;
   nickname: string;
-  location1_id: number;
-  location2_id?: number | null;
-};
+  password: string;
+}) {
+  const repo = getRepository(User);
+
+  const user = repo.create({ id, nickname, password });
+
+  const result = await repo.insert(user);
+  return result;
+}
 
 export const UserService = {
-  createUser: async ({ nickname, location1_id }: UserType) => {
-    // const result = await execQuery(CREATE_USER({ nickname, location1_id }));
-    // return result;
-  },
-
-  updateUserLocation: async ({
-    nickname,
-    location1_id,
-    location2_id,
-  }: UserType) => {
-    // await execQuery(
-    //   UPDATE_USER_LOCATION({ nickname, location1_id, location2_id })
-    // );
-  },
-
-  findUserByNickname: async ({ nickname }: { nickname: string }) => {
-    // const result = await execQuery(FIND_BY_USER_NICKNAME({ nickname }));
-    // return result;
-  },
-
-  findUserById: async ({ id }: { id: number }) => {
-    // const result = await execQuery(FIND_BY_USER_ID({ id }));
-    // return result;
-  },
+  findUser,
+  findUsers,
+  createUser,
 };

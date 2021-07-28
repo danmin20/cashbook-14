@@ -3,29 +3,23 @@ import {
   CreateDateColumn,
   Entity,
   ManyToOne,
-  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Payment } from './payment';
 import { User } from './user';
+import { Payment } from './payment';
+import { Category } from './category';
 
 @Entity('history')
 export class History {
   @PrimaryGeneratedColumn({ type: 'bigint', unsigned: true })
   id!: string;
 
-  @Column({ type: 'varchar' })
-  date!: string;
+  @Column({ type: 'timestamp' })
+  date!: Date;
 
-  @Column({ type: 'varchar' })
-  category!: string;
-
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', length: 255 })
   content!: string;
-
-  @Column({ type: 'varchar' })
-  type!: string;
 
   @Column({ type: 'bigint' })
   amount!: string;
@@ -39,6 +33,15 @@ export class History {
   @ManyToOne(() => User, (user) => user.histories)
   user!: User;
 
-  @ManyToOne(() => Payment, (payment) => payment.histories)
-  payment!: Payment;
+  @ManyToOne(() => Payment, (payment) => payment.histories, {
+    nullable: true,
+    onDelete: 'SET NULL',
+  })
+  payment?: Payment | null;
+
+  @ManyToOne(() => Category, (category) => category.histories, {
+    nullable: true,
+    onDelete: 'SET NULL',
+  })
+  category?: Category | null;
 }
