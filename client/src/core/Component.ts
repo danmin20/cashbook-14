@@ -1,5 +1,4 @@
 import { updateRealDOM } from '../index';
-import { stateCmp } from '../util';
 
 export interface PropsType {}
 export interface StateType {}
@@ -53,7 +52,7 @@ export default class Component<
 
   setState(newState: Partial<S>) {
     const nextState = { ...this.state, ...newState };
-    if (stateCmp(this.state, nextState) === 'Same') {
+    if (JSON.stringify(this.state) === JSON.stringify(nextState)) {
       return;
     }
     this.state = nextState;

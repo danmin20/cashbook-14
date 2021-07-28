@@ -7,4 +7,9 @@
     height: 19.4rem;
     background-color: $primary1;
   }
+  .calendar-wrapper {
+    @include flex-center;
+    position: relative;
+    height: 71rem;
+  }
 }
