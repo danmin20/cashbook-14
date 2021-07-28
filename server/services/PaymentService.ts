@@ -44,8 +44,6 @@ async function createPayment({
 }: {
   userId: string;
   name: string;
-  type: string;
-  color: string;
 }) {
   const repo = getRepository(Payment);
 
