@@ -2,11 +2,12 @@ import { refresh, delete as delBtn } from '../../../../assets';
 import Component, { PropsType } from '../../../core/Component';
 import jsx from '../../../core/jsx';
 import './style';
-import { generateRandomColor } from '../../../utils/util';
+import { generateRandomColor, hexRegex } from '../../../utils/util';
 
 export interface ColorPickerState {
   color: string;
   isPalatteOpened: boolean;
+  isHexError: boolean;
 }
 
 export default class ColorPicker extends Component<
@@ -16,16 +17,24 @@ export default class ColorPicker extends Component<
   generateColor = () => {
     this.setState({
       color: generateRandomColor(),
+      isHexError: false,
     });
   };
   handleClickPalatte = (color: string) => {
     this.setState({
       color,
+      isHexError: false,
     });
   };
   handleOpenPalatte = (e: Event, value: boolean) => {
     e.stopPropagation();
     this.setState({ isPalatteOpened: value });
+  };
+  handleCheckHex = ({ target }: { target: HTMLInputElement }) => {
+    this.setState({
+      color: target.value,
+      isHexError: hexRegex.test(target.value) ? false : true,
+    });
   };
   palatte = [
     '#4A6CC3',
@@ -46,12 +55,13 @@ export default class ColorPicker extends Component<
     this.state = {
       color: generateRandomColor(),
       isPalatteOpened: false,
+      isHexError: false,
     };
 
     this.setDom();
   }
   render() {
-    const { color, isPalatteOpened } = this.state;
+    const { color, isPalatteOpened, isHexError } = this.state;
 
     return jsx`
       <div class='color-picker'>
@@ -63,7 +73,8 @@ export default class ColorPicker extends Component<
           <img src=${refresh} />
         </div>
         <input onClick=${(e: Event) =>
-          this.handleOpenPalatte(e, true)} value=${color} />
+          this.handleOpenPalatte(e, true)} value=${color}
+          onChange=${this.handleCheckHex} class='${isHexError ? 'error' : ''}'/>
 
         ${
           isPalatteOpened
@@ -73,7 +84,8 @@ export default class ColorPicker extends Component<
                   this.handleOpenPalatte(
                     e,
                     false
-                  )} src=${delBtn} class='close-btn' />
+                  )} src=${delBtn} class='close-btn
+              }' />
 
           ${this.palatte.map(
             (item) =>
