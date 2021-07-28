@@ -2,9 +2,11 @@
 
 .wrapper {
   .top {
+    display: flex;
+    justify-content: center;
     width: 100%;
     height: 19.4rem;
-    background-color: $primary1;
+    // background-color: $primary1;
   }
   .content {
     .input-bar-wrapper {

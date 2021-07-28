@@ -24,6 +24,7 @@ export default class Header extends Component<PropsType, StateType> {
   render() {
     return jsx`
       <div class='header'>
+
         <div class='header__title' onClick=${() =>
           $router.push('/')}>우아한 가계부</div>
         
@@ -38,7 +39,7 @@ export default class Header extends Component<PropsType, StateType> {
               getState(dateState) as Date
             ).getFullYear()}</div>
           </div>
-          
+
           <img src=${right} onClick=${() => controller.calendar.nextMonth()} />
         </div>
         
