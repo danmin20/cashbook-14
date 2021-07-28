@@ -21,10 +21,7 @@ export class History {
   @Column({ type: 'varchar', length: 255 })
   content!: string;
 
-  @Column({ type: 'varchar', length: 7 })
-  type!: string;
-
-  @Column({ type: 'bigint', unsigned: true })
+  @Column({ type: 'bigint' })
   amount!: string;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
@@ -38,11 +35,13 @@ export class History {
 
   @ManyToOne(() => Payment, (payment) => payment.histories, {
     nullable: true,
+    onDelete: 'SET NULL',
   })
   payment?: Payment | null;
 
   @ManyToOne(() => Category, (category) => category.histories, {
     nullable: true,
+    onDelete: 'SET NULL',
   })
   category?: Category | null;
 }
