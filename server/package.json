@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "tsc && node build/app",
-    "dev": "nodemon --watch \"**\" --ext \"ts\" --exec \"ts-node\" app"
+    "dev": "nodemon --watch \"**\" --ext \"ts\" --exec \"ts-node\" --files \"app.ts\""
   },
   "dependencies": {
     "dotenv": "^10.0.0",
