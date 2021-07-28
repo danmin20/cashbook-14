@@ -7,7 +7,7 @@
   &__weekbar {
     @include flex-center;
     @include body-regular;
-    position: fixed;
+    position: absolute;
     top: 16.2rem;
     justify-content: space-around;
     width: 84.8rem;

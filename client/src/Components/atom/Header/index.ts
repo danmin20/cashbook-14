@@ -1,16 +1,14 @@
 import { calendar, chart, file, left, right } from '../../../../assets';
 import { controller } from '../../../Controller';
-import Component from '../../../core/Component';
+import Component, { PropsType, StateType } from '../../../core/Component';
 import jsx from '../../../core/jsx';
 import { $router } from '../../../lib/router';
 import { dateState } from '../../../Model';
-import { getState, setState, subscribe } from '../../../utils/observer';
+import { getState, subscribe } from '../../../utils/observer';
 import './style';
 
-export interface HeaderProps {}
-
-export default class Header extends Component<HeaderProps> {
-  constructor(props: HeaderProps) {
+export default class Header extends Component<PropsType, StateType> {
+  constructor(props: PropsType) {
     super(props);
 
     subscribe(dateState, 'header', this.update.bind(this));

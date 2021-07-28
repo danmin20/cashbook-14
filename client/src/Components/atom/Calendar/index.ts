@@ -40,7 +40,7 @@ export default class Calendar extends Component<PropsType> {
                   startCount = true;
                 }
 
-                const innerHTML = jsx`<div class='cal-box'${
+                const innerHTML = jsx`<div class='cal-box${
                   markToday === countDay + 1 ? ' today' : ''
                 }'>
                   <div class='cal-box__date'>${

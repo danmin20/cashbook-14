@@ -11,9 +11,7 @@ export default class CalendarPage extends Component<PropsType, StateType> {
   constructor(props: PropsType) {
     super(props);
 
-    this.$header = new Header({
-      date: new Date(),
-    }).$dom;
+    this.$header = new Header({}).$dom;
 
     this.$calendar = new Calendar({}).$dom;
 
@@ -22,7 +20,7 @@ export default class CalendarPage extends Component<PropsType, StateType> {
 
   render() {
     return jsx`
-      <div class='calendar-page'>
+      <div class='wrapper'>
         <div class='top'>
           ${this.$header}
         </div>
