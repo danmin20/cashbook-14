@@ -4,7 +4,7 @@
   @include flex-center;
   flex-direction: column;
   width: 100%;
-  position: absolute;
+  position: fixed;
   top: 16.2rem;
   &__weekbar {
     @include flex-center;

@@ -7,4 +7,21 @@
     height: 19.4rem;
     background-color: $primary1;
   }
+  .calendar-wrapper {
+    @include flex-center;
+    position: relative;
+    height: 71rem;
+    .footer {
+      @include bold-medium;
+      word-spacing: 0.2rem;
+      color: $grey1;
+      box-sizing: border-box;
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      width: 84.9rem;
+      position: absolute;
+      bottom: 0;
+    }
+  }
 }

@@ -26,7 +26,18 @@ export default class CalendarPage extends Component<PropsType, StateType> {
         <div class='top'>
           ${this.$header}
         </div>
-        ${this.$calendar}
+        <div class='calendar-wrapper'>
+          ${this.$calendar}
+          <div class='footer'>
+            <div>
+              총 수입 1,822,480
+              총 지출 834,640
+            </div>
+            <div>
+              총계 987,840
+            </div>
+          </div>
+        </div>
       </div>
     `;
   }
