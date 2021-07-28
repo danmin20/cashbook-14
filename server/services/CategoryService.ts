@@ -6,6 +6,7 @@ async function findCategory({ id }: { id: string }) {
 
   const result = await repo.findOne({
     where: { id },
+    relations: ['user'],
   });
   return result;
 }
@@ -21,6 +22,7 @@ async function findCategories({
 
   const result = await repo.find({
     where: { ...(userId && { user: { id: userId } }), ...(type && { type }) },
+    relations: ['user'],
   });
 
   return result;
@@ -45,6 +47,7 @@ async function createCategory({
   return result;
 }
 
+// type 변경 시 history의 것과 달라질 수 있는 문제!
 async function updateCategory(
   { id }: { id: string },
   {

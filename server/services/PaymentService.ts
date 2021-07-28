@@ -6,6 +6,7 @@ async function findPayment({ id }: { id: string }) {
 
   const result = await repo.findOne({
     where: { id },
+    relations: ['user'],
   });
   return result;
 }
@@ -15,6 +16,7 @@ async function findPayments({ userId }: { userId?: string }) {
 
   const result = await repo.find({
     where: { ...(userId && { user: { id: userId } }) },
+    relations: ['user'],
   });
 
   return result;
