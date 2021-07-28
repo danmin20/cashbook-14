@@ -17,13 +17,16 @@ async function findHistory({ id }: { id: string }) {
   return result;
 }
 
-// TODO: 날짜 관련 필터링 추가
 async function findHistories({
   userId,
   categoryId,
+  year,
+  month,
 }: {
   userId?: string;
   categoryId?: string;
+  year: string;
+  month: string;
 }) {
   const repo = getRepository(History);
 
@@ -34,7 +37,10 @@ async function findHistories({
     },
     relations: ['category', 'payment', 'user'],
   });
-  return result;
+  return result.filter(
+    (history) =>
+      history.date.getFullYear() === +year && history.date.getMonth() === +month
+  );
 }
 
 async function createHistory({
