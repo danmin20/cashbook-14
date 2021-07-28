@@ -1,14 +1,43 @@
-import { Request, Response, NextFunction, json } from 'express';
+import { Request, Response, NextFunction } from 'express';
+import jwt, { Secret } from 'jsonwebtoken';
 import { CategoryService } from '../services/CategoryService';
 import { PaymentService } from '../services/PaymentService';
 import { UserService } from '../services/UserService';
 
-// TODO
-async function login(req: Request, res: Response, next: NextFunction) {}
+async function login(req: Request, res: Response, next: NextFunction) {
+  try {
+    const { id: userId, password } = req.body;
+
+    const result = await UserService.findUser({ id: userId });
+
+    if (!result || result.password !== password) {
+      return res
+        .status(400)
+        .json({ error: true, message: '인증에 실패하였습니다.' });
+    }
+
+    const generateAccessToken = (id: string) => {
+      return jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET as Secret, {
+        expiresIn: '1000h',
+      });
+    };
+
+    const accessToken = generateAccessToken(result?.id || '');
+    return res.status(200).json({ accessToken });
+  } catch (err) {
+    next(err);
+  }
+}
 
 async function register(req: Request, res: Response, next: NextFunction) {
   try {
     const { id: userId, nickname, password } = req.body;
+
+    if (await UserService.findUser({ id: userId })) {
+      return res
+        .status(300)
+        .json({ error: true, message: '이미 존재하는 아이디입니다.' });
+    }
 
     const result = await UserService.createUser({
       id: userId,
