@@ -42,6 +42,10 @@
           right: 0.8rem;
           bottom: 0.8rem;
         }
+        &__history {
+          .content {
+          }
+        }
         &:not(:last-child) {
           border-right: 0.1rem solid $line;
         }

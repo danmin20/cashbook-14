@@ -12,7 +12,6 @@ export default class CalendarPage extends Component<PropsType, StateType> {
     super(props);
 
     this.$header = new Header({}).$dom;
-
     this.$calendar = new Calendar({}).$dom;
 
     this.setDom();
