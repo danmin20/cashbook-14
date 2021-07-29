@@ -2,36 +2,40 @@ import express, { Request, Response, NextFunction } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import path from 'path';
-import session from 'express-session';
-import cookieParser from 'cookie-parser';
 import 'dotenv/config';
-
+import cookieParser from 'cookie-parser';
+import session from 'express-session';
 import router from './routes';
 import createConnection from './database';
 
 const app = express();
 
-app.use(cors());
+let corsOption = {
+  origin: 'http://localhost:8080', // 허락하는 요청 주소
+  credentials: true, // true로 하면 설정한 내용을 response 헤더에 추가 해줍니다.
+};
+
+app.use(cors(corsOption));
 
 app.set('port', process.env.PORT || 3000);
 
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser(process.env.COOKIE_SECRET));
 
+app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(
   session({
     resave: false,
     saveUninitialized: false,
-    secret: 'asdfasdf',
+    secret: process.env.COOKIE_SECRET as string,
     cookie: {
       httpOnly: false,
       secure: false,
     },
-    // store: new FileStore(),
   })
 );
+
 app.use(express.static(path.join(__dirname, '../client/dist/src')));
 
 app.use('/api', router);

@@ -54,11 +54,18 @@ async function login(req: Request, res: Response, next: NextFunction) {
         await PaymentService.createPayment({ userId, name, type });
       }
     }
-    for (const { name, type } of defaultPayments) {
-      await PaymentService.createPayment({ userId: isExist.id, name, type });
-    }
 
-    res.send({ access_token });
+    const { id: userId } = (await UserService.findUser({
+      githubId: userData.login,
+    })) as User;
+
+    req.session.user = {
+      userId,
+      githubId: userData.login,
+      githubName: userData.name,
+    };
+
+    res.redirect('http://localhost:8080');
   } catch (err) {
     console.log(err);
     res.redirect('http://localhost:8080/error');

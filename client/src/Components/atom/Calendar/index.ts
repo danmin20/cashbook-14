@@ -1,21 +1,51 @@
+import dayjs from 'dayjs';
+import { getMonthlyHistory } from '../../../api/history';
 import { controller } from '../../../Controller';
 import Component, { PropsType } from '../../../core/Component';
 import jsx from '../../../core/jsx';
 import { dateState } from '../../../Model';
+import { HistoryType } from '../../../shared/type';
 import { getState, subscribe } from '../../../utils/observer';
 import './style';
 
-export default class Calendar extends Component<PropsType> {
+export interface CalendarState {
+  clicked: 'left' | 'right';
+  list: HistoryType[];
+}
+
+export default class Calendar extends Component<PropsType, CalendarState> {
   constructor(props: PropsType) {
     super(props);
 
     this.state = {
       clicked: 'left',
+      list: [],
     };
 
     subscribe(dateState, 'calendar', this.update.bind(this));
 
     this.setDom();
+  }
+
+  willMount() {
+    getMonthlyHistory({
+      YYYYMM: dayjs(getState(dateState) as Date).format('YYYY-MM'),
+    }).then((res) => this.setState({ list: res }));
+  }
+
+  didMount() {
+    // console.log(this.state.list);
+    const days = this.$dom.querySelectorAll('.cal-box__history');
+    days.forEach((day) => {
+      this.state.list.forEach((item) => {
+        if (day.id === dayjs(item.date).format('D')) {
+          // console.log(day.id, item.content);
+          // console.log(day);
+
+          day.append(jsx`<div class="content">${item.amount}</div>`);
+        }
+      });
+    });
   }
 
   loadYYMM = (fullDate: Date) => {
@@ -35,6 +65,8 @@ export default class Calendar extends Component<PropsType> {
     let startCount = false;
     let countDay = 0;
 
+    const { list } = this.state;
+
     return jsx`
       <div>
         ${[...Array(6).keys()].map(
@@ -48,9 +80,14 @@ export default class Calendar extends Component<PropsType> {
                 const innerHTML = jsx`<div class='cal-box${
                   markToday === countDay + 1 ? ' today' : ''
                 }'>
-                  <div class='cal-box__date'>${
-                    startCount ? ++countDay : ''
-                  }</div>
+                  
+                    <div class='cal-box__date'>${
+                      startCount ? ++countDay : ''
+                    }</div>
+
+                    <div id=${countDay.toString()} class='cal-box__history'>
+                    </div>
+                    
                   </div>`;
 
                 if (countDay === lastDay.getDate()) {

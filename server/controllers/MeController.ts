@@ -6,6 +6,7 @@ import { HistoryService } from '../services/HistoryService';
 
 async function getMe(req: Request, res: Response, next: NextFunction) {
   try {
+    console.log(req.user);
     const { githubId } = req.user;
 
     const result = await UserService.findUser({ githubId });
@@ -36,7 +37,9 @@ async function getMyCategories(
   next: NextFunction
 ) {
   try {
-    const { id: userId } = req.user;
+    const { id: userId } = req.session.user;
+
+    console.log('aaaaa', userId);
 
     const { query } = req;
 
@@ -50,7 +53,7 @@ async function getMyCategories(
 
 async function getMyHistories(req: Request, res: Response, next: NextFunction) {
   try {
-    const { id: userId } = req.user;
+    const { userId } = req.session.user;
 
     const { query } = req;
 

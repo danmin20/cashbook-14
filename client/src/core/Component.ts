@@ -29,9 +29,11 @@ export default class Component<
     this.$dom = document.createElement('code');
   }
 
-  onStart() {}
+  willMount() {}
+  didMount() {}
 
   setDom(): void {
+    this.willMount();
     this.$dom = this.render() as Element;
   }
 
@@ -46,8 +48,9 @@ export default class Component<
   }
 
   update(): void {
-    this.onStart();
+    this.willMount();
     this.updateDOM();
+    this.didMount();
   }
 
   setState(newState: Partial<S>) {
