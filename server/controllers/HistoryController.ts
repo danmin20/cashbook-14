@@ -28,7 +28,7 @@ async function updateHistory(req: Request, res: Response, next: NextFunction) {
     const { body } = req;
 
     const result = await HistoryService.updateHistory(
-      { id: historyId, userId },
+      { id: parseInt(historyId), userId },
       { ...body, ...(body.date && { date: new Date(body.date) }) }
     );
 
@@ -45,7 +45,7 @@ async function deleteHistory(req: Request, res: Response, next: NextFunction) {
     const { historyId } = req.params;
 
     const result = await HistoryService.deleteHistory({
-      id: historyId,
+      id: parseInt(historyId),
       userId,
     });
 

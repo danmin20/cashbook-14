@@ -50,15 +50,15 @@ async function findHistories({
 
   if (start) {
     result = result.filter((history) => {
-      const cmpFullYear = history.date.getFullYear() - start.year;
-      const cmpMonth = history.date.getMonth() - start.month;
+      const cmpFullYear = new Date(history.date).getFullYear() - start.year;
+      const cmpMonth = new Date(history.date).getMonth() - start.month;
       return cmpFullYear > 0 || (cmpFullYear === 0 && cmpMonth >= 0);
     });
   }
   if (last) {
     result = result.filter((history) => {
-      const cmpFullYear = history.date.getFullYear() - last.year;
-      const cmpMonth = history.date.getMonth() - last.month;
+      const cmpFullYear = new Date(history.date).getFullYear() - last.year;
+      const cmpMonth = new Date(history.date).getMonth() - last.month;
       return cmpFullYear < 0 || (cmpFullYear === 0 && cmpMonth <= 0);
     });
   }
@@ -95,7 +95,9 @@ async function getSumOfAmountsGroupByMonth({
     () => 0
   );
   histories.forEach((history) => {
-    const group = history.date.getFullYear() * 12 + history.date.getMonth();
+    const group =
+      new Date(history.date).getFullYear() * 12 +
+      new Date(history.date).getMonth();
     result[group - startValue] += +history.amount;
   });
 
@@ -110,12 +112,12 @@ async function createHistory({
   content,
   amount,
 }: {
-  userId: string;
-  paymentId?: string | null;
-  categoryId?: string | null;
-  date: Date;
+  userId: number;
+  paymentId?: number | null;
+  categoryId?: number | null;
+  date: string;
   content: string;
-  amount: string;
+  amount: number;
 }) {
   const repo = getRepository(History);
 
@@ -133,7 +135,7 @@ async function createHistory({
 }
 
 async function updateHistory(
-  { id, userId }: { id: string; userId?: string },
+  { id, userId }: { id: number; userId?: number },
   {
     paymentId,
     categoryId,
@@ -141,11 +143,11 @@ async function updateHistory(
     content,
     amount,
   }: {
-    paymentId?: string | null;
-    categoryId?: string | null;
-    date?: Date;
+    paymentId?: number | null;
+    categoryId?: number | null;
+    date?: string;
     content?: string;
-    amount?: string;
+    amount?: number;
   }
 ) {
   const repo = getRepository(History);
@@ -163,7 +165,7 @@ async function updateHistory(
   return result;
 }
 
-async function deleteHistory({ id, userId }: { id: string; userId?: string }) {
+async function deleteHistory({ id, userId }: { id: number; userId?: number }) {
   const repo = getRepository(History);
 
   const result = await repo.delete({
