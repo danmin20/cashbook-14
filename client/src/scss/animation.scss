@@ -6,3 +6,12 @@
     transform: rotate(360deg);
   }
 }
+
+@keyframes calendar {
+  16% {
+    transform: rotate(-5deg);
+  }
+  25% {
+    transform: rotate(5deg);
+  }
+}

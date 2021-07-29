@@ -9,6 +9,10 @@ export default class Calendar extends Component<PropsType> {
   constructor(props: PropsType) {
     super(props);
 
+    this.state = {
+      clicked: 'left',
+    };
+
     subscribe(dateState, 'calendar', this.update.bind(this));
 
     this.setDom();
@@ -30,6 +34,7 @@ export default class Calendar extends Component<PropsType> {
 
     let startCount = false;
     let countDay = 0;
+
     return jsx`
       <div>
         ${[...Array(6).keys()].map(
@@ -66,7 +71,7 @@ export default class Calendar extends Component<PropsType> {
           (day) => jsx`<div>${day}</div>`
         )}</div>
 
-        <div class='cal-body'>
+        <div class='cal-body' style='animation: calendar 0.3s'>
           ${this.loadYYMM(getState(dateState) as Date)}
           <div class='footer'>
             <div>

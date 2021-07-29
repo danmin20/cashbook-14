@@ -20,7 +20,7 @@ export default class CalendarPage extends Component<PropsType, StateType> {
 
   render() {
     return jsx`
-      <div class='wrapper'>
+      <div class='wrapper cal'>
         <div class='top'>
           ${this.$header}
         </div>
