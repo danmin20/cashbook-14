@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { getMonthlyHistory } from '../../../../api/history';
+import { getMonthlyHistory } from '../../../api/history';
 import { controller } from '../../../Controller';
 import Component, { PropsType } from '../../../core/Component';
 import jsx from '../../../core/jsx';
@@ -34,13 +34,13 @@ export default class Calendar extends Component<PropsType, CalendarState> {
   }
 
   didMount() {
-    console.log(this.state.list);
+    // console.log(this.state.list);
     const days = this.$dom.querySelectorAll('.cal-box__history');
     days.forEach((day) => {
       this.state.list.forEach((item) => {
         if (day.id === dayjs(item.date).format('D')) {
-          console.log(day.id, item.content);
-          console.log(day);
+          // console.log(day.id, item.content);
+          // console.log(day);
 
           day.append(jsx`<div class="content">${item.amount}</div>`);
         }

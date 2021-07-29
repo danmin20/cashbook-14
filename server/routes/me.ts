@@ -11,7 +11,7 @@ router.get(
   authenticateAccessToken,
   MeController.getMyCategories
 );
-router.get('/histories', authenticateAccessToken, MeController.getMyHistories);
+router.get('/histories', MeController.getMyHistories);
 router.get(
   '/sum-of-amounts',
   authenticateAccessToken,

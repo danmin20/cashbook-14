@@ -1,5 +1,3 @@
-// 참고: https://blog.doitreviews.com/development/2020-03-26-extend-express-request-type-in-typescript/
-
 export {};
 
 declare global {
@@ -8,5 +6,11 @@ declare global {
       // user?: { id: string};
       user?: import('./models/User').default;
     }
+  }
+}
+
+declare module 'express-session' {
+  export interface SessionData {
+    user: { [key: string] } | id;
   }
 }
