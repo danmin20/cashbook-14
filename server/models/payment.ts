@@ -12,11 +12,14 @@ import { History } from './history';
 
 @Entity('payment')
 export class Payment {
-  @PrimaryGeneratedColumn({ type: 'bigint', unsigned: true })
-  id!: string;
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
+  id!: number;
 
   @Column({ type: 'varchar', length: 31 })
   name!: string;
+
+  @Column({ type: 'varchar' })
+  type!: 'income' | 'outcome';
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   createdAt!: Date;

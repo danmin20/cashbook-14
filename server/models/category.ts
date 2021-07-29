@@ -12,8 +12,8 @@ import { History } from './history';
 
 @Entity('category')
 export class Category {
-  @PrimaryGeneratedColumn({ type: 'bigint', unsigned: true })
-  id!: string;
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
+  id!: number;
 
   @Column({ type: 'varchar', length: 31 })
   name!: string;

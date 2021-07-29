@@ -38,7 +38,7 @@ async function createCategory({
   type,
   color,
 }: {
-  userId: string;
+  userId: number;
   name: string;
   type: string;
   color: string;
@@ -52,7 +52,7 @@ async function createCategory({
 }
 
 async function updateCategory(
-  { id, userId }: { id: string; userId?: string },
+  { id, userId }: { id: number; userId?: number },
   {
     name,
     type,
@@ -76,7 +76,7 @@ async function updateCategory(
   return result;
 }
 
-async function deleteCategory({ id, userId }: { id: string; userId?: string }) {
+async function deleteCategory({ id, userId }: { id: number; userId?: number }) {
   const repo = getRepository(Category);
 
   const result = await repo.delete({

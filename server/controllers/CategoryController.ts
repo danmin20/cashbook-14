@@ -24,7 +24,7 @@ async function updateCategory(req: Request, res: Response, next: NextFunction) {
     const { body } = req;
 
     const result = await CategoryService.updateCategory(
-      { id: categoryId, userId },
+      { id: parseInt(categoryId), userId },
       { ...body }
     );
 
@@ -41,7 +41,7 @@ async function deleteCategory(req: Request, res: Response, next: NextFunction) {
     const { categoryId } = req.params;
 
     const result = await CategoryService.deleteCategory({
-      id: categoryId,
+      id: parseInt(categoryId),
       userId,
     });
 

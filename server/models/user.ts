@@ -4,7 +4,7 @@ import {
   Entity,
   OneToMany,
   UpdateDateColumn,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Payment } from './payment';
 import { Category } from './category';
@@ -12,14 +12,14 @@ import { History } from './history';
 
 @Entity('user')
 export class User {
-  @PrimaryColumn({ type: 'varchar', length: 31 })
-  id!: string;
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
+  id!: number;
 
   @Column({ type: 'varchar', length: 31 })
-  nickname!: string;
+  email!: string;
 
   @Column({ type: 'varchar', length: 255 })
-  password!: string;
+  token!: string;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   createdAt!: Date;

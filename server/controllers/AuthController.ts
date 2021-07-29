@@ -4,36 +4,36 @@ import { CategoryService } from '../services/CategoryService';
 import { PaymentService } from '../services/PaymentService';
 import { UserService } from '../services/UserService';
 
-async function login(req: Request, res: Response, next: NextFunction) {
-  try {
-    const { id: userId, password } = req.body;
+// async function login(req: Request, res: Response, next: NextFunction) {
+//   try {
+//     const { id: userId, password } = req.body;
 
-    const result = await UserService.findUser({ id: userId });
+//     const result = await UserService.findUser({ id: userId });
 
-    if (!result || result.password !== password) {
-      return res
-        .status(400)
-        .json({ error: true, message: '인증에 실패하였습니다.' });
-    }
+//     if (!result || result.password !== password) {
+//       return res
+//         .status(400)
+//         .json({ error: true, message: '인증에 실패하였습니다.' });
+//     }
 
-    const generateAccessToken = (id: string) => {
-      return jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET as Secret, {
-        expiresIn: '1000h',
-      });
-    };
+//     const generateAccessToken = (email: string) => {
+//       return jwt.sign({ id: email }, process.env.ACCESS_TOKEN_SECRET as Secret, {
+//         expiresIn: '1000h',
+//       });
+//     };
 
-    const accessToken = generateAccessToken(result?.id || '');
-    return res.status(200).json({ accessToken });
-  } catch (err) {
-    next(err);
-  }
-}
+//     const accessToken = generateAccessToken(result?.id || '');
+//     return res.status(200).json({ accessToken });
+//   } catch (err) {
+//     next(err);
+//   }
+// }
 
 async function register(req: Request, res: Response, next: NextFunction) {
   try {
-    const { id: userId, nickname, password } = req.body;
+    const { id: userId, email, token } = req.body;
 
-    if (await UserService.findUser({ id: userId })) {
+    if (await UserService.findUser({ email })) {
       return res
         .status(300)
         .json({ error: true, message: '이미 존재하는 아이디입니다.' });
@@ -41,8 +41,8 @@ async function register(req: Request, res: Response, next: NextFunction) {
 
     const result = await UserService.createUser({
       id: userId,
-      nickname,
-      password,
+      email,
+      token,
     });
 
     for (const { name, type, color } of defaultCategories) {
@@ -60,7 +60,7 @@ async function register(req: Request, res: Response, next: NextFunction) {
 }
 
 export const AuthController = {
-  login,
+  // login,
   register,
 };
 
