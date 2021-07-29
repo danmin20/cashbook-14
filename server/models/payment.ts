@@ -19,7 +19,7 @@ export class Payment {
   name!: string;
 
   @Column({ type: 'varchar' })
-  type!: 'income' | 'outcome';
+  type!: string;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   createdAt!: Date;

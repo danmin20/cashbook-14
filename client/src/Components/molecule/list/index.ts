@@ -9,7 +9,7 @@ export interface ListProps {
   type: 'small' | 'large';
   content: string;
   payment: string;
-  paymentType: 'income' | 'outcome';
+  paymentType: string;
   amount: number;
 }
 

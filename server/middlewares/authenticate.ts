@@ -1,48 +1,24 @@
-import { Request, Response, NextFunction } from 'express';
-import jwt, {
-  GetPublicKeyOrSecret,
-  JwtPayload,
-  Secret,
-  VerifyCallback,
-} from 'jsonwebtoken';
-
-// export const authenticateAccessToken = async (
-//   req: any,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   let authHeader = req.headers['authorization'];
-//   let token = authHeader && authHeader.split(' ')[1];
-
-//   if (!token) {
-//     next(Error);
-//   } else {
-//     jwt.verify(
-//       token,
-//       process.env.ACCESS_TOKEN_SECRET as Secret | GetPublicKeyOrSecret,
-//       ((error: Error, user: JwtPayload) => {
-//         if (error) {
-//           next(error);
-//         }
-
-//         req.user = user;
-//         next();
-//       }) as VerifyCallback
-//     );
-//   }
-// };
+import { Response, NextFunction } from 'express';
+import { AuthController } from '../controllers/AuthController';
+import { User } from '../models/user';
+import { UserService } from '../services/UserService';
 
 export const authenticateAccessToken = async (
-  req: Request,
+  req: any,
   res: Response,
   next: NextFunction
 ) => {
-  // const { userId } = req.query;
+  let token = req.headers['authorization'];
 
-  // if (!userId) {
-  //   next(Error);
-  // }
+  if (!token) {
+    next(Error);
+  } else {
+    const userData = await AuthController.getGithubUser(token);
+    const { id } = (await UserService.findUser({
+      githubId: userData.login,
+    })) as User;
 
-  req.user = { id: 0 };
-  next();
+    // githubId, githubName
+    req.user = { id, ...userData };
+  }
 };

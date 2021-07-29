@@ -6,6 +6,7 @@ import InputBar from '../../Components/molecule/InputBar';
 import List, { ListProps } from '../../Components/molecule/list';
 import Component, { PropsType } from '../../core/Component';
 import jsx from '../../core/jsx';
+import axios from 'axios';
 import './style';
 
 export interface MainStates {
@@ -24,6 +25,25 @@ export default class Main extends Component<PropsType, MainStates> {
   $historyList: Element;
   $alert: Element;
   $categoryAlert: Element;
+  handleLogin = async () => {
+    const { data } = await axios.get('http://localhost:3000/api/githublogin');
+    console.log(data);
+    // await axios
+    //   .post('http://localhost:3000/api/auth/token', {
+    //     code: data,
+    //   })
+    //   .then(({ data: aa }) => {
+    //     console.log('ddd', aa);
+    //   });
+
+    // const { data: result } = axios.post(
+    //   'https://github.com/login/oauth/access_token',
+    //   {
+    //     client_id: 'd0c1439770278d8073c1',
+    //     client_secret: '18580c89854b783ae43c24ae513b38917e85c6ed',
+    //   }
+    // );
+  };
 
   constructor(props: any) {
     super(props);
@@ -108,7 +128,6 @@ export default class Main extends Component<PropsType, MainStates> {
 
     this.setDom();
   }
-
   render() {
     return jsx`
       <div class='wrapper'>
@@ -124,6 +143,8 @@ export default class Main extends Component<PropsType, MainStates> {
             ${this.$historyList}
             ${this.$categoryAlert}
           </div>
+          <a href="http://localhost:3000/api/auth">깃허브 요청</a>
+          <button onClick=${this.handleLogin}>github</button>
         </div>
       </div>
     `;
