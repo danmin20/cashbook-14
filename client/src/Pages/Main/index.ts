@@ -143,7 +143,7 @@ export default class Main extends Component<PropsType, MainStates> {
             ${this.$historyList}
             ${this.$categoryAlert}
           </div>
-          <a href="http://localhost:3000/api/githublogin">깃허브 요청</a>
+          <a href="http://localhost:3000/api/auth">깃허브 요청</a>
           <button onClick=${this.handleLogin}>github</button>
         </div>
       </div>

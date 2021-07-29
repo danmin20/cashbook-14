@@ -9,7 +9,7 @@ import './style';
 export interface InputBarProps {}
 
 export interface InputBarStates {
-  paymentType: 'income' | 'outcome';
+  paymentType: string;
   date: string;
   category: string | null;
   content: string | null;

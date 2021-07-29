@@ -10,7 +10,7 @@ import githubLoginRouter from './github';
 const router = express.Router();
 
 router.use('/auth', authRouter);
-router.use('/githublogin', githubLoginRouter);
+// router.use('/githublogin', githubLoginRouter);
 router.use('/me', meRouter);
 router.use('/payments', paymentRouter);
 router.use('/categories', categoryRouter);

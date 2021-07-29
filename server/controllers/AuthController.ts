@@ -1,157 +1,171 @@
-import { Request, Response, NextFunction } from 'express';
-import jwt, { Secret } from 'jsonwebtoken';
+import { Request, Response, NextFunction, query } from 'express';
 import { CategoryService } from '../services/CategoryService';
 import { PaymentService } from '../services/PaymentService';
 import { UserService } from '../services/UserService';
+import { User } from '../models/user';
+import rs from 'randomstring';
 import QueryString from 'qs';
-import axios from 'axios';
-import { AuthService } from '../services/AuthService';
-import JwtService from '../services/JwtService';
+import fetch from 'node-fetch';
 
-async function callback(req: Request, res: Response) {
-  const { code } = req.query;
-
-  const githubToken = await AuthService.getAccessToken(code as string);
-  const user = await UserService.createUser({ token: githubToken });
-  const accessToken = JwtService.generate(user);
-
-  res.cookie('accessToken', accessToken);
-  res.redirect('http://localhost:8080/');
-}
-
-async function login(req: Request, res: Response, next: NextFunction) {
+function githubLogin(req: Request, res: Response, next: NextFunction) {
   try {
-    // const { id: userId, password } = req.body;
+    const state = rs.generate();
 
     const url = 'https://github.com/login/oauth/authorize?';
     const query = QueryString.stringify({
-      client_id: 'd0c1439770278d8073c1',
-      redirect_uri: 'http://localhost:8080',
-      state: 'asdfasdfasdfasdfasdf',
+      client_id: process.env.GITHUB_CLIENT_ID,
+      redirect_uri: 'http://localhost:3000/api/auth/callback',
+      state: state,
       scope: 'user:email',
     });
-    const githubAuthUrl = url + query;
-    res.send(githubAuthUrl);
-
-    // const result = await UserService.findUser({ id: userId });
-
-    // if (!result || result.password !== password) {
-    //   return res
-    //     .status(400)
-    //     .json({ error: true, message: '인증에 실패하였습니다.' });
-    // }
-
-    // const generateAccessToken = (id: string) => {
-    //   return jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET as Secret, {
-    //     expiresIn: '1000h',
-    //   });
-    // };
-
-    // const accessToken = generateAccessToken(result?.id || '');
-    // return res.status(200).json({ accessToken });
+    res.redirect(url + query);
   } catch (err) {
     next(err);
   }
 }
 
-// async function register(req: Request, res: Response, next: NextFunction) {
-//   try {
-//     const { id: userId, nickname, password } = req.body;
+// 로그인 또는 회원가입
+async function login(req: Request, res: Response, next: NextFunction) {
+  try {
+    const { code } = req.query;
+    const access_token = await getAccessToken(code as string);
+    const userData = await getGithubUser(access_token);
 
-//     if (await UserService.findUser({ id: userId })) {
-//       return res
-//         .status(300)
-//         .json({ error: true, message: '이미 존재하는 아이디입니다.' });
-//     }
+    const isExist = (await UserService.findUser({
+      githubId: userData.login,
+    })) as User;
 
-//     const result = await UserService.createUser({
-//       id: userId,
-//       nickname,
-//       password,
-//     });
+    // 없으면 유저 생성
+    if (!isExist) {
+      await UserService.createUser({
+        githubId: userData.login,
+        githubName: userData.name,
+      });
 
-//     for (const { name, type, color } of defaultCategories) {
-//       await CategoryService.createCategory({ userId, name, type, color });
-//     }
+      const { id: userId } = (await UserService.findUser({
+        githubId: userData.login,
+      })) as User;
 
-//     for (const { name } of defaultPayments) {
-//       await PaymentService.createPayment({ userId, name });
-//     }
+      // 기본 카테고리/결제수단 생성
+      for (const { name, type, color } of defaultCategories) {
+        await CategoryService.createCategory({ userId, name, type, color });
+      }
+      for (const { name, type } of defaultPayments) {
+        await PaymentService.createPayment({ userId, name, type });
+      }
+    }
+    for (const { name, type } of defaultPayments) {
+      await PaymentService.createPayment({ userId: isExist.id, name, type });
+    }
 
-//     res.status(200).json(result);
-//   } catch (err) {
-//     next(err);
-//   }
-// }
+    res.send({ access_token });
+  } catch (err) {
+    console.log(err);
+    res.redirect('http://localhost:8080/error');
+  }
+}
+
+async function getAccessToken(code: string): Promise<string> {
+  const tokenURL = 'https://github.com/login/oauth/access_token';
+  const accessTokenResponse = await fetch(tokenURL, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      client_id: process.env.GITHUB_CLIENT_ID,
+      client_secret: process.env.GITHUB_CLIENT_SECRETS,
+      code: code as string,
+      redirect_uri: 'http://localhost:3000/',
+    }),
+  });
+  const accessTokenJson = await accessTokenResponse.json();
+  return accessTokenJson.access_token;
+}
+
+async function getGithubUser(access_token: string) {
+  const userApiResponse = await fetch('https://api.github.com/user', {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      Authorization: `token ${access_token}`,
+    },
+  });
+  const userApiJson = await userApiResponse.json();
+  return userApiJson;
+}
 
 export const AuthController = {
   login,
-  callback,
-  // token,
-  // register,
+  githubLogin,
+  getGithubUser,
 };
 
 const defaultPayments = [
   {
     name: '현금',
+    type: 'income',
   },
   {
     name: '현대카드',
+    type: 'outcome',
   },
   {
     name: '신한카드',
+    type: 'outcome',
   },
 ];
 
 const defaultCategories = [
   {
     name: '생활',
-    type: '지출',
+    type: 'outcome',
     color: '#4a6cc3',
   },
   {
     name: '식비',
-    type: '지출',
+    type: 'outcome',
     color: '#4ca1de',
   },
   {
     name: '교통',
-    type: '지출',
+    type: 'outcome',
     color: '#94d3cc',
   },
   {
     name: '쇼핑/뷰티',
-    type: '지출',
+    type: 'outcome',
     color: '#4cb8b8',
   },
   {
     name: '의료/건강',
-    type: '지출',
+    type: 'outcome',
     color: '#6ed5eb',
   },
   {
     name: '문화/여가',
-    type: '지출',
+    type: 'outcome',
     color: '#d092e2',
   },
   {
     name: '미분류',
-    type: '지출',
+    type: 'outcome',
     color: '#817dce',
   },
   {
     name: '월급',
-    type: '수입',
+    type: 'income',
     color: '#b9d58c',
   },
   {
     name: '용돈',
-    type: '수입',
+    type: 'income',
     color: '#e6d267',
   },
   {
     name: '기타수입',
-    type: '수입',
+    type: 'income',
     color: '#e2b765',
   },
 ];

@@ -3,10 +3,7 @@ import { AuthController } from '../controllers/AuthController';
 
 const router = express.Router();
 
-// router.post('/login', AuthController.login);
-router.post('/register', AuthController.register);
-
-// router.post('/token', AuthController.token);
-// router.post('/register', AuthController.register);
+router.get('/', AuthController.githubLogin);
+router.get('/callback', AuthController.login);
 
 export default router;

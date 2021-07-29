@@ -6,9 +6,9 @@ import { HistoryService } from '../services/HistoryService';
 
 async function getMe(req: Request, res: Response, next: NextFunction) {
   try {
-    const { email } = req.user;
+    const { githubId } = req.user;
 
-    const result = await UserService.findUser({ email: email });
+    const result = await UserService.findUser({ githubId });
 
     res.status(200).json(result);
   } catch (err) {

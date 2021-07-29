@@ -16,10 +16,10 @@ export class User {
   id!: number;
 
   @Column({ type: 'varchar', length: 31 })
-  email!: string;
+  githubId!: string;
 
   @Column({ type: 'varchar', length: 255 })
-  token!: string;
+  githubName!: string;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   createdAt!: Date;
