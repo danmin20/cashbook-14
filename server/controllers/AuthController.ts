@@ -3,65 +3,92 @@ import jwt, { Secret } from 'jsonwebtoken';
 import { CategoryService } from '../services/CategoryService';
 import { PaymentService } from '../services/PaymentService';
 import { UserService } from '../services/UserService';
+import QueryString from 'qs';
+import axios from 'axios';
+import { AuthService } from '../services/AuthService';
+import JwtService from '../services/JwtService';
+
+async function callback(req: Request, res: Response) {
+  const { code } = req.query;
+
+  const githubToken = await AuthService.getAccessToken(code as string);
+  const user = await UserService.createUser({ token: githubToken });
+  const accessToken = JwtService.generate(user);
+
+  res.cookie('accessToken', accessToken);
+  res.redirect('http://localhost:8080/');
+}
 
 async function login(req: Request, res: Response, next: NextFunction) {
   try {
-    const { id: userId, password } = req.body;
+    // const { id: userId, password } = req.body;
 
-    const result = await UserService.findUser({ id: userId });
-
-    if (!result || result.password !== password) {
-      return res
-        .status(400)
-        .json({ error: true, message: '인증에 실패하였습니다.' });
-    }
-
-    const generateAccessToken = (id: string) => {
-      return jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET as Secret, {
-        expiresIn: '1000h',
-      });
-    };
-
-    const accessToken = generateAccessToken(result?.id || '');
-    return res.status(200).json({ accessToken });
-  } catch (err) {
-    next(err);
-  }
-}
-
-async function register(req: Request, res: Response, next: NextFunction) {
-  try {
-    const { id: userId, nickname, password } = req.body;
-
-    if (await UserService.findUser({ id: userId })) {
-      return res
-        .status(300)
-        .json({ error: true, message: '이미 존재하는 아이디입니다.' });
-    }
-
-    const result = await UserService.createUser({
-      id: userId,
-      nickname,
-      password,
+    const url = 'https://github.com/login/oauth/authorize?';
+    const query = QueryString.stringify({
+      client_id: 'd0c1439770278d8073c1',
+      redirect_uri: 'http://localhost:8080',
+      state: 'asdfasdfasdfasdfasdf',
+      scope: 'user:email',
     });
+    const githubAuthUrl = url + query;
+    res.send(githubAuthUrl);
 
-    for (const { name, type, color } of defaultCategories) {
-      await CategoryService.createCategory({ userId, name, type, color });
-    }
+    // const result = await UserService.findUser({ id: userId });
 
-    for (const { name } of defaultPayments) {
-      await PaymentService.createPayment({ userId, name });
-    }
+    // if (!result || result.password !== password) {
+    //   return res
+    //     .status(400)
+    //     .json({ error: true, message: '인증에 실패하였습니다.' });
+    // }
 
-    res.status(200).json(result);
+    // const generateAccessToken = (id: string) => {
+    //   return jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET as Secret, {
+    //     expiresIn: '1000h',
+    //   });
+    // };
+
+    // const accessToken = generateAccessToken(result?.id || '');
+    // return res.status(200).json({ accessToken });
   } catch (err) {
     next(err);
   }
 }
+
+// async function register(req: Request, res: Response, next: NextFunction) {
+//   try {
+//     const { id: userId, nickname, password } = req.body;
+
+//     if (await UserService.findUser({ id: userId })) {
+//       return res
+//         .status(300)
+//         .json({ error: true, message: '이미 존재하는 아이디입니다.' });
+//     }
+
+//     const result = await UserService.createUser({
+//       id: userId,
+//       nickname,
+//       password,
+//     });
+
+//     for (const { name, type, color } of defaultCategories) {
+//       await CategoryService.createCategory({ userId, name, type, color });
+//     }
+
+//     for (const { name } of defaultPayments) {
+//       await PaymentService.createPayment({ userId, name });
+//     }
+
+//     res.status(200).json(result);
+//   } catch (err) {
+//     next(err);
+//   }
+// }
 
 export const AuthController = {
   login,
-  register,
+  callback,
+  // token,
+  // register,
 };
 
 const defaultPayments = [

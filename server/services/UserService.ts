@@ -20,20 +20,20 @@ async function findUsers({ nickname }: { nickname?: string }) {
 }
 
 async function createUser({
-  id,
-  nickname,
-  password,
+  token,
 }: {
-  id: string;
-  nickname: string;
-  password: string;
+  token: string;
+  // id: string;
+  // nickname: string;
+  // password: string;
 }) {
+  console.log(token);
   const repo = getRepository(User);
 
-  const user = repo.create({ id, nickname, password });
+  // const user = repo.create({ id, nickname, password });
 
-  const result = await repo.insert(user);
-  return result;
+  // const result = await repo.insert(user);
+  // return result;
 }
 
 export const UserService = {
