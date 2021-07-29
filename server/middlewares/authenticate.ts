@@ -37,12 +37,12 @@ export const authenticateAccessToken = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { userId } = req.query;
+  // const { userId } = req.query;
 
-  if (!userId) {
-    next(Error);
-  }
+  // if (!userId) {
+  //   next(Error);
+  // }
 
-  req.user = { id: userId };
+  req.user = { id: 0 };
   next();
 };

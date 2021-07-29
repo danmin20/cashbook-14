@@ -24,7 +24,7 @@ async function updatePayment(req: Request, res: Response, next: NextFunction) {
     const { body } = req;
 
     const result = await PaymentService.updatePayment(
-      { id: paymentId, userId },
+      { id: parseInt(paymentId), userId },
       { ...body }
     );
 
@@ -41,7 +41,7 @@ async function deletePayment(req: Request, res: Response, next: NextFunction) {
     const { paymentId } = req.params;
 
     const result = await PaymentService.deletePayment({
-      id: paymentId,
+      id: parseInt(paymentId),
       userId,
     });
 

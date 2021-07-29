@@ -10,9 +10,9 @@ async function findPayment({
   name,
   userId,
 }: {
-  id?: string;
+  id?: number;
   name?: string;
-  userId?: string;
+  userId?: number;
 }) {
   const repo = getRepository(Payment);
 
@@ -27,7 +27,7 @@ async function findPayment({
   return result;
 }
 
-async function findPayments({ userId }: { userId?: string }) {
+async function findPayments({ userId }: { userId?: number }) {
   const repo = getRepository(Payment);
 
   const result = await repo.find({
@@ -42,7 +42,7 @@ async function createPayment({
   userId,
   name,
 }: {
-  userId: string;
+  userId: number;
   name: string;
 }) {
   const repo = getRepository(Payment);
@@ -54,7 +54,7 @@ async function createPayment({
 }
 
 async function updatePayment(
-  { id, userId }: { id: string; userId?: string },
+  { id, userId }: { id: number; userId?: number },
   {
     name,
   }: {
@@ -72,7 +72,7 @@ async function updatePayment(
   return result;
 }
 
-async function deletePayment({ id, userId }: { id: string; userId?: string }) {
+async function deletePayment({ id, userId }: { id: number; userId?: number }) {
   const repo = getRepository(Payment);
 
   const result = await repo.delete({

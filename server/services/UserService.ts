@@ -1,36 +1,36 @@
 import { getRepository } from 'typeorm';
 import { User } from '../models/user';
 
-async function findUser({ id }: { id: string }) {
+async function findUser({ email }: { email: string }) {
   const repo = getRepository(User);
 
   const result = await repo.findOne({
-    where: { id },
+    where: { email },
   });
   return result;
 }
 
-async function findUsers({ nickname }: { nickname?: string }) {
+async function findUsers({ email }: { email?: number }) {
   const repo = getRepository(User);
 
   const result = await repo.find({
-    where: { ...(nickname && { nickname }) },
+    where: { ...(email && { email }) },
   });
   return result;
 }
 
 async function createUser({
   id,
-  nickname,
-  password,
+  email,
+  token,
 }: {
-  id: string;
-  nickname: string;
-  password: string;
+  id: number;
+  email: string;
+  token: string;
 }) {
   const repo = getRepository(User);
 
-  const user = repo.create({ id, nickname, password });
+  const user = repo.create({ id, email, token });
 
   const result = await repo.insert(user);
   return result;

@@ -12,17 +12,20 @@ import { Category } from './category';
 
 @Entity('history')
 export class History {
-  @PrimaryGeneratedColumn({ type: 'bigint', unsigned: true })
-  id!: string;
+  @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
+  id!: number;
 
-  @Column({ type: 'timestamp' })
-  date!: Date;
+  @Column({ type: 'varchar' })
+  date!: string;
+
+  @Column({ type: 'varchar' })
+  paymentType!: 'income' | 'outcome';
 
   @Column({ type: 'varchar', length: 255 })
   content!: string;
 
-  @Column({ type: 'bigint' })
-  amount!: string;
+  @Column({ type: 'decimal' })
+  amount!: number;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   createdAt!: Date;
