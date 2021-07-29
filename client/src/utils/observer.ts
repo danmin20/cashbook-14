@@ -1,5 +1,5 @@
 type GlobalStateType = {
-  [key: string]: { _state: object; _observers: Map<string, Function> };
+  [key: string]: { _state: unknown; _observers: Map<string, Function> };
 };
 const globalState: GlobalStateType = {};
 
@@ -14,7 +14,7 @@ const initState = ({
   defaultValue,
 }: {
   key: string;
-  defaultValue: object;
+  defaultValue: unknown;
 }) => {
   if (key in globalState) throw Error('이미 존재하는 key값 입니다.');
   globalState[key] = {
@@ -29,7 +29,7 @@ const getState = (key: string) => {
   return globalState[key]._state;
 };
 
-const setState = (key: string) => (newState: object) => {
+const setState = (key: string) => (newState: unknown) => {
   if (!(key in globalState)) throw Error('존재하지 않는 key값 입니다.');
 
   if (typeof newState === 'function') {

@@ -23,6 +23,7 @@ export default class Main extends Component<PropsType, MainStates> {
   $info: Element;
   $historyList: Element;
   $alert: Element;
+  $categoryAlert: Element;
 
   constructor(props: any) {
     super(props);
@@ -60,9 +61,7 @@ export default class Main extends Component<PropsType, MainStates> {
       ],
     };
 
-    this.$header = new Header({
-      date: this.state.date,
-    }).$dom;
+    this.$header = new Header({}).$dom;
 
     this.$inputBar = new InputBar({}).$dom;
 
@@ -97,6 +96,12 @@ export default class Main extends Component<PropsType, MainStates> {
     });
 
     this.$alert = new Alert({
+      select: 'payment',
+      type: 'add',
+      content: 'asdf',
+    }).$dom;
+    this.$categoryAlert = new Alert({
+      select: 'category',
       type: 'add',
       content: 'asdf',
     }).$dom;
@@ -106,18 +111,18 @@ export default class Main extends Component<PropsType, MainStates> {
 
   render() {
     return jsx`
-      <div class='main-page'>
+      <div class='wrapper'>
         <div class='top'>
           ${this.$header}
+        </div>
+        <div class='content'>
           <div class='input-bar-wrapper'>
             ${this.$inputBar}
           </div>
-        </div>
-        <div class='list'>
           ${this.$info}
-          <div class='list__histories'>
+          <div class='content__list'>
             ${this.$historyList}
-            ${this.$alert}
+            ${this.$categoryAlert}
           </div>
         </div>
       </div>

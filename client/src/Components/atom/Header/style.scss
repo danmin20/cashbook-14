@@ -1,7 +1,8 @@
 @import '../../../scss/theme';
 
 .header {
-  width: 100%;
+  position: relative;
+  width: 90.4rem;
   height: 14.6rem;
   display: flex;
   align-items: center;
@@ -9,36 +10,40 @@
   box-sizing: border-box;
   padding: 0 2.8rem;
   color: white;
+
   &__title {
     @include display-small;
     cursor: pointer;
   }
-}
 
-.date-controller {
-  @include flex-center;
-  img {
-    cursor: pointer;
-    margin: 0 5.2rem;
-  }
-  .date {
+  .date-controller {
     @include flex-center;
-    flex-direction: column;
-    &__month {
-      @include display-large;
+    img {
+      cursor: pointer;
+      margin: 0 5.2rem;
     }
-    &__year {
-      @include display-small;
-      margin-top: 1.5rem;
+    .date {
+      @include flex-center;
+      flex-direction: column;
+      &__month {
+        @include display-large;
+      }
+      &__year {
+        @include display-small;
+        margin-top: 1.5rem;
+      }
     }
   }
-}
 
-.buttons {
-  img {
-    cursor: pointer;
-    &:not(:first-child) {
-      margin-left: 2.4rem;
+  .buttons {
+    img {
+      cursor: pointer;
+      &:not(:first-child) {
+        margin-left: 2.4rem;
+      }
+    }
+    .inactive {
+      opacity: 0.5;
     }
   }
 }

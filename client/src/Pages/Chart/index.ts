@@ -9,20 +9,18 @@ export default class Chart extends Component<PropsType, StateType> {
   constructor(props: PropsType) {
     super(props);
 
-    this.$header = new Header({
-      date: this.state.date,
-    }).$dom;
+    this.$header = new Header({}).$dom;
 
     this.setDom();
   }
 
   render() {
     return jsx`
-      <div class='chart-page'>
+      <div class='wrapper'>
         <div class='top'>
           ${this.$header}
         </div>
       </div>
-      `;
+    `;
   }
 }
