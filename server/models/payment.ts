@@ -18,9 +18,6 @@ export class Payment {
   @Column({ type: 'varchar', length: 31 })
   name!: string;
 
-  @Column({ type: 'varchar' })
-  type!: string;
-
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   createdAt!: Date;
 

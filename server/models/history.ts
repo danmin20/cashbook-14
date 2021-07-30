@@ -15,11 +15,11 @@ export class History {
   @PrimaryGeneratedColumn({ type: 'int', unsigned: true })
   id!: number;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', length: 31 })
   date!: string;
 
-  @Column({ type: 'varchar' })
-  paymentType!: string;
+  @Column({ type: 'varchar', length: 7 })
+  type!: string;
 
   @Column({ type: 'varchar', length: 255 })
   content!: string;
