@@ -15,6 +15,7 @@ import Component, { PropsType } from '../../core/Component';
 import jsx from '../../core/jsx';
 import { dateState, userState } from '../../Model';
 import { getState, setState, subscribe } from '../../utils/observer';
+import Histories from './histories';
 import './style';
 
 export interface MainStates {
@@ -26,7 +27,7 @@ export interface MainStates {
   payments: [];
 }
 
-type AllHistorytype = {
+export type AllHistorytype = {
   date: string;
   histories: HistoriesType[];
   totalIncome: number;
@@ -44,14 +45,12 @@ export default class Main extends Component<PropsType, MainStates> {
   $header: Element;
   $inputBar: Element;
   $info: Element;
-  $historyList: Element = jsx``;
+  $historyList: Element;
   $alert: Element;
   $categoryAlert: Element;
 
   constructor(props: any) {
     super(props);
-
-    subscribe(userState.myHistories, 'a', this.update.bind(this));
 
     this.state = {
       date: new Date(),
@@ -67,6 +66,8 @@ export default class Main extends Component<PropsType, MainStates> {
     };
 
     this.$header = new Header({}).$dom;
+
+    this.$historyList = new Histories({}).$dom;
 
     this.$inputBar = new InputBar({}).$dom;
 
@@ -89,38 +90,6 @@ export default class Main extends Component<PropsType, MainStates> {
     }).$dom;
 
     this.setDom();
-  }
-
-  willUpdate() {
-    const histories = getState(userState.myHistories) as AllHistorytype;
-
-    this.$historyList = jsx`<div>${histories?.histories.map(
-      ({ date, histories, totalIncome, totalOutcome }) => {
-        return jsx`<div>${
-          new DayList({
-            date,
-            income: totalIncome,
-            outcome: totalOutcome,
-          }).$dom
-        }
-       ${histories.map((history: ListProps) => {
-         return jsx`<div>${
-           new List({
-             listType: 'large',
-             content: history.content,
-             payment: history.payment,
-             paymentType: history.paymentType,
-             amount: history.amount,
-             category: {
-               name: history.category.name,
-               color: history.category.color,
-             },
-           }).$dom
-         }</div>`;
-       })}
-      </div>`;
-      }
-    )}</div>`;
   }
 
   render() {
