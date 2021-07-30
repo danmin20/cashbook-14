@@ -10,6 +10,8 @@
   width: 14.8rem;
   box-sizing: border-box;
 
+  animation: open 0.3s;
+
   &__item {
     @include body-regular;
     @include flex-center;

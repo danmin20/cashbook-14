@@ -88,14 +88,6 @@ export default class Main extends Component<PropsType, MainStates> {
       content: 'asdf',
     }).$dom;
 
-    const setIncomeCategories = setState(userState.myIncomeCategories);
-    const setOutcomeCategories = setState(userState.myOutcomeCategories);
-    const setPayments = setState(userState.myPayments);
-
-    getMyIncomeCategories().then((res) => setIncomeCategories(res));
-    getMyOutcomeCategories().then((res) => setOutcomeCategories(res));
-    getMyPayments().then((res) => setPayments(res));
-
     this.setDom();
   }
 

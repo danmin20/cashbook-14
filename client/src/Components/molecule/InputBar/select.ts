@@ -12,12 +12,16 @@ export interface InputBarSelectProps {
 
 export default class InputBarSelect extends Component<
   InputBarSelectProps,
-  StateType
+  { isOpened: boolean }
 > {
   $dropdown: Element;
 
   constructor(props: InputBarSelectProps) {
     super(props);
+
+    this.state = {
+      isOpened: false,
+    };
 
     this.$dropdown = new DropDown({
       items: this.props.items,
@@ -29,11 +33,15 @@ export default class InputBarSelect extends Component<
   render() {
     const { setContent, content } = this.props;
 
+    const handleOpen = () => {
+      this.setState({ isOpened: !this.state.isOpened });
+    };
+
     return jsx`
       <div class='select'>
         ${content || '선택하세요'}
-        <img src=${drop} />
-        ${this.$dropdown}
+        <img src=${drop} onClick=${handleOpen} />
+        ${this.state.isOpened ? this.$dropdown : ''}
       </div>
     `;
   }

@@ -1,9 +1,14 @@
 import dayjs from 'dayjs';
+import {
+  getMyIncomeCategories,
+  getMyOutcomeCategories,
+  getMyPayments,
+} from '../../../api/me';
 import Component from '../../../core/Component';
 import jsx from '../../../core/jsx';
 import { userState } from '../../../Model';
 import { CategoryType, PaymentType } from '../../../shared/type';
-import { getState, subscribe } from '../../../utils/observer';
+import { getState, setState, subscribe } from '../../../utils/observer';
 import SaveButton from '../../atom/SaveButton';
 import InputBarInput from './input';
 import InputBarSelect from './select';
@@ -18,13 +23,17 @@ export interface InputBarStates {
   content: string | null;
   payment: string | null;
   amount: number | null;
+
+  myIncomeCategories: CategoryType[];
+  myOutcomeCategories: CategoryType[];
+  myPayments: PaymentType[];
 }
 
 export default class InputBar extends Component<InputBarProps, InputBarStates> {
   $saveBtn: Element;
-  $dateInput: Element;
-  $contentInput: Element;
-  $amountInput: Element;
+  $dateInput: Element = jsx``;
+  $contentInput: Element = jsx``;
+  $amountInput: Element = jsx``;
   $categorySelect: Element = jsx``;
   $paymentSelect: Element = jsx``;
 
@@ -33,15 +42,19 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
 
     subscribe(
       userState.myIncomeCategories,
-      'input-bar',
+      'input-bar-incomecategories',
       this.update.bind(this)
     );
     subscribe(
       userState.myOutcomeCategories,
-      'input-bar',
+      'input-bar-outcomecategories',
       this.update.bind(this)
     );
-    subscribe(userState.myPayments, 'input-bar', this.update.bind(this));
+    subscribe(
+      userState.myPayments,
+      'input-bar-payments',
+      this.update.bind(this)
+    );
 
     this.state = {
       paymentType: 'outcome',
@@ -50,6 +63,10 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
       content: null,
       payment: null,
       amount: null,
+
+      myIncomeCategories: [],
+      myOutcomeCategories: [],
+      myPayments: [],
     };
 
     this.$saveBtn = new SaveButton({
@@ -58,30 +75,51 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
       onClick: () => {},
     }).$dom;
 
-    this.$dateInput = new InputBarInput({
-      setContent: (date: string) => this.setState({ date }),
-    }).$dom;
-    this.$contentInput = new InputBarInput({
-      setContent: (content: string) => this.setState({ content }),
-    }).$dom;
-    this.$amountInput = new InputBarInput({
-      setContent: (amount: string) =>
-        this.setState({ amount: parseInt(amount) }),
-    }).$dom;
+    // const setIncomeCategories = setState(userState.myIncomeCategories);
+    // const setOutcomeCategories = setState(userState.myOutcomeCategories);
+    const setPayments = setState(userState.myPayments);
+
+    getMyIncomeCategories().then((res) =>
+      this.setState({ myIncomeCategories: res })
+    );
+    getMyOutcomeCategories().then((res) =>
+      this.setState({ myOutcomeCategories: res })
+    );
+    getMyPayments().then((res) => setPayments(res));
 
     this.setDom();
   }
 
   willMount() {
+    console.log('a', this.state.myOutcomeCategories);
+    // console.log(getState(userState.myIncomeCategories));
+    // 일자
+    this.$dateInput = new InputBarInput({
+      setContent: (date: string) => this.setState({ date }),
+    }).$dom;
+
+    // 내용
+    this.$contentInput = new InputBarInput({
+      setContent: (content: string) => this.setState({ content }),
+    }).$dom;
+
+    // 금액
+    this.$amountInput = new InputBarInput({
+      setContent: (amount: string) =>
+        this.setState({ amount: parseInt(amount) }),
+    }).$dom;
+
+    // 분류
     this.$categorySelect = new InputBarSelect({
       content: this.state.category,
       setContent: (category: string) => this.setState({ category }),
       items:
         this.state.paymentType === 'income'
-          ? (getState(userState.myIncomeCategories) as CategoryType[])
-          : (getState(userState.myOutcomeCategories) as CategoryType[]),
+          ? this.state.myIncomeCategories
+          : this.state.myOutcomeCategories,
     }).$dom;
 
+    // 결제수단
     this.$paymentSelect = new InputBarSelect({
       content: this.state.payment,
       setContent: (payment: string) => this.setState({ payment }),
