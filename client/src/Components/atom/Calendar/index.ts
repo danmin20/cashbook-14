@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { getMonthlyHistory } from '../../../api/history';
+import { getMyMonthlyHistory } from '../../../api/me';
 import { controller } from '../../../Controller';
 import Component, { PropsType } from '../../../core/Component';
 import jsx from '../../../core/jsx';
@@ -28,7 +28,7 @@ export default class Calendar extends Component<PropsType, CalendarState> {
   }
 
   willMount() {
-    getMonthlyHistory({
+    getMyMonthlyHistory({
       YYYYMM: dayjs(getState(dateState) as Date).format('YYYY-MM'),
     }).then((res) => this.setState({ list: res }));
   }

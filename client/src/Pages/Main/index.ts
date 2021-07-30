@@ -1,3 +1,8 @@
+import {
+  getMyIncomeCategories,
+  getMyOutcomeCategories,
+  getMyPayments,
+} from '../../api/me';
 import DayList, { DayListProps } from '../../Components/atom/DayList';
 import Header from '../../Components/atom/Header';
 import Alert from '../../Components/molecule/Alert';
@@ -15,6 +20,9 @@ export interface MainStates {
     day: DayListProps;
     list: ListProps[];
   }[];
+  incomeCategories: [];
+  outcomeCategories: [];
+  payments: [];
 }
 
 export default class Main extends Component<PropsType, MainStates> {
@@ -30,35 +38,10 @@ export default class Main extends Component<PropsType, MainStates> {
 
     this.state = {
       date: new Date(),
-      histories: [
-        {
-          day: {
-            date: new Date(),
-            income: 99999,
-            outcome: 999999,
-          },
-          list: [
-            {
-              tagId: 'category1',
-              tagTitle: '생활',
-              type: 'large',
-              content: '내용',
-              payment: '신한카드',
-              paymentType: 'outcome',
-              amount: 10000000,
-            },
-            {
-              tagId: 'category8',
-              tagTitle: '월급',
-              type: 'large',
-              content: '내용',
-              payment: '현금',
-              paymentType: 'income',
-              amount: 10000000,
-            },
-          ],
-        },
-      ],
+      incomeCategories: [],
+      outcomeCategories: [],
+      histories: [],
+      payments: [],
     };
 
     this.$header = new Header({}).$dom;
@@ -108,6 +91,17 @@ export default class Main extends Component<PropsType, MainStates> {
 
     this.setDom();
   }
+
+  willMount() {
+    getMyIncomeCategories().then((res) =>
+      this.setState({ incomeCategories: res })
+    );
+    getMyOutcomeCategories().then((res) =>
+      this.setState({ outcomeCategories: res })
+    );
+    getMyPayments().then((res) => this.setState({ outcomeCategories: res }));
+  }
+
   render() {
     return jsx`
       <div class='wrapper'>

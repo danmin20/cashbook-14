@@ -8,7 +8,6 @@ export const authenticateAccessToken = async (
   res: Response,
   next: NextFunction
 ) => {
-  console.log(req.session.user);
   const user = req.session.user;
 
   if (!user) {

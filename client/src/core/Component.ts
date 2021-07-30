@@ -30,11 +30,14 @@ export default class Component<
   }
 
   willMount() {}
+  willUpdate() {}
   didMount() {}
+  didUpdate() {}
 
   setDom(): void {
     this.willMount();
     this.$dom = this.render() as Element;
+    this.didMount();
   }
 
   render(): HTMLElement | ChildNode | DocumentFragment {
@@ -48,9 +51,9 @@ export default class Component<
   }
 
   update(): void {
-    this.willMount();
+    this.willUpdate();
     this.updateDOM();
-    this.didMount();
+    this.didUpdate();
   }
 
   setState(newState: Partial<S>) {

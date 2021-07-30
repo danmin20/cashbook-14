@@ -7,8 +7,7 @@ import { History } from '../models/history';
 
 async function getMe(req: Request, res: Response, next: NextFunction) {
   try {
-    console.log(req.user);
-    const { githubId } = req.user;
+    const { githubId } = req.session.user;
 
     const result = await UserService.findUser({ githubId });
 
@@ -20,11 +19,12 @@ async function getMe(req: Request, res: Response, next: NextFunction) {
 
 async function getMyPayments(req: Request, res: Response, next: NextFunction) {
   try {
-    const { id: userId } = req.user;
+    console.log('aaa');
+    const { userId } = req.session.user;
+    console.log(req.session.user);
 
-    const { query } = req;
-
-    const result = await PaymentService.findPayments({ userId, ...query });
+    const result = await PaymentService.findPayments({ userId });
+    console.log(result);
 
     res.status(200).json(result);
   } catch (err) {
@@ -38,7 +38,7 @@ async function getMyCategories(
   next: NextFunction
 ) {
   try {
-    const { id: userId } = req.session.user;
+    const { userId } = req.session.user;
 
     const { query } = req;
 
@@ -130,7 +130,7 @@ async function getSumOfAmounts(
   next: NextFunction
 ) {
   try {
-    const { id: userId } = req.user;
+    const { userId } = req.session.user;
 
     const { query } = req;
 
