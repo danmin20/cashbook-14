@@ -19,7 +19,7 @@ async function findCategories({
   userId,
   type,
 }: {
-  userId?: string;
+  userId?: number;
   type?: string;
 }) {
   const repo = getRepository(Category);

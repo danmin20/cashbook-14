@@ -23,12 +23,14 @@ async function findHistories({
   type,
   start,
   last,
+  order,
 }: {
-  userId?: string;
-  categoryId?: string;
+  userId?: number;
+  categoryId?: number;
   type?: string;
   start?: { year: number; month: number };
   last?: { year: number; month: number };
+  order?: string;
 }) {
   const repo = getRepository(History);
 
@@ -36,18 +38,12 @@ async function findHistories({
     where: {
       ...(userId && { user: { id: userId } }),
       ...(categoryId && { category: { id: categoryId } }),
+      ...(type && { type }),
     },
     relations: ['category', 'payment', 'user'],
   });
 
   // TODO: 필터링 개선(DB 수준에서의 필터링을 구현하기) 근데 쿼리 작성하기 귀찮다... ㅎㅎ
-  if (type === '지출') {
-    result = result.filter((history) => +history.amount < 0);
-  }
-  if (type === '수입') {
-    result = result.filter((history) => +history.amount > 0);
-  }
-
   if (start) {
     result = result.filter((history) => {
       const cmpFullYear = new Date(history.date).getFullYear() - start.year;
@@ -63,6 +59,17 @@ async function findHistories({
     });
   }
 
+  if (order === 'ASC') {
+    // 오름차
+    result = result.sort((a, b) => {
+      return a.id - b.id;
+    });
+  } else {
+    result = result.sort((a, b) => {
+      return b.id - a.id;
+    });
+  }
+
   return result;
 }
 
@@ -73,8 +80,8 @@ async function getSumOfAmountsGroupByMonth({
   start,
   last,
 }: {
-  userId?: string;
-  categoryId?: string;
+  userId?: number;
+  categoryId?: number;
   type?: string;
   start: { year: number; month: number };
   last: { year: number; month: number };
@@ -98,7 +105,8 @@ async function getSumOfAmountsGroupByMonth({
     const group =
       new Date(history.date).getFullYear() * 12 +
       new Date(history.date).getMonth();
-    result[group - startValue] += +history.amount;
+    result[group - startValue] +=
+      +history.amount * (history.type === 'outcome' ? -1 : 1);
   });
 
   return result;
@@ -109,6 +117,7 @@ async function createHistory({
   paymentId,
   categoryId,
   date,
+  type,
   content,
   amount,
 }: {
@@ -116,6 +125,7 @@ async function createHistory({
   paymentId?: number | null;
   categoryId?: number | null;
   date: string;
+  type: string;
   content: string;
   amount: number;
 }) {
@@ -123,6 +133,7 @@ async function createHistory({
 
   const history = repo.create({
     date,
+    type,
     content,
     amount,
     user: { id: userId },
@@ -140,12 +151,14 @@ async function updateHistory(
     paymentId,
     categoryId,
     date,
+    type,
     content,
     amount,
   }: {
     paymentId?: number | null;
     categoryId?: number | null;
     date?: string;
+    type?: string;
     content?: string;
     amount?: number;
   }
@@ -160,6 +173,7 @@ async function updateHistory(
       ...(date && { date }),
       ...(content && { content }),
       ...(amount && { amount }),
+      ...(type && { type }),
     }
   );
   return result;

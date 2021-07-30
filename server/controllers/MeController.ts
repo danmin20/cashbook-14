@@ -3,6 +3,7 @@ import { UserService } from '../services/UserService';
 import { PaymentService } from '../services/PaymentService';
 import { CategoryService } from '../services/CategoryService';
 import { HistoryService } from '../services/HistoryService';
+import { History } from '../models/history';
 
 async function getMe(req: Request, res: Response, next: NextFunction) {
   try {
@@ -39,8 +40,6 @@ async function getMyCategories(
   try {
     const { id: userId } = req.session.user;
 
-    console.log('aaaaa', userId);
-
     const { query } = req;
 
     const result = await CategoryService.findCategories({ userId, ...query });
@@ -51,21 +50,71 @@ async function getMyCategories(
   }
 }
 
+function getGroupedHistory(histories: History[]) {
+  const groupedHistories: {
+    [key: string]: {
+      totalIncome: number;
+      totalOutcome: number;
+      histories: History[];
+    };
+  } = {};
+
+  for (const history of histories) {
+    if (!groupedHistories[history.date]) {
+      groupedHistories[history.date] = {
+        totalIncome: 0,
+        totalOutcome: 0,
+        histories: [],
+      };
+    }
+
+    switch (history.type) {
+      case 'income':
+        groupedHistories[history.date].totalIncome += +history.amount;
+        break;
+      case 'outcome':
+        groupedHistories[history.date].totalOutcome += +history.amount;
+        break;
+    }
+
+    groupedHistories[history.date].histories.push(history);
+  }
+
+  return groupedHistories;
+}
+
 async function getMyHistories(req: Request, res: Response, next: NextFunction) {
   try {
     const { userId } = req.session.user;
 
     const { query } = req;
 
-    const head = query.date ? new Date(query.date as string) : new Date();
-    const date = { year: head.getFullYear(), month: head.getMonth() };
+    const date = query.date ? new Date(query.date as string) : new Date();
+    const dateObject = { year: date.getFullYear(), month: date.getMonth() };
 
-    const result = await HistoryService.findHistories({
+    const histories = await HistoryService.findHistories({
       userId,
       ...query,
-      ...(query.date && { start: date }),
-      ...(query.date && { last: date }),
+      ...(query.date && { start: dateObject }),
+      ...(query.date && { last: dateObject }),
     });
+
+    const result = {
+      totalIncome: 0,
+      totalOutcome: 0,
+      histories: getGroupedHistory(histories),
+    };
+
+    for (const history of histories) {
+      switch (history.type) {
+        case 'income':
+          result.totalIncome += +history.amount;
+          break;
+        case 'outcome':
+          result.totalOutcome += +history.amount;
+          break;
+      }
+    }
 
     res.status(200).json(result);
   } catch (err) {
@@ -83,8 +132,8 @@ async function getSumOfAmounts(
 
     const { query } = req;
 
-    const head = query.date ? new Date(query.date as string) : new Date();
-    const last = { year: head.getFullYear(), month: head.getMonth() };
+    const date = query.date ? new Date(query.date as string) : new Date();
+    const last = { year: date.getFullYear(), month: date.getMonth() };
     const isUnderflow = last.month - 11 < 0;
     const start = {
       year: last.year - (isUnderflow ? 1 : 0),
