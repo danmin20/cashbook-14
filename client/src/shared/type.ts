@@ -12,7 +12,6 @@ export type HistoryType = {
   payment: {
     id: number;
     name: string;
-    type: string;
   };
 };
 

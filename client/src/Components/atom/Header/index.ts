@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { calendar, chart, file, left, right } from '../../../../assets';
 import { controller } from '../../../Controller';
 import Component, { PropsType, StateType } from '../../../core/Component';
@@ -17,10 +18,11 @@ export default class Header extends Component<PropsType, StateType> {
       | '/calendar'
       | '/chart';
 
-    subscribe(dateState, 'header', this.update.bind(this));
+    subscribe(dateState, 'header-datestate', this.update.bind(this));
 
     this.setDom();
   }
+
   render() {
     return jsx`
       <div class='header'>
@@ -32,12 +34,12 @@ export default class Header extends Component<PropsType, StateType> {
           <img src=${left} onClick=${() => controller.calendar.prevMonth()} />
           
           <div class='date'>
-            <div class='date__month'>${
-              (getState(dateState) as Date).getMonth() + 1
-            }월</div>
-            <div class='date__year'>${(
+            <div class='date__month'>${dayjs(
               getState(dateState) as Date
-            ).getFullYear()}</div>
+            ).format('M')}월</div>
+            <div class='date__year'>${dayjs(getState(dateState) as Date).format(
+              'YYYY'
+            )}</div>
           </div>
 
           <img src=${right} onClick=${() => controller.calendar.nextMonth()} />

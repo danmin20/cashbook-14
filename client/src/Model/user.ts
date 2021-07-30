@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+import { getMyMonthlyHistory } from '../api/me';
 import { initState } from '../utils/observer';
 
 const myIncomeCategories = initState({
@@ -17,7 +19,9 @@ const myPayments = initState({
 
 const myHistories = initState({
   key: 'myHistories',
-  defaultValue: [],
+  defaultValue: getMyMonthlyHistory({
+    YYYYMM: dayjs(new Date()).format('YYYY-MM'),
+  }),
 });
 
 export default {

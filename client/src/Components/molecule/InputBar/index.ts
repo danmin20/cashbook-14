@@ -31,17 +31,17 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
   constructor(props: InputBarProps) {
     super(props);
 
-    subscribe(
-      userState.myIncomeCategories,
-      'input-bar',
-      this.update.bind(this)
-    );
-    subscribe(
-      userState.myOutcomeCategories,
-      'input-bar',
-      this.update.bind(this)
-    );
-    subscribe(userState.myPayments, 'input-bar', this.update.bind(this));
+    // subscribe(
+    //   userState.myIncomeCategories,
+    //   'input-bar',
+    //   this.update.bind(this)
+    // );
+    // subscribe(
+    //   userState.myOutcomeCategories,
+    //   'input-bar',
+    //   this.update.bind(this)
+    // );
+    // subscribe(userState.myPayments, 'input-bar', this.update.bind(this));
 
     this.state = {
       paymentType: 'outcome',
@@ -81,6 +81,7 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
           ? (getState(userState.myIncomeCategories) as CategoryType[])
           : (getState(userState.myOutcomeCategories) as CategoryType[]),
     }).$dom;
+
     this.$paymentSelect = new InputBarSelect({
       content: this.state.payment,
       setContent: (payment: string) => this.setState({ payment }),

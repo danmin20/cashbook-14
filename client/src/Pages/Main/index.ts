@@ -44,15 +44,14 @@ export default class Main extends Component<PropsType, MainStates> {
   $header: Element;
   $inputBar: Element;
   $info: Element;
-  $historyList: Element;
+  $historyList: Element = jsx``;
   $alert: Element;
   $categoryAlert: Element;
 
   constructor(props: any) {
     super(props);
 
-    subscribe(dateState, 'wrapper', this.update.bind(this));
-    subscribe(userState.myHistories, 'wrapper', this.update.bind(this));
+    subscribe(userState.myHistories, 'a', this.update.bind(this));
 
     this.state = {
       date: new Date(),
@@ -91,23 +90,29 @@ export default class Main extends Component<PropsType, MainStates> {
       content: 'asdf',
     }).$dom;
 
-    this.setDom();
-  }
-
-  willMount() {
-    console.log(dayjs(getState(dateState) as Date).format('YYYY-MM'));
+    // console.log(dayjs(getState(dateState) as Date).format('YYYY-MM'));
     const setIncomeCategories = setState(userState.myIncomeCategories);
     const setOutcomeCategories = setState(userState.myOutcomeCategories);
-    const setHistories = setState(userState.myHistories);
     const setPayments = setState(userState.myPayments);
 
     getMyIncomeCategories().then((res) => setIncomeCategories(res));
     getMyOutcomeCategories().then((res) => setOutcomeCategories(res));
     getMyPayments().then((res) => setPayments(res));
-    getMyMonthlyHistory({
-      YYYYMM: dayjs(getState(dateState) as Date).format('YYYY-MM'),
-    }).then((res) => setHistories(res));
+
+    // getMyMonthlyHistory({
+    //   YYYYMM: dayjs(getState(dateState) as Date).format('YYYY-MM'),
+    // }).then((res) => setHistories(res));
+
+    this.setDom();
   }
+
+  // willUpdate() {
+  //   const setHistories = setState(userState.myHistories);
+
+  //   getMyMonthlyHistory({
+  //     YYYYMM: dayjs(getState(dateState) as Date).format('YYYY-MM'),
+  //   }).then((res) => setHistories(res));
+  // }
 
   willUpdate() {
     console.log('asdfasdf', getState(userState.myHistories));
@@ -138,11 +143,13 @@ export default class Main extends Component<PropsType, MainStates> {
         });
       }
     );
+
+    // this.$historyList = ;
   }
 
   render() {
     return jsx`
-      <div class='wrapper'>
+      <div class='main-wrapper'>
         <div class='top'>
           ${this.$header}
         </div>
