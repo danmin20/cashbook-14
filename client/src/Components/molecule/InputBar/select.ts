@@ -1,5 +1,5 @@
 import { drop } from '../../../../assets';
-import Component, { StateType } from '../../../core/Component';
+import Component from '../../../core/Component';
 import jsx from '../../../core/jsx';
 import { CategoryType, PaymentType } from '../../../shared/type';
 import DropDown from '../../atom/Dropdown';

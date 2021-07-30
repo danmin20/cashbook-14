@@ -1,5 +1,3 @@
-import dayjs from 'dayjs';
-import { getMyMonthlyHistory } from '../api/me';
 import { initState } from '../utils/observer';
 
 const myIncomeCategories = initState({

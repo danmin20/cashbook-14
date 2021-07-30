@@ -1,23 +1,15 @@
-import Component, { PropsType, StateType } from '../../core/Component';
-import jsx from '../../core/jsx';
-import Header from '../../Components/atom/Header';
-import PieGraph from '../../Components/atom/PieGraph';
-import { getState, subscribe } from '../../utils/observer';
-import { userState } from '../../Model';
-import { AllHistorytype } from '.';
-import DayList from '../../Components/atom/DayList';
-import List, { ListProps } from '../../Components/molecule/list';
+import Component, { PropsType, StateType } from '../../../core/Component';
+import jsx from '../../../core/jsx';
+import { getState, subscribe } from '../../../utils/observer';
+import { userState } from '../../../Model';
+import DayList from '../../../Components/atom/DayList';
+import List, { ListProps } from '../../../Components/molecule/list';
+import { AllHistorytype } from '../../../Pages/Main';
 
-export default class Histories extends Component<PropsType, StateType> {
-  $header: Element;
-  $pieGraph: Element;
-
+export default class HistoryList extends Component<PropsType, StateType> {
   constructor(props: PropsType) {
     super(props);
     subscribe(userState.myHistories, 'a', this.update.bind(this));
-
-    this.$header = new Header({}).$dom;
-    this.$pieGraph = new PieGraph({}).$dom;
 
     this.setDom();
   }

@@ -1,21 +1,11 @@
-import dayjs from 'dayjs';
-import {
-  getMyIncomeCategories,
-  getMyMonthlyHistory,
-  getMyOutcomeCategories,
-  getMyPayments,
-} from '../../api/me';
-import DayList from '../../Components/atom/DayList';
 import Header from '../../Components/atom/Header';
 import Alert from '../../Components/molecule/Alert';
 import Info from '../../Components/molecule/Info';
 import InputBar from '../../Components/molecule/InputBar';
-import List, { ListProps } from '../../Components/molecule/list';
+import { ListProps } from '../../Components/molecule/list';
+import HistoryList from '../../Components/organism/historyList';
 import Component, { PropsType } from '../../core/Component';
 import jsx from '../../core/jsx';
-import { dateState, userState } from '../../Model';
-import { getState, setState, subscribe } from '../../utils/observer';
-import Histories from './histories';
 import './style';
 
 export interface MainStates {
@@ -67,7 +57,7 @@ export default class Main extends Component<PropsType, MainStates> {
 
     this.$header = new Header({}).$dom;
 
-    this.$historyList = new Histories({}).$dom;
+    this.$historyList = new HistoryList({}).$dom;
 
     this.$inputBar = new InputBar({}).$dom;
 
