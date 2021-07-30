@@ -41,7 +41,6 @@ async function findPayments({ userId }: { userId?: number }) {
 async function createPayment({
   userId,
   name,
-  type,
 }: {
   userId: number;
   name: string;
@@ -49,7 +48,7 @@ async function createPayment({
 }) {
   const repo = getRepository(Payment);
 
-  const payment = repo.create({ name, type, user: { id: userId } });
+  const payment = repo.create({ name, user: { id: userId } });
 
   const result = await repo.insert(payment);
   return result;
