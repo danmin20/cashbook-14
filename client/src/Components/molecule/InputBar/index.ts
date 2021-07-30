@@ -1,6 +1,9 @@
 import dayjs from 'dayjs';
 import Component from '../../../core/Component';
 import jsx from '../../../core/jsx';
+import { userState } from '../../../Model';
+import { CategoryType, PaymentType } from '../../../shared/type';
+import { getState, subscribe } from '../../../utils/observer';
 import SaveButton from '../../atom/SaveButton';
 import InputBarInput from './input';
 import InputBarSelect from './select';
@@ -22,11 +25,23 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
   $dateInput: Element;
   $contentInput: Element;
   $amountInput: Element;
-  $categorySelect: Element;
-  $paymentSelect: Element;
+  $categorySelect: Element = jsx``;
+  $paymentSelect: Element = jsx``;
 
   constructor(props: InputBarProps) {
     super(props);
+
+    subscribe(
+      userState.myIncomeCategories,
+      'input-bar',
+      this.update.bind(this)
+    );
+    subscribe(
+      userState.myOutcomeCategories,
+      'input-bar',
+      this.update.bind(this)
+    );
+    subscribe(userState.myPayments, 'input-bar', this.update.bind(this));
 
     this.state = {
       paymentType: 'outcome',
@@ -54,18 +69,23 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
         this.setState({ amount: parseInt(amount) }),
     }).$dom;
 
+    this.setDom();
+  }
+
+  willUpdate() {
     this.$categorySelect = new InputBarSelect({
       content: this.state.category,
       setContent: (category: string) => this.setState({ category }),
-      items: ['생활', '식비', '교통'],
+      items:
+        this.state.paymentType === 'income'
+          ? (getState(userState.myIncomeCategories) as CategoryType[])
+          : (getState(userState.myOutcomeCategories) as CategoryType[]),
     }).$dom;
     this.$paymentSelect = new InputBarSelect({
       content: this.state.payment,
       setContent: (payment: string) => this.setState({ payment }),
-      items: ['월급', '용돈', '기타수입'],
+      items: getState(userState.myPayments) as PaymentType[],
     }).$dom;
-
-    this.setDom();
   }
 
   render() {

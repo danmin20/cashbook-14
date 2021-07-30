@@ -1,9 +1,11 @@
+import dayjs from 'dayjs';
 import {
   getMyIncomeCategories,
+  getMyMonthlyHistory,
   getMyOutcomeCategories,
   getMyPayments,
 } from '../../api/me';
-import DayList, { DayListProps } from '../../Components/atom/DayList';
+import DayList from '../../Components/atom/DayList';
 import Header from '../../Components/atom/Header';
 import Alert from '../../Components/molecule/Alert';
 import Info from '../../Components/molecule/Info';
@@ -11,19 +13,32 @@ import InputBar from '../../Components/molecule/InputBar';
 import List, { ListProps } from '../../Components/molecule/list';
 import Component, { PropsType } from '../../core/Component';
 import jsx from '../../core/jsx';
+import { dateState, userState } from '../../Model';
+import { getState, setState, subscribe } from '../../utils/observer';
 import './style';
 
 export interface MainStates {
   // 전역 상태로 넣기
   date: Date;
-  histories: {
-    day: DayListProps;
-    list: ListProps[];
-  }[];
+  histories: AllHistorytype;
   incomeCategories: [];
   outcomeCategories: [];
   payments: [];
 }
+
+type AllHistorytype = {
+  date: string;
+  histories: HistoriesType[];
+  totalIncome: number;
+  totalOutcome: number;
+};
+
+type HistoriesType = {
+  date: string;
+  histories: ListProps[];
+  totalIncome: number;
+  totalOutcome: number;
+};
 
 export default class Main extends Component<PropsType, MainStates> {
   $header: Element;
@@ -36,11 +51,19 @@ export default class Main extends Component<PropsType, MainStates> {
   constructor(props: any) {
     super(props);
 
+    subscribe(dateState, 'wrapper', this.update.bind(this));
+    subscribe(userState.myHistories, 'wrapper', this.update.bind(this));
+
     this.state = {
       date: new Date(),
       incomeCategories: [],
       outcomeCategories: [],
-      histories: [],
+      histories: {
+        date: '',
+        histories: [],
+        totalIncome: 0,
+        totalOutcome: 0,
+      },
       payments: [],
     };
 
@@ -56,27 +79,6 @@ export default class Main extends Component<PropsType, MainStates> {
     }).$dom;
 
     this.$historyList = document.createElement('div');
-    this.state.histories.forEach(({ day, list }) => {
-      const $dayList = new DayList({
-        date: day.date,
-        income: day.income,
-        outcome: day.outcome,
-      }).$dom;
-      this.$historyList.append($dayList);
-
-      list.forEach((history: ListProps) => {
-        const $history = new List({
-          tagId: history.tagId,
-          tagTitle: history.tagTitle,
-          type: history.type,
-          content: history.content,
-          payment: history.payment,
-          paymentType: history.paymentType,
-          amount: history.amount,
-        }).$dom;
-        this.$historyList.append($history);
-      });
-    });
 
     this.$alert = new Alert({
       select: 'payment',
@@ -93,13 +95,49 @@ export default class Main extends Component<PropsType, MainStates> {
   }
 
   willMount() {
-    getMyIncomeCategories().then((res) =>
-      this.setState({ incomeCategories: res })
+    console.log(dayjs(getState(dateState) as Date).format('YYYY-MM'));
+    const setIncomeCategories = setState(userState.myIncomeCategories);
+    const setOutcomeCategories = setState(userState.myOutcomeCategories);
+    const setHistories = setState(userState.myHistories);
+    const setPayments = setState(userState.myPayments);
+
+    getMyIncomeCategories().then((res) => setIncomeCategories(res));
+    getMyOutcomeCategories().then((res) => setOutcomeCategories(res));
+    getMyPayments().then((res) => setPayments(res));
+    getMyMonthlyHistory({
+      YYYYMM: dayjs(getState(dateState) as Date).format('YYYY-MM'),
+    }).then((res) => setHistories(res));
+  }
+
+  willUpdate() {
+    console.log('asdfasdf', getState(userState.myHistories));
+    (getState(userState.myHistories) as AllHistorytype).histories.forEach(
+      ({ date, histories, totalIncome, totalOutcome }) => {
+        const $dayList = new DayList({
+          date,
+          income: totalIncome,
+          outcome: totalOutcome,
+        }).$dom;
+        this.$historyList.append($dayList);
+
+        console.log('histories', histories);
+
+        histories.forEach((history: ListProps) => {
+          const $history = new List({
+            listType: 'large',
+            content: history.content,
+            payment: history.payment,
+            type: history.type,
+            amount: history.amount,
+            category: {
+              name: history.category.name,
+              color: history.category.color,
+            },
+          }).$dom;
+          this.$historyList.append($history);
+        });
+      }
     );
-    getMyOutcomeCategories().then((res) =>
-      this.setState({ outcomeCategories: res })
-    );
-    getMyPayments().then((res) => this.setState({ outcomeCategories: res }));
   }
 
   render() {

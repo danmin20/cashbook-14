@@ -3,7 +3,6 @@ import jsx from '../../../core/jsx';
 import './style';
 
 export interface CategoryTagProps {
-  id: string;
   title: string;
   color: string;
 }

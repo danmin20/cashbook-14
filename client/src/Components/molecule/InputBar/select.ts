@@ -1,12 +1,13 @@
 import { drop } from '../../../../assets';
 import Component, { StateType } from '../../../core/Component';
 import jsx from '../../../core/jsx';
+import { CategoryType, PaymentType } from '../../../shared/type';
 import DropDown from '../../atom/Dropdown';
 
 export interface InputBarSelectProps {
   setContent: Function;
   content: string | null;
-  items: string[];
+  items: CategoryType[] | PaymentType[];
 }
 
 export default class InputBarSelect extends Component<
@@ -17,6 +18,7 @@ export default class InputBarSelect extends Component<
 
   constructor(props: InputBarSelectProps) {
     super(props);
+    console.log('asdf', this.props.items);
 
     this.$dropdown = new DropDown({
       items: this.props.items,
