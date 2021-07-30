@@ -53,6 +53,7 @@ async function getMyCategories(
 function getGroupedHistory(histories: History[]) {
   const groupedHistories: {
     [key: string]: {
+      date: string;
       totalIncome: number;
       totalOutcome: number;
       histories: History[];
@@ -62,6 +63,7 @@ function getGroupedHistory(histories: History[]) {
   for (const history of histories) {
     if (!groupedHistories[history.date]) {
       groupedHistories[history.date] = {
+        date: history.date,
         totalIncome: 0,
         totalOutcome: 0,
         histories: [],
@@ -80,7 +82,7 @@ function getGroupedHistory(histories: History[]) {
     groupedHistories[history.date].histories.push(history);
   }
 
-  return groupedHistories;
+  return Object.values(groupedHistories);
 }
 
 async function getMyHistories(req: Request, res: Response, next: NextFunction) {
