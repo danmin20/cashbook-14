@@ -1,6 +1,6 @@
 @import '../../scss/theme';
 
-.main-wrapper {
+.wrapper {
   .top {
     display: flex;
     justify-content: center;
@@ -17,5 +17,22 @@
     @include flex-center;
     width: 100%;
     flex-direction: column;
+  }
+  .chart {
+    @include flex-center;
+    @include body-regular;
+    position: absolute;
+    top: 16.2rem;
+    justify-content: space-around;
+    width: 84.8rem;
+    box-shadow: $shadow;
+    background-color: $off-white;
+    color: $label;
+    border: 0.1rem solid $line;
+    border-radius: 1rem;
+
+    * {
+      flex: 1;
+    }
   }
 }

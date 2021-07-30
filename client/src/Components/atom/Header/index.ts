@@ -27,7 +27,6 @@ export default class Header extends Component<PropsType, StateType> {
   }
 
   willMount() {
-    console.log(dayjs(getState(dateState) as Date).format('M'));
     const setHistories = setState(userState.myHistories);
     getMyMonthlyHistory({
       YYYYMM: dayjs(getState(dateState) as Date).format('YYYY-MM'),

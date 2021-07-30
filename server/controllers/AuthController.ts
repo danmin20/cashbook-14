@@ -67,7 +67,6 @@ async function login(req: Request, res: Response, next: NextFunction) {
 
     res.redirect('http://localhost:8080');
   } catch (err) {
-    console.log(err);
     res.redirect('http://localhost:8080/error');
   }
 }

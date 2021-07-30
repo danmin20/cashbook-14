@@ -1,7 +1,6 @@
 import Component, { PropsType, StateType } from '../../core/Component';
 import jsx from '../../core/jsx';
 import Header from '../../Components/atom/Header';
-import './style';
 import PieGraph from '../../Components/atom/PieGraph';
 
 export default class Chart extends Component<PropsType, StateType> {

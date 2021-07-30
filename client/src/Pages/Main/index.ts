@@ -133,7 +133,7 @@ export default class Main extends Component<PropsType, MainStates> {
 
   render() {
     return jsx`
-      <div class='main-wrapper'>
+      <div class='wrapper'>
         <div class='top'>
           ${this.$header}
         </div>

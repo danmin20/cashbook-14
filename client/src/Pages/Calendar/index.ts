@@ -2,7 +2,6 @@ import Component, { PropsType, StateType } from '../../core/Component';
 import jsx from '../../core/jsx';
 import Header from '../../Components/atom/Header';
 import Calendar from '../../Components/atom/Calendar';
-import './style';
 
 export default class CalendarPage extends Component<PropsType, StateType> {
   $header: Element;
