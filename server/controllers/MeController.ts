@@ -19,12 +19,9 @@ async function getMe(req: Request, res: Response, next: NextFunction) {
 
 async function getMyPayments(req: Request, res: Response, next: NextFunction) {
   try {
-    console.log('aaa');
     const { userId } = req.session.user;
-    console.log(req.session.user);
 
     const result = await PaymentService.findPayments({ userId });
-    console.log(result);
 
     res.status(200).json(result);
   } catch (err) {

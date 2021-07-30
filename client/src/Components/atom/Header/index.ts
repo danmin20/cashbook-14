@@ -1,15 +1,18 @@
 import dayjs from 'dayjs';
 import { calendar, chart, file, left, right } from '../../../../assets';
+import { getMyMonthlyHistory } from '../../../api/me';
 import { controller } from '../../../Controller';
 import Component, { PropsType, StateType } from '../../../core/Component';
 import jsx from '../../../core/jsx';
 import { $router } from '../../../lib/router';
-import { dateState } from '../../../Model';
-import { getState, subscribe } from '../../../utils/observer';
+import { dateState, userState } from '../../../Model';
+import { getState, setState, subscribe } from '../../../utils/observer';
 import './style';
 
 export default class Header extends Component<PropsType, StateType> {
   pathname: '/' | '/calendar' | '/chart';
+  $date: Element = jsx``;
+
   constructor(props: PropsType) {
     super(props);
 
@@ -18,9 +21,28 @@ export default class Header extends Component<PropsType, StateType> {
       | '/calendar'
       | '/chart';
 
-    subscribe(dateState, 'header-datestate', this.update.bind(this));
+    subscribe(dateState, 'date', this.update.bind(this));
 
     this.setDom();
+  }
+
+  willMount() {
+    console.log(dayjs(getState(dateState) as Date).format('M'));
+    const setHistories = setState(userState.myHistories);
+    getMyMonthlyHistory({
+      YYYYMM: dayjs(getState(dateState) as Date).format('YYYY-MM'),
+    }).then((res) => {
+      setHistories(res);
+    });
+
+    this.$date = jsx`<div class='date'>
+    <div class='date__month'>${dayjs(getState(dateState) as Date).format(
+      'M'
+    )}월</div>
+    <div class='date__year'>${dayjs(getState(dateState) as Date).format(
+      'YYYY'
+    )}</div>
+  </div>`;
   }
 
   render() {
@@ -33,14 +55,7 @@ export default class Header extends Component<PropsType, StateType> {
         <div class='date-controller'>
           <img src=${left} onClick=${() => controller.calendar.prevMonth()} />
           
-          <div class='date'>
-            <div class='date__month'>${dayjs(
-              getState(dateState) as Date
-            ).format('M')}월</div>
-            <div class='date__year'>${dayjs(getState(dateState) as Date).format(
-              'YYYY'
-            )}</div>
-          </div>
+          ${this.$date}
 
           <img src=${right} onClick=${() => controller.calendar.nextMonth()} />
         </div>

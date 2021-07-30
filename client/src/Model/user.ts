@@ -19,9 +19,7 @@ const myPayments = initState({
 
 const myHistories = initState({
   key: 'myHistories',
-  defaultValue: getMyMonthlyHistory({
-    YYYYMM: dayjs(new Date()).format('YYYY-MM'),
-  }),
+  defaultValue: [],
 });
 
 export default {

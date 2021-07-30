@@ -8,7 +8,7 @@ export default async (): Promise<void> => {
     password: process.env.DB_PW,
     host: process.env.DB_HOST,
     port: parseInt(process.env.DB_PORT as string),
-    synchronize: true,
+    // synchronize: true,
     entities: [`${__dirname}/**/models/**/*{.ts,.js}`],
     extra: {
       charset: 'utf8mb4_general_ci',

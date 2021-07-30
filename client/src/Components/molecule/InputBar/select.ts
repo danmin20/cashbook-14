@@ -18,7 +18,6 @@ export default class InputBarSelect extends Component<
 
   constructor(props: InputBarSelectProps) {
     super(props);
-    console.log('asdf', this.props.items);
 
     this.$dropdown = new DropDown({
       items: this.props.items,

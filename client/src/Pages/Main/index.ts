@@ -77,8 +77,6 @@ export default class Main extends Component<PropsType, MainStates> {
       checked: ['income'],
     }).$dom;
 
-    this.$historyList = document.createElement('div');
-
     this.$alert = new Alert({
       select: 'payment',
       type: 'add',
@@ -90,7 +88,6 @@ export default class Main extends Component<PropsType, MainStates> {
       content: 'asdf',
     }).$dom;
 
-    // console.log(dayjs(getState(dateState) as Date).format('YYYY-MM'));
     const setIncomeCategories = setState(userState.myIncomeCategories);
     const setOutcomeCategories = setState(userState.myOutcomeCategories);
     const setPayments = setState(userState.myPayments);
@@ -99,52 +96,39 @@ export default class Main extends Component<PropsType, MainStates> {
     getMyOutcomeCategories().then((res) => setOutcomeCategories(res));
     getMyPayments().then((res) => setPayments(res));
 
-    // getMyMonthlyHistory({
-    //   YYYYMM: dayjs(getState(dateState) as Date).format('YYYY-MM'),
-    // }).then((res) => setHistories(res));
-
     this.setDom();
   }
 
-  // willUpdate() {
-  //   const setHistories = setState(userState.myHistories);
-
-  //   getMyMonthlyHistory({
-  //     YYYYMM: dayjs(getState(dateState) as Date).format('YYYY-MM'),
-  //   }).then((res) => setHistories(res));
-  // }
-
   willUpdate() {
-    console.log('asdfasdf', getState(userState.myHistories));
-    (getState(userState.myHistories) as AllHistorytype).histories.forEach(
+    const histories = getState(userState.myHistories) as AllHistorytype;
+
+    this.$historyList = jsx`<div>${histories?.histories.map(
       ({ date, histories, totalIncome, totalOutcome }) => {
-        const $dayList = new DayList({
-          date,
-          income: totalIncome,
-          outcome: totalOutcome,
-        }).$dom;
-        this.$historyList.append($dayList);
-
-        console.log('histories', histories);
-
-        histories.forEach((history: ListProps) => {
-          const $history = new List({
-            listType: 'large',
-            content: history.content,
-            payment: history.payment,
-            type: history.type,
-            amount: history.amount,
-            category: {
-              name: history.category.name,
-              color: history.category.color,
-            },
-          }).$dom;
-          this.$historyList.append($history);
-        });
+        return jsx`<div>${
+          new DayList({
+            date,
+            income: totalIncome,
+            outcome: totalOutcome,
+          }).$dom
+        }
+       ${histories.map((history: ListProps) => {
+         return jsx`<div>${
+           new List({
+             listType: 'large',
+             content: history.content,
+             payment: history.payment,
+             paymentType: history.paymentType,
+             amount: history.amount,
+             category: {
+               name: history.category.name,
+               color: history.category.color,
+             },
+           }).$dom
+         }</div>`;
+       })}
+      </div>`;
       }
-    );
-
-    // this.$historyList = ;
+    )}</div>`;
   }
 
   render() {
