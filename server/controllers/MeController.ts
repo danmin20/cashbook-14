@@ -7,7 +7,7 @@ import { History } from '../models/history';
 
 async function getMe(req: Request, res: Response, next: NextFunction) {
   try {
-    const { githubId } = req.session.user;
+    const { githubId } = req.user;
 
     const result = await UserService.findUser({ githubId });
 
@@ -19,7 +19,7 @@ async function getMe(req: Request, res: Response, next: NextFunction) {
 
 async function getMyPayments(req: Request, res: Response, next: NextFunction) {
   try {
-    const { userId } = req.session.user;
+    const { userId } = req.user;
 
     const result = await PaymentService.findPayments({ userId });
 
@@ -35,7 +35,7 @@ async function getMyCategories(
   next: NextFunction
 ) {
   try {
-    const { userId } = req.session.user;
+    const { userId } = req.user;
 
     const { query } = req;
 
@@ -84,7 +84,7 @@ function getGroupedHistory(histories: History[]) {
 
 async function getMyHistories(req: Request, res: Response, next: NextFunction) {
   try {
-    const { userId } = req.session.user;
+    const { userId } = req.user;
 
     const { query } = req;
 
@@ -127,7 +127,7 @@ async function getSumOfAmounts(
   next: NextFunction
 ) {
   try {
-    const { userId } = req.session.user;
+    const { userId } = req.user;
 
     const { query } = req;
 

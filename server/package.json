@@ -4,7 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "tsc && node build/app",
+    "start": "tsc && NODE_ENV=production node build/app",
+    "start:pm2": "tsc && NODE_ENV=production pm2 restart build/app.js --update-env",
     "dev": "nodemon --watch \"**\" --ext \"ts\" --exec \"ts-node\" --files \"app.ts\""
   },
   "dependencies": {
