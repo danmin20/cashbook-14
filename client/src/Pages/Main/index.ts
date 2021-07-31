@@ -1,6 +1,5 @@
 import Header from '../../Components/atom/Header';
 import Alert from '../../Components/molecule/Alert';
-import Info from '../../Components/molecule/Info';
 import InputBar from '../../Components/molecule/InputBar';
 import { ListProps } from '../../Components/molecule/list';
 import HistoryList from '../../Components/organism/historyList';
@@ -24,7 +23,7 @@ export type AllHistorytype = {
   totalOutcome: number;
 };
 
-type HistoriesType = {
+export type HistoriesType = {
   date: string;
   histories: ListProps[];
   totalIncome: number;
@@ -34,7 +33,6 @@ type HistoriesType = {
 export default class Main extends Component<PropsType, MainStates> {
   $header: Element;
   $inputBar: Element;
-  $info: Element;
   $historyList: Element;
   $alert: Element;
   $categoryAlert: Element;
@@ -61,13 +59,6 @@ export default class Main extends Component<PropsType, MainStates> {
 
     this.$inputBar = new InputBar({}).$dom;
 
-    this.$info = new Info({
-      count: 23235235,
-      income: 234234,
-      outcome: 41451245,
-      checked: ['income'],
-    }).$dom;
-
     this.$alert = new Alert({
       select: 'payment',
       type: 'add',
@@ -92,7 +83,6 @@ export default class Main extends Component<PropsType, MainStates> {
           <div class='input-bar-wrapper'>
             ${this.$inputBar}
           </div>
-          ${this.$info}
           <div class='content__list'>
             ${this.$historyList}
             ${this.$categoryAlert}

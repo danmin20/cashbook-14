@@ -91,8 +91,6 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
   }
 
   willMount() {
-    console.log('a', this.state.myOutcomeCategories);
-    // console.log(getState(userState.myIncomeCategories));
     // 일자
     this.$dateInput = new InputBarInput({
       setContent: (date: string) => this.setState({ date }),

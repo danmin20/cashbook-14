@@ -8,15 +8,18 @@
     height: 19.4rem;
   }
   .content {
+    @include flex-center;
+    width: 100%;
+    flex-direction: column;
     .input-bar-wrapper {
       @include flex-center;
       position: absolute;
       width: 100%;
       top: 16rem;
     }
-    @include flex-center;
-    width: 100%;
-    flex-direction: column;
+    .content__list {
+      // overflow-y: scroll;
+    }
   }
   .chart {
     @include flex-center;

@@ -5,22 +5,57 @@ import { userState } from '../../../Model';
 import DayList from '../../../Components/atom/DayList';
 import List, { ListProps } from '../../../Components/molecule/list';
 import { AllHistorytype } from '../../../Pages/Main';
+import Info from '../../molecule/Info';
 
-export default class HistoryList extends Component<PropsType, StateType> {
+interface HistoryListState {
+  checked: ('income' | 'outcome')[];
+}
+
+export default class HistoryList extends Component<
+  PropsType,
+  HistoryListState
+> {
+  $info: Element = jsx``;
+  histories: AllHistorytype = {
+    date: '',
+    histories: [],
+    totalIncome: 0,
+    totalOutcome: 0,
+  };
+
   constructor(props: PropsType) {
     super(props);
-    subscribe(userState.myHistories, 'a', this.update.bind(this));
+
+    this.state = {
+      checked: ['income', 'outcome'],
+    };
+    subscribe(userState.myHistories, 'myHistories', this.update.bind(this));
 
     this.setDom();
   }
 
-  render() {
-    const histories = getState(userState.myHistories) as AllHistorytype;
-    console.log('aaaa', histories);
+  willMount() {
+    this.histories = getState(userState.myHistories) as AllHistorytype;
 
-    return jsx`<div>${
-      histories?.histories
-        ? histories?.histories.map(
+    this.$info = new Info({
+      income: this.histories.totalIncome,
+      outcome: this.histories.totalOutcome,
+      count: 100,
+      checked: this.state.checked,
+      handleCheck: (newState: ('income' | 'outcome')[]) =>
+        this.setState({ checked: newState }),
+    }).$dom;
+  }
+
+  render() {
+    const { checked } = this.state;
+
+    return jsx`
+    <div>
+     ${this.$info}
+    <div>${
+      this.histories?.histories
+        ? this.histories?.histories.map(
             ({ date, histories, totalIncome, totalOutcome }) => {
               return jsx`<div>${
                 new DayList({
@@ -30,24 +65,34 @@ export default class HistoryList extends Component<PropsType, StateType> {
                 }).$dom
               }
          ${histories.map((history: ListProps) => {
-           return jsx`<div>${
-             new List({
-               listType: 'large',
-               content: history.content,
-               payment: history.payment,
-               paymentType: history.paymentType,
-               amount: history.amount,
-               category: {
-                 name: history.category.name,
-                 color: history.category.color,
-               },
-             }).$dom
-           }</div>`;
+           if (
+             (history.paymentType === 'income' &&
+               checked.find((i) => i === 'income')) ||
+             (history.paymentType === 'outcome' &&
+               checked.find((i) => i === 'outcome'))
+           ) {
+             return jsx`<div>${
+               new List({
+                 listType: 'large',
+                 content: history.content,
+                 payment: history.payment,
+                 paymentType: history.paymentType,
+                 amount: history.amount,
+                 category: {
+                   name: history.category.name,
+                   color: history.category.color,
+                 },
+               }).$dom
+             }</div>`;
+           } else {
+             return jsx``;
+           }
          })}
         </div>`;
             }
           )
         : ''
-    }</div>`;
+    }</div>
+    </div>`;
   }
 }
