@@ -2,7 +2,8 @@ import { drop } from '../../../../assets';
 import Component from '../../../core/Component';
 import jsx from '../../../core/jsx';
 import { CategoryType, PaymentType } from '../../../shared/type';
-import DropDown from '../../atom/Dropdown';
+import DropDown from '../Dropdown';
+import './style';
 
 export interface InputBarSelectProps {
   setContent: Function;
@@ -38,9 +39,9 @@ export default class InputBarSelect extends Component<
     };
 
     return jsx`
-      <div class='select'>
+      <div class='select${content ? '' : ' none'}' onClick=${handleOpen}>
         ${content || '선택하세요'}
-        <img src=${drop} onClick=${handleOpen} />
+        <img src=${drop} />
         ${this.state.isOpened ? this.$dropdown : ''}
       </div>
     `;

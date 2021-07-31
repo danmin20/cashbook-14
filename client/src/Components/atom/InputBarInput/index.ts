@@ -1,5 +1,6 @@
 import Component, { StateType } from '../../../core/Component';
 import jsx from '../../../core/jsx';
+import './style';
 
 export interface InputBarInputProps {
   setContent: Function;
@@ -19,7 +20,7 @@ export default class InputBarInput extends Component<
     const { setContent } = this.props;
 
     return jsx`
-      <input placeholder='입력하세요' />
+      <input class='input' placeholder='입력하세요' />
     `;
   }
 }

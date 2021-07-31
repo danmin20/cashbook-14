@@ -1,0 +1,14 @@
+@import '../../../scss/theme';
+
+.select {
+  @include flex-center;
+  cursor: pointer;
+  position: relative;
+  img {
+    margin-left: 1.5rem;
+  }
+}
+
+.none {
+  color: $label;
+}

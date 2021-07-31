@@ -9,9 +9,9 @@ import jsx from '../../../core/jsx';
 import { userState } from '../../../Model';
 import { CategoryType, PaymentType } from '../../../shared/type';
 import { getState, setState, subscribe } from '../../../utils/observer';
+import InputBarInput from '../../atom/InputBarInput';
+import InputBarSelect from '../../atom/InputBarSelect';
 import SaveButton from '../../atom/SaveButton';
-import InputBarInput from './input';
-import InputBarSelect from './select';
 import './style';
 
 export interface InputBarProps {}
@@ -126,7 +126,7 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
   }
 
   render() {
-    const { paymentType, category } = this.state;
+    const { paymentType } = this.state;
 
     return jsx`
       <div class='input-bar'>
