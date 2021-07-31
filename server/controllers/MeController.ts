@@ -105,6 +105,7 @@ async function getMyHistories(req: Request, res: Response, next: NextFunction) {
       totalIncome: 0,
       totalOutcome: 0,
       histories: getGroupedHistory(histories),
+      totalCount: histories.length,
     };
 
     for (const history of histories) {
