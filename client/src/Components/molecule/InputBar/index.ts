@@ -23,10 +23,6 @@ export interface InputBarStates {
   content: string | null;
   payment: string | null;
   amount: number | null;
-
-  myIncomeCategories: CategoryType[];
-  myOutcomeCategories: CategoryType[];
-  myPayments: PaymentType[];
 }
 
 export default class InputBar extends Component<InputBarProps, InputBarStates> {
@@ -40,22 +36,6 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
   constructor(props: InputBarProps) {
     super(props);
 
-    subscribe(
-      userState.myIncomeCategories,
-      'input-bar-incomecategories',
-      this.update.bind(this)
-    );
-    subscribe(
-      userState.myOutcomeCategories,
-      'input-bar-outcomecategories',
-      this.update.bind(this)
-    );
-    subscribe(
-      userState.myPayments,
-      'input-bar-payments',
-      this.update.bind(this)
-    );
-
     this.state = {
       paymentType: 'outcome',
       date: dayjs(new Date()).format('YYYYMMDD'),
@@ -63,10 +43,6 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
       content: null,
       payment: null,
       amount: null,
-
-      myIncomeCategories: [],
-      myOutcomeCategories: [],
-      myPayments: [],
     };
 
     this.$saveBtn = new SaveButton({
@@ -75,16 +51,12 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
       onClick: () => {},
     }).$dom;
 
-    // const setIncomeCategories = setState(userState.myIncomeCategories);
-    // const setOutcomeCategories = setState(userState.myOutcomeCategories);
+    const setIncomeCategories = setState(userState.myIncomeCategories);
+    const setOutcomeCategories = setState(userState.myOutcomeCategories);
     const setPayments = setState(userState.myPayments);
 
-    getMyIncomeCategories().then((res) =>
-      this.setState({ myIncomeCategories: res })
-    );
-    getMyOutcomeCategories().then((res) =>
-      this.setState({ myOutcomeCategories: res })
-    );
+    getMyIncomeCategories().then((res) => setIncomeCategories(res));
+    getMyOutcomeCategories().then((res) => setOutcomeCategories(res));
     getMyPayments().then((res) => setPayments(res));
 
     this.setDom();
@@ -111,17 +83,17 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
     this.$categorySelect = new InputBarSelect({
       content: this.state.category,
       setContent: (category: string) => this.setState({ category }),
-      items:
+      type:
         this.state.paymentType === 'income'
-          ? this.state.myIncomeCategories
-          : this.state.myOutcomeCategories,
+          ? 'incomeCategories'
+          : 'outcomeCategories',
     }).$dom;
 
     // 결제수단
     this.$paymentSelect = new InputBarSelect({
       content: this.state.payment,
       setContent: (payment: string) => this.setState({ payment }),
-      items: getState(userState.myPayments) as PaymentType[],
+      type: 'payments',
     }).$dom;
   }
 

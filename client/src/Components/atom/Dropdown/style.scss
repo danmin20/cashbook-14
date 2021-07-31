@@ -1,45 +1,84 @@
 @import '../../../scss/theme';
 
-.dropdown {
+.dropdown-wrapper {
   position: absolute;
   top: 5rem;
-  border: 0.1rem solid $line;
-  background-color: $off-white;
-  border-radius: 1rem;
-  box-shadow: $shadow;
-  width: 14.8rem;
-  box-sizing: border-box;
+  left: -2rem;
 
-  animation: open 0.3s;
-
-  &__item {
-    @include body-regular;
-    @include flex-center;
-    justify-content: space-between;
-    position: relative;
-    padding: 1.6rem 2.4rem;
-    color: $title-active;
+  .dropdown {
+    border: 0.1rem solid $line;
+    background-color: $off-white;
+    border-radius: 1rem;
+    box-shadow: $shadow;
+    width: 14.8rem;
     box-sizing: border-box;
-    cursor: pointer;
-    &:hover {
-      &:first-child {
-        border-radius: 1rem 1rem 0 0;
+
+    animation: open 0.3s;
+
+    &__item {
+      @include body-regular;
+      @include flex-center;
+      justify-content: space-between;
+      position: relative;
+      padding: 1.6rem 2.4rem;
+      color: $title-active;
+      box-sizing: border-box;
+      cursor: pointer;
+      &:hover {
+        &:first-child {
+          border-radius: 1rem 1rem 0 0;
+        }
+        &:last-child {
+          border-radius: 0 0 1rem 1rem;
+        }
+        background-color: $background;
       }
-      &:last-child {
-        border-radius: 0 0 1rem 1rem;
-      }
-      background-color: $background;
-    }
-    &:not(:first-child) {
-      &::after {
-        position: absolute;
-        content: '';
-        top: 0;
-        left: 2.4rem;
-        width: 10rem;
-        height: 0.1rem;
-        background-color: $line;
+      &:not(:first-child) {
+        &::after {
+          position: absolute;
+          content: '';
+          top: 0;
+          left: 2.4rem;
+          width: 10rem;
+          height: 0.1rem;
+          background-color: $line;
+        }
       }
     }
   }
+  .add-btn {
+    @include flex-center;
+    box-sizing: border-box;
+    padding-bottom: 0.3rem;
+    width: 3rem;
+    height: 3rem;
+    background-color: $primary1;
+    position: absolute;
+    top: 0rem;
+    right: -3.5rem;
+    border-radius: 50%;
+    box-shadow: $shadow;
+    color: #fff;
+    font-size: 2rem;
+  }
+}
+
+.modal-container {
+  @include flex-center;
+  cursor: default;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  height: 100vh;
+}
+.background {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  background-color: $title-active;
+  opacity: 0.5;
 }

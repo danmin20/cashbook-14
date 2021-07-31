@@ -155,7 +155,7 @@ const defaultCategories = [
     color: '#d092e2',
   },
   {
-    name: '미분류',
+    name: '기타',
     type: 'outcome',
     color: '#817dce',
   },
