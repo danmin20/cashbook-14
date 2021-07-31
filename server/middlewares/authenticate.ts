@@ -6,7 +6,6 @@ export const authenticate = async (
   next: NextFunction
 ) => {
   const user = req.session?.user;
-  console.log(user);
 
   if (!user) {
     res.json({
