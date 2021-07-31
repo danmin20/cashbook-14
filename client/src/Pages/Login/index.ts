@@ -1,36 +1,25 @@
 import Component, { PropsType, StateType } from '../../core/Component';
 import jsx from '../../core/jsx';
-import Header from '../../Components/atom/Header';
-import PieGraph from '../../Components/atom/PieGraph';
 
 export default class Login extends Component<PropsType, StateType> {
-  $header: Element;
-  $pieGraph: Element;
-
   constructor(props: PropsType) {
     super(props);
-
-    this.$header = new Header({}).$dom;
-    this.$pieGraph = new PieGraph({}).$dom;
 
     this.setDom();
   }
 
   render() {
     return jsx`
-      <div class='wrapper'>
+      <div class='login-wrapper'>
+        <div style="width: 100%; overflow: hidden">
+        <div class="wave -one"></div>
+        <div class="wave -two"></div>
+        <div class="wave -three"></div>
+        </div>
         <div class='top'>
-          ${this.$header}
-        </div>
+        <a href="http://localhost:3000/api/auth">깃허브 요청</a>
 
-        <div class="chart-wrapper">
-          <div class="chart">
-            ${this.$pieGraph}
-            <div>
-              List is here
-            </div>
         </div>
-
       </div>
     `;
   }

@@ -9,9 +9,9 @@ export const authenticate = async (
   console.log(user);
 
   if (!user) {
-    // console.log('redirect');
-    // // res.redirect('http://localhost:3000/api/auth');
-    res.redirect('/login');
+    res.json({
+      message: 'forbidden',
+    });
   } else {
     req.user = user;
     next();

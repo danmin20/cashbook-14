@@ -72,7 +72,6 @@ export default class Main extends Component<PropsType, MainStates> {
           <div class='content__list'>
             ${this.$historyList}
           </div>
-          <a href="http://localhost:3000/api/auth">깃허브 요청</a>
         </div>
       </div>
     `;
