@@ -29,7 +29,7 @@ export default class HistoryList extends Component<
     this.state = {
       checked: ['income', 'outcome'],
     };
-    subscribe(userState.myHistories, 'myHistories', this.update.bind(this));
+    subscribe(userState.myHistories, 'main-histories', this.update.bind(this));
 
     this.setDom();
   }

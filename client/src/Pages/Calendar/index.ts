@@ -1,7 +1,7 @@
 import Component, { PropsType, StateType } from '../../core/Component';
 import jsx from '../../core/jsx';
 import Header from '../../Components/atom/Header';
-import Calendar from '../../Components/atom/Calendar';
+import CalendarContainer from '../../Components/organism/CalendarContainer';
 
 export default class CalendarPage extends Component<PropsType, StateType> {
   $header: Element;
@@ -11,7 +11,7 @@ export default class CalendarPage extends Component<PropsType, StateType> {
     super(props);
 
     this.$header = new Header({}).$dom;
-    this.$calendar = new Calendar({}).$dom;
+    this.$calendar = new CalendarContainer({}).$dom;
 
     this.setDom();
   }

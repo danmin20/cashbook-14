@@ -3,3 +3,6 @@ export const generateRandomColor = () => {
 };
 
 export const hexRegex = /^#(?:[0-9a-f]{3}){1,2}$/i;
+
+export const returnPrice = (price: number) =>
+  price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
