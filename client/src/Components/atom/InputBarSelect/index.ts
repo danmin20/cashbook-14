@@ -50,6 +50,7 @@ export default class InputBarSelect extends Component<
   }
 
   willUpdate() {
+    console.log('update select', getState(userState.myOutcomeCategories));
     this.$dropdown = new DropDown({
       selectType: this.props.type === 'payments' ? 'payment' : 'category',
       items:
@@ -59,6 +60,10 @@ export default class InputBarSelect extends Component<
           ? (getState(userState.myOutcomeCategories) as CategoryType[])
           : (getState(userState.myPayments) as PaymentType[]),
       setContent: this.props.setContent,
+      paymentType:
+        this.props.type !== 'payments' && this.props.type === 'incomeCategories'
+          ? 'income'
+          : 'outcome' || null,
     }).$dom;
   }
 

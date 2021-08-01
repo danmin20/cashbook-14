@@ -3,7 +3,7 @@ import { PaymentService } from '../services/PaymentService';
 
 async function createPayment(req: Request, res: Response, next: NextFunction) {
   try {
-    const { id: userId } = req.user;
+    const { userId } = req.user;
 
     const { body } = req;
 
@@ -17,7 +17,7 @@ async function createPayment(req: Request, res: Response, next: NextFunction) {
 
 async function updatePayment(req: Request, res: Response, next: NextFunction) {
   try {
-    const { id: userId } = req.user;
+    const { userId } = req.user;
 
     const { paymentId } = req.params;
 
@@ -36,7 +36,7 @@ async function updatePayment(req: Request, res: Response, next: NextFunction) {
 
 async function deletePayment(req: Request, res: Response, next: NextFunction) {
   try {
-    const { id: userId } = req.user;
+    const { userId } = req.user;
 
     const { paymentId } = req.params;
 

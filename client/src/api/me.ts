@@ -1,4 +1,4 @@
-import { fetchWrap } from '../utils/util';
+import { fetchWrap } from '@/utils/util';
 
 export const getMyMonthlyHistory = ({ YYYYMM }: { YYYYMM: string }) =>
   fetchWrap({ method: 'get', url: '/me/histories', params: { date: YYYYMM } });

@@ -1,4 +1,4 @@
-import { fetchWrap } from '../utils/util';
+import { fetchWrap } from '@/utils/util';
 
 export const createHistory = ({
   paymentId,

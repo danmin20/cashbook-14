@@ -9,6 +9,7 @@ interface DropDownProps {
   selectType: 'payment' | 'category';
   items: CategoryType[] | PaymentType[];
   setContent: Function;
+  paymentType: 'income' | 'outcome' | null;
 }
 
 interface DropDownState {
@@ -33,6 +34,7 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
       closeAlert: () => this.setState({ isAlertOpened: false }),
       select: this.props.selectType,
       type: 'add',
+      paymentType: this.props.paymentType,
       content:
         this.props.selectType === 'category'
           ? '카테고리 추가'
