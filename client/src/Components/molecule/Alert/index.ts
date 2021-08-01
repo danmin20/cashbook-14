@@ -5,7 +5,11 @@ import TextInput from '@/Components/atom/TextInput';
 import './style';
 import { createCategory } from '@/api/category';
 import { createPayment } from '@/api/payment';
-import { getMyIncomeCategories, getMyOutcomeCategories } from '@/api/me';
+import {
+  getMyIncomeCategories,
+  getMyOutcomeCategories,
+  getMyPayments,
+} from '@/api/me';
 import { setState } from '@/core/observer';
 import { userState } from '@/Model';
 
@@ -55,10 +59,6 @@ export default class Alert extends Component<AlertProps> {
 
       if (select === 'category') {
         if (type === 'add') {
-          console.log(
-            $input?.value,
-            this.$colorPicker.querySelector('input')?.value
-          );
           // 카테고리 추가
           createCategory({
             name: $input?.value as string,
@@ -83,7 +83,11 @@ export default class Alert extends Component<AlertProps> {
           // 결제수단 추가
           createPayment({
             name: $input?.value as string,
-          }).then(() => closeAlert());
+          })
+            .then(() => {
+              getMyPayments().then((res) => setPayments(res));
+            })
+            .then(() => closeAlert());
         } else {
           // 결제수단 삭제
         }

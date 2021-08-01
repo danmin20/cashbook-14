@@ -17,7 +17,7 @@ interface InpuBarSelectState {
   isOpened: boolean;
 }
 
-export default class InputBarSelect extends Component<
+class InputBarSelect extends Component<
   InputBarSelectProps,
   InpuBarSelectState
 > {
@@ -26,45 +26,11 @@ export default class InputBarSelect extends Component<
   constructor(props: InputBarSelectProps) {
     super(props);
 
-    subscribe(
-      userState.myIncomeCategories,
-      'input-bar-incomecategories',
-      this.update.bind(this)
-    );
-    subscribe(
-      userState.myOutcomeCategories,
-      'input-bar-outcomecategories',
-      this.update.bind(this)
-    );
-    subscribe(
-      userState.myPayments,
-      'input-bar-payments',
-      this.update.bind(this)
-    );
-
     this.state = {
       isOpened: false,
     };
 
     this.setDom();
-  }
-
-  willUpdate() {
-    console.log('update select', getState(userState.myOutcomeCategories));
-    this.$dropdown = new DropDown({
-      selectType: this.props.type === 'payments' ? 'payment' : 'category',
-      items:
-        this.props.type === 'incomeCategories'
-          ? (getState(userState.myIncomeCategories) as CategoryType[])
-          : this.props.type === 'outcomeCategories'
-          ? (getState(userState.myOutcomeCategories) as CategoryType[])
-          : (getState(userState.myPayments) as PaymentType[]),
-      setContent: this.props.setContent,
-      paymentType:
-        this.props.type !== 'payments' && this.props.type === 'incomeCategories'
-          ? 'income'
-          : 'outcome' || null,
-    }).$dom;
   }
 
   render() {
@@ -84,5 +50,58 @@ export default class InputBarSelect extends Component<
         ${isOpened ? this.$dropdown : ''}
       </div>
     `;
+  }
+}
+
+export class CategorySelect extends InputBarSelect {
+  $dropdown: Element = jsx``;
+
+  constructor(props: InputBarSelectProps) {
+    super(props);
+
+    subscribe(
+      userState.myIncomeCategories,
+      'input-bar-incomecategories',
+      this.update.bind(this)
+    );
+    subscribe(
+      userState.myOutcomeCategories,
+      'input-bar-outcomecategories',
+      this.update.bind(this)
+    );
+  }
+
+  willUpdate() {
+    this.$dropdown = new DropDown({
+      selectType: 'category',
+      items:
+        this.props.type === 'incomeCategories'
+          ? (getState(userState.myIncomeCategories) as CategoryType[])
+          : (getState(userState.myOutcomeCategories) as CategoryType[]),
+      setContent: this.props.setContent,
+      paymentType:
+        this.props.type === 'incomeCategories' ? 'income' : 'outcome',
+    }).$dom;
+  }
+}
+export class PaymentSelect extends InputBarSelect {
+  $dropdown: Element = jsx``;
+
+  constructor(props: InputBarSelectProps) {
+    super(props);
+
+    subscribe(
+      userState.myPayments,
+      'input-bar-payments',
+      this.update.bind(this)
+    );
+  }
+
+  willUpdate() {
+    this.$dropdown = new DropDown({
+      selectType: 'payment',
+      items: getState(userState.myPayments) as PaymentType[],
+      setContent: this.props.setContent,
+    }).$dom;
   }
 }

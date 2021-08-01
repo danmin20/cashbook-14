@@ -10,7 +10,10 @@ import { $router } from '@/core/router';
 import { userState } from '@/Model';
 import { setState } from '@/core/observer';
 import InputBarInput from '@/Components/atom/InputBarInput';
-import InputBarSelect from '@/Components/atom/InputBarSelect';
+import {
+  CategorySelect,
+  PaymentSelect,
+} from '@/Components/atom/InputBarSelect';
 import SaveButton from '@/Components/atom/SaveButton';
 import './style';
 import { minus } from '@/../assets';
@@ -90,12 +93,8 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
     this.$amountInput = new InputBarInput({}).$dom;
     this.$amountInput.id = 'amount-input';
 
-    this.setDom();
-  }
-
-  willMount() {
     // 분류
-    this.$categorySelect = new InputBarSelect({
+    this.$categorySelect = new CategorySelect({
       content: this.state.category.name,
       setContent: (category: { id: number; name: string }) =>
         this.setState({ category }),
@@ -106,13 +105,17 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
     }).$dom;
 
     // 결제수단
-    this.$paymentSelect = new InputBarSelect({
+    this.$paymentSelect = new PaymentSelect({
       content: this.state.payment.name,
       setContent: (payment: { id: number; name: string }) =>
         this.setState({ payment }),
       type: 'payments',
     }).$dom;
+
+    this.setDom();
   }
+
+  willMount() {}
 
   render() {
     const { paymentType } = this.state;
