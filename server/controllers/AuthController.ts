@@ -35,6 +35,9 @@ async function login(req: Request, res: Response, next: NextFunction) {
       githubId: userData.login,
     })) as User;
 
+    // githubName이 없는 경우 githubId를 복사하여 사용
+    userData.name = userData.name ?? userData.login;
+
     // 없으면 유저 생성
     if (!isExist) {
       await UserService.createUser({
