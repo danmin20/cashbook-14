@@ -43,7 +43,9 @@ export default class List extends Component<ListProps> {
         <div class='payment'>
           ${listType === 'large' ? payment.name : ''}
         </div>
-        <div class='amount'>
+        <div class='amount${
+          paymentType === 'outcome' ? ' outcome' : ' income'
+        }'>
           ${paymentType === 'outcome' ? '-' : ''}${amount}${
       listType === 'large' ? '원' : ''
     }

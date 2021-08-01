@@ -19,9 +19,15 @@
     &__history {
       padding: 0.8rem 0.9rem;
       font-size: 1.4rem;
+      text-align: end;
       .amount {
         color: $title-active;
         height: 2.2rem;
+        &:last-child {
+          border-top: 0.1rem solid $line;
+          margin-top: 0.4rem;
+          padding-top: 0.8rem;
+        }
       }
       .income {
         color: $primary3;
