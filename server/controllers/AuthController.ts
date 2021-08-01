@@ -70,7 +70,6 @@ async function login(req: Request, res: Response, next: NextFunction) {
 
     res.redirect('http://localhost:8080');
   } catch (err) {
-    console.log(err);
     res.redirect('http://localhost:8080/error');
   }
 }
@@ -159,7 +158,7 @@ const defaultCategories = [
     color: '#d092e2',
   },
   {
-    name: '미분류',
+    name: '기타',
     type: 'outcome',
     color: '#817dce',
   },

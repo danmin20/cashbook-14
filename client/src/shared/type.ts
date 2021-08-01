@@ -12,6 +12,17 @@ export type HistoryType = {
   payment: {
     id: number;
     name: string;
-    type: string;
   };
+};
+
+export type CategoryType = {
+  id?: number;
+  name: string;
+  type?: string;
+  color: string;
+};
+
+export type PaymentType = {
+  id: number;
+  name: string;
 };

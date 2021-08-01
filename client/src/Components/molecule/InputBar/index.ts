@@ -1,9 +1,17 @@
 import dayjs from 'dayjs';
+import {
+  getMyIncomeCategories,
+  getMyOutcomeCategories,
+  getMyPayments,
+} from '../../../api/me';
 import Component from '../../../core/Component';
 import jsx from '../../../core/jsx';
+import { userState } from '../../../Model';
+import { CategoryType, PaymentType } from '../../../shared/type';
+import { getState, setState, subscribe } from '../../../utils/observer';
+import InputBarInput from '../../atom/InputBarInput';
+import InputBarSelect from '../../atom/InputBarSelect';
 import SaveButton from '../../atom/SaveButton';
-import InputBarInput from './input';
-import InputBarSelect from './select';
 import './style';
 
 export interface InputBarProps {}
@@ -19,11 +27,11 @@ export interface InputBarStates {
 
 export default class InputBar extends Component<InputBarProps, InputBarStates> {
   $saveBtn: Element;
-  $dateInput: Element;
-  $contentInput: Element;
-  $amountInput: Element;
-  $categorySelect: Element;
-  $paymentSelect: Element;
+  $dateInput: Element = jsx``;
+  $contentInput: Element = jsx``;
+  $amountInput: Element = jsx``;
+  $categorySelect: Element = jsx``;
+  $paymentSelect: Element = jsx``;
 
   constructor(props: InputBarProps) {
     super(props);
@@ -43,33 +51,54 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
       onClick: () => {},
     }).$dom;
 
+    const setIncomeCategories = setState(userState.myIncomeCategories);
+    const setOutcomeCategories = setState(userState.myOutcomeCategories);
+    const setPayments = setState(userState.myPayments);
+
+    getMyIncomeCategories().then((res) => setIncomeCategories(res));
+    getMyOutcomeCategories().then((res) => setOutcomeCategories(res));
+    getMyPayments().then((res) => setPayments(res));
+
+    this.setDom();
+  }
+
+  willMount() {
+    // 일자
     this.$dateInput = new InputBarInput({
       setContent: (date: string) => this.setState({ date }),
     }).$dom;
+
+    // 내용
     this.$contentInput = new InputBarInput({
       setContent: (content: string) => this.setState({ content }),
     }).$dom;
+
+    // 금액
     this.$amountInput = new InputBarInput({
       setContent: (amount: string) =>
         this.setState({ amount: parseInt(amount) }),
     }).$dom;
 
+    // 분류
     this.$categorySelect = new InputBarSelect({
       content: this.state.category,
       setContent: (category: string) => this.setState({ category }),
-      items: ['생활', '식비', '교통'],
+      type:
+        this.state.paymentType === 'income'
+          ? 'incomeCategories'
+          : 'outcomeCategories',
     }).$dom;
+
+    // 결제수단
     this.$paymentSelect = new InputBarSelect({
       content: this.state.payment,
       setContent: (payment: string) => this.setState({ payment }),
-      items: ['월급', '용돈', '기타수입'],
+      type: 'payments',
     }).$dom;
-
-    this.setDom();
   }
 
   render() {
-    const { paymentType, category } = this.state;
+    const { paymentType } = this.state;
 
     return jsx`
       <div class='input-bar'>

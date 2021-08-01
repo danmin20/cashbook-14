@@ -4,6 +4,7 @@ import diff from './core/diff';
 import Main from './Pages/Main';
 import Calendar from './Pages/Calendar';
 import Chart from './Pages/Chart';
+import Login from './Pages/Login';
 
 declare global {
   interface Window {
@@ -13,6 +14,7 @@ declare global {
 
 const routes = [
   { path: '/', page: Main },
+  { path: '/login', page: Login },
   { path: '/calendar', page: Calendar },
   { path: '/chart', page: Chart },
 ];

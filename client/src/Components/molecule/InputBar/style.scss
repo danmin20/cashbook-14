@@ -39,16 +39,6 @@
     border: 0 solid $placeholder;
     border-left-width: 0.1rem;
   }
-  input {
-    @include body-regular;
-    border: none;
-    outline: none;
-    box-sizing: border-box;
-    width: 10rem;
-    &::placeholder {
-      color: $placeholder;
-    }
-  }
   .amount {
     @include flex-center;
     box-sizing: border-box;
@@ -59,15 +49,6 @@
     input {
       text-align: end;
       margin-right: 1rem;
-    }
-  }
-
-  .select {
-    @include flex-center;
-    position: relative;
-    img {
-      margin-left: 1.5rem;
-      cursor: pointer;
     }
   }
 }

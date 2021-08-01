@@ -15,6 +15,7 @@
 
   &__header {
     @include flex-center;
+    color: $title-active;
     justify-content: space-between;
   }
 
@@ -29,7 +30,7 @@
 
   .inactive {
     cursor: default;
-    color: $label;
+    opacity: 0.5;
   }
   .delete {
     font-weight: 500;

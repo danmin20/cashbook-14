@@ -3,7 +3,7 @@ import jsx from '../../../core/jsx';
 import './style';
 
 export interface DayListProps {
-  date: Date;
+  date: string;
   income?: number;
   outcome?: number;
 }
@@ -20,7 +20,7 @@ export default class DayList extends Component<DayListProps> {
     return jsx`
       <div class='day-list'>
         <div>
-          7월 15일 <span>목</span>
+          ${date} <span>목</span>
         </div>
         <div class='day-list__sum'>
           ${

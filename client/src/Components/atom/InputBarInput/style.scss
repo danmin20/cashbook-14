@@ -1,0 +1,12 @@
+@import '../../../scss/theme';
+
+.input {
+  @include body-regular;
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+  width: 10rem;
+  &::placeholder {
+    color: $label;
+  }
+}

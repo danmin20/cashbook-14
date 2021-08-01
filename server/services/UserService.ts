@@ -26,7 +26,6 @@ async function createUser({
   githubId: string;
   githubName: string;
 }) {
-  console.log(githubName);
   const repo = getRepository(User);
 
   const user = repo.create({ githubId, githubName });

@@ -51,6 +51,7 @@ export default class Component<
   }
 
   update(): void {
+    this.willMount();
     this.willUpdate();
     this.updateDOM();
     this.didUpdate();

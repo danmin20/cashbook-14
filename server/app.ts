@@ -38,9 +38,29 @@ app.use(
   })
 );
 
-app.use(express.static(path.join(__dirname, '../client/dist/src')));
+app.use(
+  express.static(
+    path.join(
+      __dirname,
+      process.env.NODE_ENV === 'production'
+        ? '../../client/dist/src'
+        : '../client/dist/src'
+    )
+  )
+);
 
 app.use('/api', router);
+app.get('/', (req: Request, res: Response) => {
+  res.sendFile(
+    path.join(
+      __dirname,
+      process.env.NODE_ENV === 'production'
+        ? '../../client/dist/src'
+        : '../client/dist/src',
+      'index.html'
+    )
+  );
+});
 
 // TODO: error handler 재작성
 app.use((req: Request, res: Response, next: NextFunction) => {

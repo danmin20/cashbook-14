@@ -8,6 +8,7 @@ export interface AlertProps {
   select: 'category' | 'payment';
   type: 'delete' | 'add';
   content: string;
+  closeAlert: Function;
 }
 
 export default class Alert extends Component<AlertProps> {
@@ -15,11 +16,11 @@ export default class Alert extends Component<AlertProps> {
   $colorPicker: Element;
   handleDeleteActive = ({ target }: { target: HTMLInputElement }) => {
     if (target.value.length > 0) {
-      (this.$dom.querySelector('#close') as HTMLDivElement).classList.remove(
+      (this.$dom.querySelector('#add') as HTMLDivElement).classList.remove(
         'inactive'
       );
     } else {
-      (this.$dom.querySelector('#close') as HTMLDivElement).classList.add(
+      (this.$dom.querySelector('#add') as HTMLDivElement).classList.add(
         'inactive'
       );
     }
@@ -37,7 +38,7 @@ export default class Alert extends Component<AlertProps> {
     this.setDom();
   }
   render() {
-    const { content, type, select } = this.props;
+    const { content, type, select, closeAlert } = this.props;
 
     return jsx`
       <div class='alert'>
@@ -47,10 +48,10 @@ export default class Alert extends Component<AlertProps> {
         <div onInput=${this.handleDeleteActive}>${this.$textInput}</div>
 
         <div class='buttons'>
-          <div id='close' class='alert__btn inactive'>취소</div>
-          <div class='alert__btn ${type === 'delete' ? 'delete' : 'add'}'>${
-      type === 'delete' ? '삭제' : '등록'
-    }
+          <div onClick='${closeAlert}' class='alert__btn'>취소</div>
+          <div id='add' class='alert__btn inactive ${
+            type === 'delete' ? 'delete' : 'add'
+          }'>${type === 'delete' ? '삭제' : '등록'}
         </div>
         </div>
       </div>

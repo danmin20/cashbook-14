@@ -7,7 +7,7 @@ import { History } from '../models/history';
 
 async function getMe(req: Request, res: Response, next: NextFunction) {
   try {
-    const { githubId } = req.session.user;
+    const { githubId } = req.user;
 
     const result = await UserService.findUser({ githubId });
 
@@ -19,12 +19,9 @@ async function getMe(req: Request, res: Response, next: NextFunction) {
 
 async function getMyPayments(req: Request, res: Response, next: NextFunction) {
   try {
-    console.log('aaa');
-    const { userId } = req.session.user;
-    console.log(req.session.user);
+    const { userId } = req.user;
 
     const result = await PaymentService.findPayments({ userId });
-    console.log(result);
 
     res.status(200).json(result);
   } catch (err) {
@@ -38,7 +35,7 @@ async function getMyCategories(
   next: NextFunction
 ) {
   try {
-    const { userId } = req.session.user;
+    const { userId } = req.user;
 
     const { query } = req;
 
@@ -70,7 +67,7 @@ function getGroupedHistory(histories: History[]) {
       };
     }
 
-    switch (history.type) {
+    switch (history.paymentType) {
       case 'income':
         groupedHistories[history.date].totalIncome += +history.amount;
         break;
@@ -87,7 +84,7 @@ function getGroupedHistory(histories: History[]) {
 
 async function getMyHistories(req: Request, res: Response, next: NextFunction) {
   try {
-    const { userId } = req.session.user;
+    const { userId } = req.user;
 
     const { query } = req;
 
@@ -111,7 +108,7 @@ async function getMyHistories(req: Request, res: Response, next: NextFunction) {
     };
 
     for (const history of histories) {
-      switch (history.type) {
+      switch (history.paymentType) {
         case 'income':
           result.totalIncome += +history.amount;
           result.totalIncomeCount += 1;
@@ -135,7 +132,7 @@ async function getSumOfAmounts(
   next: NextFunction
 ) {
   try {
-    const { userId } = req.session.user;
+    const { userId } = req.user;
 
     const { query } = req;
 

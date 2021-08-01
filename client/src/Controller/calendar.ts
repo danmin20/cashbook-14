@@ -1,4 +1,4 @@
-import { dateState } from '../Model';
+import { dateState, userState } from '../Model';
 import { setState } from '../utils/observer';
 
 export default {
@@ -24,6 +24,7 @@ export default {
   getLastDay: (yy: number, mm: number) => new Date(yy, mm + 1, 0),
 
   setDateState: setState(dateState),
+  setHistoryState: setState(userState.myHistories),
 
   nextMonth: function () {
     let d = new Date();

@@ -1,16 +1,19 @@
 import Component from '../../../core/Component';
 import jsx from '../../../core/jsx';
+import { CategoryType, PaymentType } from '../../../shared/type';
 import CategoryTag from '../../atom/CategoryTag';
 import './style';
 
 export interface ListProps {
-  tagId: string;
-  tagTitle: string;
-  type: 'small' | 'large';
+  category: CategoryType;
+  listType: 'large' | 'small';
+  paymentType: 'income' | 'outcome';
   content: string;
-  payment: string;
-  paymentType: string;
+  payment: PaymentType;
   amount: number;
+  totalIncome?: number;
+  totalOutcome?: number;
+  date?: string;
 }
 
 export default class List extends Component<ListProps> {
@@ -20,30 +23,29 @@ export default class List extends Component<ListProps> {
     super(props);
 
     this.$categoryTag = new CategoryTag({
-      id: this.props.tagId,
-      title: this.props.tagTitle,
-      color: '#4a6cc3',
+      title: this.props.category.name,
+      color: this.props.category.color,
     }).$dom;
 
     this.setDom();
   }
   render() {
-    const { type, content, payment, amount, paymentType } = this.props;
+    const { paymentType, content, payment, amount, listType } = this.props;
 
     return jsx`
       <div class='list-component${
-        this.props.type === 'large' ? ' list-large' : ''
+        this.props.listType === 'large' ? ' list-large' : ''
       }'>
         <div class='title'>
           ${this.$categoryTag}
           ${content}
         </div>
         <div class='payment'>
-          ${type === 'large' ? payment : ''}
+          ${listType === 'large' ? payment.name : ''}
         </div>
         <div class='amount'>
           ${paymentType === 'outcome' ? '-' : ''}${amount}${
-      type === 'large' ? '원' : ''
+      listType === 'large' ? '원' : ''
     }
         </div>
       </div>

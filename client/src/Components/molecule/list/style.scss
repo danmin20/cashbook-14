@@ -3,7 +3,7 @@
 .list-component {
   @include flex-center;
   @include body-medium;
-  justify-content: space-between;
+  flex: 1;
   width: 37.2rem;
   box-sizing: border-box;
   padding: 2rem 1.2rem;
@@ -13,16 +13,22 @@
   padding-bottom: 2rem;
   border-bottom: 0.1rem solid $line;
   .title {
-    @include flex-center;
+    display: flex;
+    align-items: center;
+    flex: 0.55;
     .category-tag {
       margin-right: 1rem;
     }
   }
   .payment {
+    flex: 0.35;
+
     @include body-medium;
     color: $body;
   }
   .amount {
+    flex: 0.1;
+    text-align: end;
     font-weight: 500;
   }
 }

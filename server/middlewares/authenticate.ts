@@ -1,18 +1,18 @@
 import { Response, NextFunction, Request } from 'express';
-import { AuthController } from '../controllers/AuthController';
-import { User } from '../models/user';
-import { UserService } from '../services/UserService';
 
-export const authenticateAccessToken = async (
+export const authenticate = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const user = req.session.user;
+  const user = req.session?.user;
 
   if (!user) {
-    next(Error);
+    res.json({
+      message: 'forbidden',
+    });
   } else {
     req.user = user;
+    next();
   }
 };
