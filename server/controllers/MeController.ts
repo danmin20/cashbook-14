@@ -106,15 +106,19 @@ async function getMyHistories(req: Request, res: Response, next: NextFunction) {
       totalOutcome: 0,
       histories: getGroupedHistory(histories),
       totalCount: histories.length,
+      totalIncomeCount: 0,
+      totalOutcomeCount: 0,
     };
 
     for (const history of histories) {
       switch (history.type) {
         case 'income':
           result.totalIncome += +history.amount;
+          result.totalIncomeCount += 1;
           break;
         case 'outcome':
           result.totalOutcome += +history.amount;
+          result.totalOutcomeCount += 1;
           break;
       }
     }
