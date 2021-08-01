@@ -2,7 +2,7 @@ import { controller } from '@/Controller';
 import Component, { PropsType, StateType } from '@/core/Component';
 import jsx from '@/core/jsx';
 import { dateState } from '@/Model';
-import { HistoriesType } from '@/Pages/Main';
+import { HistoriesType } from '@/shared/type';
 import { getState, subscribe } from '@/core/observer';
 import Calendar from '@/Components/atom/Calendar';
 import './style';

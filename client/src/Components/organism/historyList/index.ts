@@ -4,8 +4,8 @@ import { getState, subscribe } from '@/core/observer';
 import { userState } from '@/Model';
 import DayList from '@/Components/atom/DayList';
 import List, { ListProps } from '@/Components/molecule/list';
-import { AllHistorytype } from '@/Pages/Main';
 import Info from '@/Components/molecule/Info';
+import { AllHistorytype } from '@/shared/type';
 
 interface HistoryListState {
   checked: ('income' | 'outcome')[];
@@ -21,6 +21,9 @@ export default class HistoryList extends Component<
     histories: [],
     totalIncome: 0,
     totalOutcome: 0,
+    totalCount: 0,
+    totalIncomeCount: 0,
+    totalOutcomeCount: 0,
   };
 
   constructor(props: PropsType) {
@@ -40,7 +43,9 @@ export default class HistoryList extends Component<
     this.$info = new Info({
       income: this.histories.totalIncome,
       outcome: this.histories.totalOutcome,
-      count: 100,
+      totalCount: this.histories.totalCount,
+      incomeCount: this.histories.totalIncomeCount,
+      outcomeCount: this.histories.totalOutcomeCount,
       checked: this.state.checked,
       handleCheck: (newState: ('income' | 'outcome')[]) =>
         this.setState({ checked: newState }),

@@ -1,3 +1,5 @@
+import { ListProps } from '@/Components/molecule/list';
+
 export type HistoryType = {
   id: number;
   paymentType: number;
@@ -25,4 +27,21 @@ export type CategoryType = {
 export type PaymentType = {
   id: number;
   name: string;
+};
+
+export type AllHistorytype = {
+  date: string;
+  histories: HistoriesType[];
+  totalIncome: number;
+  totalOutcome: number;
+  totalCount: number;
+  totalIncomeCount: number;
+  totalOutcomeCount: number;
+};
+
+export type HistoriesType = {
+  date: string;
+  histories: ListProps[];
+  totalIncome: number;
+  totalOutcome: number;
 };
