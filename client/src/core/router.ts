@@ -3,11 +3,9 @@ import Component from '@/core/Component';
 import { customEventEmitter } from '@/utils/helpers';
 
 type Route = {
-  path: any;
-  page: any;
+  path: string;
+  page: typeof Component;
   redirect?: string;
-  component?: any;
-  middlewares?: any;
 };
 
 class Router {
@@ -17,7 +15,15 @@ class Router {
   } = {};
   fallback: string = '/';
 
-  constructor({ $app, routes, fallback = '/' }: any) {
+  constructor({
+    $app,
+    routes,
+    fallback = '/',
+  }: {
+    $app: HTMLElement;
+    routes: Route[];
+    fallback?: string;
+  }) {
     this.$app = $app;
     this.fallback = fallback;
 

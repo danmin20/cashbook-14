@@ -1,5 +1,5 @@
 import Header from '@/Components/atom/Header';
-import InputBar from '@/Components/molecule/InputBar';
+import InputBar from '@/Components/organism/InputBar';
 import HistoryList from '@/Components/organism/historyList';
 import Component, { PropsType, StateType } from '@/core/Component';
 import jsx from '@/core/jsx';
@@ -10,7 +10,7 @@ export default class Main extends Component<PropsType, StateType> {
   $inputBar: Element;
   $historyList: Element;
 
-  constructor(props: any) {
+  constructor(props: PropsType) {
     super(props);
 
     this.$header = new Header({}).$dom;
