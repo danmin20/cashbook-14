@@ -13,7 +13,7 @@ import InputBarInput from '@/Components/atom/InputBarInput';
 import {
   CategorySelect,
   PaymentSelect,
-} from '@/Components/atom/InputBarSelect';
+} from '@/Components/molecule/InputBarSelect';
 import SaveButton from '@/Components/atom/SaveButton';
 import './style';
 import { minus } from '@/../assets';
@@ -93,6 +93,10 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
     this.$amountInput = new InputBarInput({}).$dom;
     this.$amountInput.id = 'amount-input';
 
+    this.setDom();
+  }
+
+  willMount() {
     // 분류
     this.$categorySelect = new CategorySelect({
       content: this.state.category.name,
@@ -111,11 +115,7 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
         this.setState({ payment }),
       type: 'payments',
     }).$dom;
-
-    this.setDom();
   }
-
-  willMount() {}
 
   render() {
     const { paymentType } = this.state;

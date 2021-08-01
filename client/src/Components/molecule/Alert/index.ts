@@ -3,8 +3,8 @@ import jsx from '@/core/jsx';
 import ColorPicker from '@/Components/atom/ColorPicker';
 import TextInput from '@/Components/atom/TextInput';
 import './style';
-import { createCategory } from '@/api/category';
-import { createPayment } from '@/api/payment';
+import { createCategory, deleteCategory } from '@/api/category';
+import { createPayment, deletePayment } from '@/api/payment';
 import {
   getMyIncomeCategories,
   getMyOutcomeCategories,
@@ -12,13 +12,15 @@ import {
 } from '@/api/me';
 import { setState } from '@/core/observer';
 import { userState } from '@/Model';
+import { CategoryType, PaymentType } from '@/shared/type';
 
 export interface AlertProps {
   select: 'category' | 'payment';
   type: 'delete' | 'add';
   content: string;
   closeAlert: Function;
-  paymentType: 'income' | 'outcome' | null;
+  paymentType?: 'income' | 'outcome';
+  delItem?: CategoryType | PaymentType;
 }
 
 export default class Alert extends Component<AlertProps> {
@@ -40,10 +42,11 @@ export default class Alert extends Component<AlertProps> {
   constructor(props: AlertProps) {
     super(props);
 
-    const { type, select, paymentType, closeAlert } = this.props;
+    const { type, select, paymentType, closeAlert, delItem } = this.props;
 
     this.$textInput = new TextInput({
       invalid: type === 'delete' ? true : false,
+      defaultValue: delItem?.name,
     }).$dom;
 
     this.$colorPicker = new ColorPicker({}).$dom;
@@ -58,38 +61,41 @@ export default class Alert extends Component<AlertProps> {
         ?.querySelector('input');
 
       if (select === 'category') {
-        if (type === 'add') {
-          // 카테고리 추가
-          createCategory({
-            name: $input?.value as string,
-            color: this.$colorPicker.querySelector('input')?.value as string,
-            type: paymentType as 'income' | 'outcome',
-          })
-            .then(() => {
-              if (paymentType === 'income') {
-                getMyIncomeCategories().then((res) => setIncomeCategories(res));
-              } else if (paymentType === 'outcome') {
-                getMyOutcomeCategories().then((res) =>
-                  setOutcomeCategories(res)
-                );
-              }
-            })
+        try {
+          if (type === 'add') {
+            // 카테고리 추가
+            createCategory({
+              name: $input?.value as string,
+              color: this.$colorPicker.querySelector('input')?.value as string,
+              type: paymentType as 'income' | 'outcome',
+            });
+          } else {
+            // 카테고리 삭제
+            deleteCategory({ categoryId: delItem?.id as number });
+          }
+        } finally {
+          getMyIncomeCategories()
+            .then((res) => setIncomeCategories(res))
             .then(() => closeAlert());
-        } else {
-          // 카테고리 삭제
+          getMyOutcomeCategories()
+            .then((res) => setOutcomeCategories(res))
+            .then(() => closeAlert());
         }
       } else {
-        if (type === 'add') {
-          // 결제수단 추가
-          createPayment({
-            name: $input?.value as string,
-          })
-            .then(() => {
-              getMyPayments().then((res) => setPayments(res));
-            })
+        try {
+          if (type === 'add') {
+            // 결제수단 추가
+            createPayment({
+              name: $input?.value as string,
+            });
+          } else {
+            // 결제수단 삭제
+            deletePayment({ paymentId: delItem?.id as number });
+          }
+        } finally {
+          getMyPayments()
+            .then((res) => setPayments(res))
             .then(() => closeAlert());
-        } else {
-          // 결제수단 삭제
         }
       }
     };
@@ -97,22 +103,23 @@ export default class Alert extends Component<AlertProps> {
     this.setDom();
   }
   render() {
-    const { content, type, select, closeAlert } = this.props;
+    const { content, type, select, closeAlert, delItem } = this.props;
 
     return jsx`
       <div class='alert'>
         <div class='alert__header'>${content}${
-      select === 'category' ? this.$colorPicker : ''
+      select === 'category' && type === 'add' ? this.$colorPicker : ''
     }</div>
-        <div id='text-input' onInput=${this.handleDeleteActive}>${
-      this.$textInput
-    }</div>
+        <div id='text-input' onInput=${
+          type === 'add' && this.handleDeleteActive
+        }>${this.$textInput}</div>
 
         <div class='buttons'>
           <div onClick='${closeAlert}' class='alert__btn'>취소</div>
-          <div id='add' class='alert__btn inactive ${
-            type === 'delete' ? 'delete' : 'add'
-          }' onClick=${this.handleSubmit}>${type === 'delete' ? '삭제' : '등록'}
+          <div id='add' 
+            class='alert__btn ${type === 'add' ? 'inactive' : ''} ${
+      type === 'delete' ? 'delete' : 'add'
+    }' onClick=${this.handleSubmit}>${type === 'delete' ? '삭제' : '등록'}
         </div>
         </div>
       </div>

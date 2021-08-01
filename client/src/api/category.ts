@@ -14,3 +14,6 @@ export const createCategory = ({
     url: '/categories',
     body: { name, type, color },
   });
+
+export const deleteCategory = ({ categoryId }: { categoryId: number }) =>
+  fetchWrap({ method: 'delete', url: `/categories/${categoryId}` });

@@ -6,3 +6,6 @@ export const createPayment = ({ name }: { name: string }) =>
     url: '/payments',
     body: { name },
   });
+
+export const deletePayment = ({ paymentId }: { paymentId: number }) =>
+  fetchWrap({ method: 'delete', url: `/payments/${paymentId}` });

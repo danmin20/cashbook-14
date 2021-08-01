@@ -20,7 +20,7 @@ export const fetchWrap = async ({
   params,
   body,
 }: {
-  method: string;
+  method: 'get' | 'post' | 'delete';
   url: string;
   params?: {};
   body?: {};
@@ -34,6 +34,7 @@ export const fetchWrap = async ({
     const { data } =
       (method === 'get' && (await axios.get(url, config))) ||
       (method === 'post' && (await axios.post(url, body, config))) ||
+      (method === 'delete' && (await axios.delete(url, config))) ||
       {};
     checkLogin(data);
     return data;

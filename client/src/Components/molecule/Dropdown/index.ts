@@ -18,18 +18,22 @@ interface DropDownState {
 
 export default class DropDown extends Component<DropDownProps, DropDownState> {
   $alert: Element = jsx``;
+  openDelAlert = (e: Event, item: CategoryType | PaymentType) => {
+    e.stopPropagation();
 
-  constructor(props: DropDownProps) {
-    super(props);
+    this.$alert = new Alert({
+      closeAlert: () => this.setState({ isAlertOpened: false }),
+      select: this.props.selectType,
+      type: 'delete',
+      delItem: item,
+      content: `해당 ${
+        this.props.selectType === 'category' ? '카테고리를' : '결제수단을'
+      } 삭제하시겠습니까?`,
+    }).$dom;
 
-    this.state = {
-      isAlertOpened: false,
-    };
-
-    this.setDom();
-  }
-
-  willUpdate() {
+    this.setState({ isAlertOpened: true });
+  };
+  openAddAlert = () => {
     this.$alert = new Alert({
       closeAlert: () => this.setState({ isAlertOpened: false }),
       select: this.props.selectType,
@@ -40,6 +44,18 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
           ? '카테고리 추가'
           : '결제수단 추가',
     }).$dom;
+
+    this.setState({ isAlertOpened: true });
+  };
+
+  constructor(props: DropDownProps) {
+    super(props);
+
+    this.state = {
+      isAlertOpened: false,
+    };
+
+    this.setDom();
   }
 
   render() {
@@ -52,15 +68,16 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
         <div class='dropdown'>
           ${items.map(
             (item) =>
-              jsx`<div onClick=${() =>
-                setContent(item)} class='dropdown__item'>${
+              jsx`
+              <div onClick=${() => setContent(item)} class='dropdown__item'>${
                 item.name
-              }<img src=${delbtn} /></div>`
+              }<img onClick=${(e: Event) =>
+                this.openDelAlert(e, item)} src=${delbtn} />
+              </div>`
           )}
         </div>
         
-        <div onClick=${() =>
-          this.setState({ isAlertOpened: true })} class='add-btn'>+</div>
+        <div onClick=${this.openAddAlert} class='add-btn'>+</div>
 
           ${
             this.state.isAlertOpened

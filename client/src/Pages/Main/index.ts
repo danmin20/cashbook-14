@@ -14,9 +14,7 @@ export default class Main extends Component<PropsType, StateType> {
     super(props);
 
     this.$header = new Header({}).$dom;
-
     this.$historyList = new HistoryList({}).$dom;
-
     this.$inputBar = new InputBar({}).$dom;
 
     this.setDom();
