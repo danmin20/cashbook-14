@@ -6,6 +6,7 @@ import {
 } from '../../../api/me';
 import Component from '../../../core/Component';
 import jsx from '../../../core/jsx';
+import { $router } from '../../../lib/router';
 import { userState } from '../../../Model';
 import { setState } from '../../../utils/observer';
 import InputBarInput from '../../atom/InputBarInput';
@@ -60,14 +61,6 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
       isActive: true,
       type: 'large',
       onClick: () => {
-        console.log(
-          this.state.paymentType,
-          this.state.payment.id,
-          this.state.category.id,
-          this.state.date,
-          this.state.content,
-          this.state.amount
-        );
         createHistory({
           paymentId: this.state.payment.id ?? undefined,
           categoryId: this.state.category.id ?? undefined,
@@ -75,7 +68,7 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
           content: this.state.content as string,
           amount: this.state.amount as number,
           paymentType: this.state.paymentType,
-        });
+        }).then(() => $router.push('/#/'));
       },
     }).$dom;
 
