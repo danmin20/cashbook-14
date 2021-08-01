@@ -25,3 +25,39 @@
     opacity: 1;
   }
 }
+
+@keyframes typingAni {
+  0% {
+    color: #4a6cc3;
+  }
+  10% {
+    color: #4ca1de;
+  }
+  20% {
+    color: #94d3cc;
+  }
+  30% {
+    color: #4cb8b8;
+  }
+  40% {
+    color: #6ed5eb;
+  }
+  50% {
+    color: #d092e2;
+  }
+  60% {
+    color: #817dce;
+  }
+  70% {
+    color: #b9d58c;
+  }
+  80% {
+    color: #e6d267;
+  }
+  90% {
+    color: #e2b765;
+  }
+  100% {
+    color: #4a6cc3;
+  }
+}

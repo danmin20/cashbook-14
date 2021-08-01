@@ -16,10 +16,7 @@
     padding: 3rem;
     color: white;
     font-size: 10rem;
-    background: linear-gradient(to right, #fbcac9, #8ca6ce);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    animation: typingAni 20s infinite;
   }
   .github {
     @include flex-center;
