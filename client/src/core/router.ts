@@ -1,5 +1,6 @@
 import { updateRealDOM } from '../index';
 import Component from '@/core/Component';
+import { customEventEmitter } from '@/utils/helpers';
 
 type Route = {
   path: any;
@@ -34,7 +35,10 @@ class Router {
   }
 
   initEvent() {
-    window.addEventListener('hashchange', () => this.onHashChangeHandler());
+    document.addEventListener(
+      'moveroutes',
+      this.moveroutesHandler.bind(this) as EventListener
+    );
   }
 
   hasRoute(path: string) {
@@ -49,9 +53,9 @@ class Router {
     return this.routes[path];
   }
 
-  onHashChangeHandler() {
-    const hash = window.location.hash;
-    let path = hash.substr(1);
+  moveroutesHandler(event: CustomEvent) {
+    const path: string = event.detail.path;
+    history.pushState(event.detail, '', path);
 
     let route = this.getNotFoundRouter();
     const regex = /\w{1,}$/;
@@ -72,7 +76,10 @@ class Router {
   }
 
   push(path: string) {
-    window.location.hash = path;
+    customEventEmitter('moveroutes', {
+      ...history.state,
+      path,
+    });
   }
 }
 
@@ -93,5 +100,10 @@ export function initRouter({
     push: (path) => router.push(path),
   };
 
-  router.onHashChangeHandler();
+  customEventEmitter(
+    'moveroutes',
+    history.state ?? {
+      path: '/',
+    }
+  );
 }

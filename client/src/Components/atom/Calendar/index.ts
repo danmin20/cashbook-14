@@ -1,7 +1,7 @@
 import Component, { StateType } from '@/core/Component';
 import jsx from '@/core/jsx';
 import { AllHistorytype, HistoriesType } from '@/Pages/Main';
-import { getState, subscribe } from '@/utils/observer';
+import { getState, subscribe } from '@/core/observer';
 import { userState } from '@/Model';
 import dayjs from 'dayjs';
 import './style';

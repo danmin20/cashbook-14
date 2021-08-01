@@ -1,3 +1,4 @@
+import { $router } from '@/core/router';
 import axios from 'axios';
 
 export const generateRandomColor = () => {
@@ -10,7 +11,7 @@ export const returnPrice = (price: number) =>
   price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
 export const checkLogin = (data: { message: string }) => {
-  if (data.message === 'forbidden') location.href = '/#/login';
+  if (data.message === 'forbidden') $router.push('/login');
 };
 
 export const fetchWrap = async ({

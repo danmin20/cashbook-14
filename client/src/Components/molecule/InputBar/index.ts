@@ -8,7 +8,7 @@ import Component from '@/core/Component';
 import jsx from '@/core/jsx';
 import { $router } from '@/core/router';
 import { userState } from '@/Model';
-import { setState } from '@/utils/observer';
+import { setState } from '@/core/observer';
 import InputBarInput from '@/Components/atom/InputBarInput';
 import InputBarSelect from '@/Components/atom/InputBarSelect';
 import SaveButton from '@/Components/atom/SaveButton';
@@ -68,7 +68,7 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
           content: this.state.content as string,
           amount: this.state.amount as number,
           paymentType: this.state.paymentType,
-        }).then(() => $router.push('/#/'));
+        }).then(() => $router.push('/'));
       },
     }).$dom;
 
