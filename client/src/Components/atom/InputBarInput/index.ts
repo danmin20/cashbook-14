@@ -1,5 +1,5 @@
-import Component, { StateType } from '../../../core/Component';
-import jsx from '../../../core/jsx';
+import Component, { StateType } from '@/core/Component';
+import jsx from '@/core/jsx';
 import './style';
 
 export interface InputBarInputProps {

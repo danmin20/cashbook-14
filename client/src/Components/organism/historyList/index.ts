@@ -1,11 +1,11 @@
-import Component, { PropsType, StateType } from '../../../core/Component';
-import jsx from '../../../core/jsx';
-import { getState, subscribe } from '../../../utils/observer';
-import { userState } from '../../../Model';
-import DayList from '../../../Components/atom/DayList';
-import List, { ListProps } from '../../../Components/molecule/list';
-import { AllHistorytype } from '../../../Pages/Main';
-import Info from '../../molecule/Info';
+import Component, { PropsType, StateType } from '@/core/Component';
+import jsx from '@/core/jsx';
+import { getState, subscribe } from '@/utils/observer';
+import { userState } from '@/Model';
+import DayList from '@/Components/atom/DayList';
+import List, { ListProps } from '@/Components/molecule/list';
+import { AllHistorytype } from '@/Pages/Main';
+import Info from '@/Components/molecule/Info';
 
 interface HistoryListState {
   checked: ('income' | 'outcome')[];

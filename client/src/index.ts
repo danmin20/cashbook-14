@@ -1,5 +1,5 @@
 import './scss/index.scss';
-import { initRouter } from './lib/router';
+import { initRouter } from './core/router';
 import diff from './core/diff';
 import Main from './Pages/Main';
 import Calendar from './Pages/Calendar';

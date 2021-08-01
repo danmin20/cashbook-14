@@ -1,4 +1,4 @@
-import { initState } from '../utils/observer';
+import { initState } from '@/utils/observer';
 
 export default initState({
   key: 'dateState',

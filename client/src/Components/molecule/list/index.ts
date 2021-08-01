@@ -1,7 +1,7 @@
-import Component from '../../../core/Component';
-import jsx from '../../../core/jsx';
-import { CategoryType, PaymentType } from '../../../shared/type';
-import CategoryTag from '../../atom/CategoryTag';
+import Component from '@/core/Component';
+import jsx from '@/core/jsx';
+import { CategoryType, PaymentType } from '@/shared/type';
+import CategoryTag from '@/Components/atom/CategoryTag';
 import './style';
 
 export interface ListProps {

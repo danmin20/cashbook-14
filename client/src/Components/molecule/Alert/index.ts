@@ -1,7 +1,7 @@
-import Component from '../../../core/Component';
-import jsx from '../../../core/jsx';
-import ColorPicker from '../../atom/ColorPicker';
-import TextInput from '../../atom/TextInput';
+import Component from '@/core/Component';
+import jsx from '@/core/jsx';
+import ColorPicker from '@/Components/atom/ColorPicker';
+import TextInput from '@/Components/atom/TextInput';
 import './style';
 
 export interface AlertProps {

@@ -1,6 +1,6 @@
-import { github } from '../../../assets';
-import Component, { PropsType, StateType } from '../../core/Component';
-import jsx from '../../core/jsx';
+import { github } from '@/../assets';
+import Component, { PropsType, StateType } from '@/core/Component';
+import jsx from '@/core/jsx';
 import './style';
 
 export default class Login extends Component<PropsType, StateType> {

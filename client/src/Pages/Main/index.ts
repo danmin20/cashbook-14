@@ -1,9 +1,9 @@
-import Header from '../../Components/atom/Header';
-import InputBar from '../../Components/molecule/InputBar';
-import { ListProps } from '../../Components/molecule/list';
-import HistoryList from '../../Components/organism/historyList';
-import Component, { PropsType } from '../../core/Component';
-import jsx from '../../core/jsx';
+import Header from '@/Components/atom/Header';
+import InputBar from '@/Components/molecule/InputBar';
+import { ListProps } from '@/Components/molecule/list';
+import HistoryList from '@/Components/organism/historyList';
+import Component, { PropsType } from '@/core/Component';
+import jsx from '@/core/jsx';
 import './style';
 
 export interface MainStates {

@@ -1,12 +1,12 @@
 import dayjs from 'dayjs';
-import { calendar, chart, file, left, right } from '../../../../assets';
-import { getMyMonthlyHistory } from '../../../api/me';
-import { controller } from '../../../Controller';
-import Component, { PropsType, StateType } from '../../../core/Component';
-import jsx from '../../../core/jsx';
-import { $router } from '../../../lib/router';
-import { dateState, userState } from '../../../Model';
-import { getState, setState, subscribe } from '../../../utils/observer';
+import { calendar, chart, file, left, right } from '@/../assets';
+import { getMyMonthlyHistory } from '@/api/me';
+import { controller } from '@/Controller';
+import Component, { PropsType, StateType } from '@/core/Component';
+import jsx from '@/core/jsx';
+import { $router } from '@/core/router';
+import { dateState, userState } from '@/Model';
+import { getState, setState, subscribe } from '@/utils/observer';
 import './style';
 
 export default class Header extends Component<PropsType, StateType> {

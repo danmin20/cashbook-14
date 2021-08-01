@@ -1,5 +1,5 @@
 import { updateRealDOM } from '../index';
-import Component from '../core/Component';
+import Component from '@/core/Component';
 
 type Route = {
   path: any;

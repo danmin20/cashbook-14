@@ -1,5 +1,5 @@
-import Component from '../../../core/Component';
-import jsx from '../../../core/jsx';
+import Component from '@/core/Component';
+import jsx from '@/core/jsx';
 import './style';
 
 export interface TextInputProps {

@@ -1,17 +1,17 @@
-import { createHistory } from '../../../api/history';
+import { createHistory } from '@/api/history';
 import {
   getMyIncomeCategories,
   getMyOutcomeCategories,
   getMyPayments,
-} from '../../../api/me';
-import Component from '../../../core/Component';
-import jsx from '../../../core/jsx';
-import { $router } from '../../../lib/router';
-import { userState } from '../../../Model';
-import { setState } from '../../../utils/observer';
-import InputBarInput from '../../atom/InputBarInput';
-import InputBarSelect from '../../atom/InputBarSelect';
-import SaveButton from '../../atom/SaveButton';
+} from '@/api/me';
+import Component from '@/core/Component';
+import jsx from '@/core/jsx';
+import { $router } from '@/core/router';
+import { userState } from '@/Model';
+import { setState } from '@/utils/observer';
+import InputBarInput from '@/Components/atom/InputBarInput';
+import InputBarSelect from '@/Components/atom/InputBarSelect';
+import SaveButton from '@/Components/atom/SaveButton';
 import './style';
 
 export interface InputBarProps {}

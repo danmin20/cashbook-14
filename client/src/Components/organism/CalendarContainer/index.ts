@@ -1,10 +1,10 @@
-import { controller } from '../../../Controller';
-import Component, { PropsType, StateType } from '../../../core/Component';
-import jsx from '../../../core/jsx';
-import { dateState } from '../../../Model';
-import { HistoriesType } from '../../../Pages/Main';
-import { getState, subscribe } from '../../../utils/observer';
-import Calendar from '../../atom/Calendar';
+import { controller } from '@/Controller';
+import Component, { PropsType, StateType } from '@/core/Component';
+import jsx from '@/core/jsx';
+import { dateState } from '@/Model';
+import { HistoriesType } from '@/Pages/Main';
+import { getState, subscribe } from '@/utils/observer';
+import Calendar from '@/Components/atom/Calendar';
 import './style';
 
 export default class CalendarContainer extends Component<PropsType, StateType> {

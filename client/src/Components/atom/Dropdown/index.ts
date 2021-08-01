@@ -1,9 +1,9 @@
-import Component from '../../../core/Component';
-import jsx from '../../../core/jsx';
-import { delete as delbtn } from '../../../../assets';
+import Component from '@/core/Component';
+import jsx from '@/core/jsx';
+import { delete as delbtn } from '@/../assets';
 import './style';
-import { CategoryType, PaymentType } from '../../../shared/type';
-import Alert from '../../molecule/Alert';
+import { CategoryType, PaymentType } from '@/shared/type';
+import Alert from '@/Components/molecule/Alert';
 
 interface DropDownProps {
   selectType: 'payment' | 'category';

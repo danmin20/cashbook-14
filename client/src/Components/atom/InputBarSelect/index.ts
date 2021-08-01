@@ -1,10 +1,10 @@
-import { drop } from '../../../../assets';
-import Component from '../../../core/Component';
-import jsx from '../../../core/jsx';
-import { userState } from '../../../Model';
-import { CategoryType, PaymentType } from '../../../shared/type';
-import { getState, subscribe } from '../../../utils/observer';
-import DropDown from '../Dropdown';
+import { drop } from '@/../assets';
+import Component from '@/core/Component';
+import jsx from '@/core/jsx';
+import { userState } from '@/Model';
+import { CategoryType, PaymentType } from '@/shared/type';
+import { getState, subscribe } from '@/utils/observer';
+import DropDown from '@/Components/atom/Dropdown';
 import './style';
 
 interface InputBarSelectProps {

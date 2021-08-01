@@ -1,6 +1,6 @@
-import Component from '../../../core/Component';
-import jsx from '../../../core/jsx';
-import SaveButton from '../../atom/SaveButton';
+import Component from '@/core/Component';
+import jsx from '@/core/jsx';
+import SaveButton from '@/Components/atom/SaveButton';
 import './style';
 
 export interface InfoProps {

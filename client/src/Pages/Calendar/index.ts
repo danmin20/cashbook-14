@@ -1,7 +1,7 @@
-import Component, { PropsType, StateType } from '../../core/Component';
-import jsx from '../../core/jsx';
-import Header from '../../Components/atom/Header';
-import CalendarContainer from '../../Components/organism/CalendarContainer';
+import Component, { PropsType, StateType } from '@/core/Component';
+import jsx from '@/core/jsx';
+import Header from '@/Components/atom/Header';
+import CalendarContainer from '@/Components/organism/CalendarContainer';
 
 export default class CalendarPage extends Component<PropsType, StateType> {
   $header: Element;
