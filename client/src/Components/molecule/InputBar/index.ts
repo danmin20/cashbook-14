@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+import { createHistory } from '../../../api/history';
 import {
   getMyIncomeCategories,
   getMyOutcomeCategories,
@@ -7,8 +7,7 @@ import {
 import Component from '../../../core/Component';
 import jsx from '../../../core/jsx';
 import { userState } from '../../../Model';
-import { CategoryType, PaymentType } from '../../../shared/type';
-import { getState, setState, subscribe } from '../../../utils/observer';
+import { setState } from '../../../utils/observer';
 import InputBarInput from '../../atom/InputBarInput';
 import InputBarSelect from '../../atom/InputBarSelect';
 import SaveButton from '../../atom/SaveButton';
@@ -17,11 +16,17 @@ import './style';
 export interface InputBarProps {}
 
 export interface InputBarStates {
-  paymentType: string;
+  paymentType: 'income' | 'outcome';
   date: string;
-  category: string | null;
+  category: {
+    id: number;
+    name: string;
+  };
   content: string | null;
-  payment: string | null;
+  payment: {
+    id: number;
+    name: string;
+  };
   amount: number | null;
 }
 
@@ -38,17 +43,40 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
 
     this.state = {
       paymentType: 'outcome',
-      date: dayjs(new Date()).format('YYYYMMDD'),
-      category: null,
+      date: '',
+      category: {
+        id: 0,
+        name: '',
+      },
       content: null,
-      payment: null,
+      payment: {
+        id: 0,
+        name: '',
+      },
       amount: null,
     };
 
     this.$saveBtn = new SaveButton({
       isActive: true,
       type: 'large',
-      onClick: () => {},
+      onClick: () => {
+        console.log(
+          this.state.paymentType,
+          this.state.payment.id,
+          this.state.category.id,
+          this.state.date,
+          this.state.content,
+          this.state.amount
+        );
+        createHistory({
+          paymentId: this.state.payment.id ?? undefined,
+          categoryId: this.state.category.id ?? undefined,
+          date: this.state.date,
+          content: this.state.content as string,
+          amount: this.state.amount as number,
+          paymentType: this.state.paymentType,
+        });
+      },
     }).$dom;
 
     const setIncomeCategories = setState(userState.myIncomeCategories);
@@ -59,30 +87,29 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
     getMyOutcomeCategories().then((res) => setOutcomeCategories(res));
     getMyPayments().then((res) => setPayments(res));
 
-    this.setDom();
-  }
-
-  willMount() {
     // 일자
     this.$dateInput = new InputBarInput({
       setContent: (date: string) => this.setState({ date }),
     }).$dom;
-
     // 내용
     this.$contentInput = new InputBarInput({
       setContent: (content: string) => this.setState({ content }),
     }).$dom;
-
     // 금액
     this.$amountInput = new InputBarInput({
       setContent: (amount: string) =>
         this.setState({ amount: parseInt(amount) }),
     }).$dom;
 
+    this.setDom();
+  }
+
+  willMount() {
     // 분류
     this.$categorySelect = new InputBarSelect({
-      content: this.state.category,
-      setContent: (category: string) => this.setState({ category }),
+      content: this.state.category.name,
+      setContent: (category: { id: number; name: string }) =>
+        this.setState({ category }),
       type:
         this.state.paymentType === 'income'
           ? 'incomeCategories'
@@ -91,8 +118,9 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
 
     // 결제수단
     this.$paymentSelect = new InputBarSelect({
-      content: this.state.payment,
-      setContent: (payment: string) => this.setState({ payment }),
+      content: this.state.payment.name,
+      setContent: (payment: { id: number; name: string }) =>
+        this.setState({ payment }),
       type: 'payments',
     }).$dom;
   }
@@ -104,14 +132,14 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
       <div class='input-bar'>
 
         <div class='input-bar__buttons'>
-          <div onClick=${() =>
-            this.setState({ paymentType: 'outcome' })} class='${
-      paymentType === 'outcome' ? 'active' : ''
-    }'>지출</div>
-          <div onClick=${() =>
-            this.setState({ paymentType: 'income' })} class='${
-      paymentType === 'income' ? 'active' : ''
-    }'>수입</div>
+          <div onClick=${() => {
+            this.setState({ paymentType: 'outcome' });
+            this.setState({ category: { id: 0, name: '' } });
+          }} class='${paymentType === 'outcome' ? 'active' : ''}'>지출</div>
+          <div onClick=${() => {
+            this.setState({ paymentType: 'income' });
+            this.setState({ category: { id: 0, name: '' } });
+          }} class='${paymentType === 'income' ? 'active' : ''}'>수입</div>
         </div>
 
         <div class='input-bar__input'>

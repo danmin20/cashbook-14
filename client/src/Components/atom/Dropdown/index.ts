@@ -51,7 +51,7 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
           ${items.map(
             (item) =>
               jsx`<div onClick=${() =>
-                setContent(item.name)} class='dropdown__item'>${
+                setContent(item)} class='dropdown__item'>${
                 item.name
               }<img src=${delbtn} /></div>`
           )}

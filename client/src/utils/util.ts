@@ -13,16 +13,26 @@ export const checkLogin = (data: { message: string }) => {
   if (data.message === 'forbidden') location.href = '/#/login';
 };
 
-export const fetchWrap = async (method: string, url: string, params?: {}) => {
+export const fetchWrap = async ({
+  method,
+  url,
+  params,
+  body,
+}: {
+  method: string;
+  url: string;
+  params?: {};
+  body?: {};
+}) => {
   try {
-    const option = {
+    const config = {
       baseURL: 'http://localhost:3000/api',
       withCredentials: true,
       params,
     };
     const { data } =
-      (method === 'get' && (await axios.get(url, option))) ||
-      (method === 'post' && (await axios.get(url, option))) ||
+      (method === 'get' && (await axios.get(url, config))) ||
+      (method === 'post' && (await axios.post(url, body, config))) ||
       {};
     checkLogin(data);
     return data;

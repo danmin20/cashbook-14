@@ -28,36 +28,35 @@
 
 @keyframes typingAni {
   0% {
-    color: #4a6cc3;
   }
   10% {
-    color: #4ca1de;
+    color: #6ed5eb;
   }
   20% {
     color: #94d3cc;
   }
   30% {
-    color: #4cb8b8;
+    color: #4a6cc3;
   }
   40% {
-    color: #6ed5eb;
+    color: #4ca1de;
   }
   50% {
-    color: #d092e2;
-  }
-  60% {
     color: #817dce;
   }
+  60% {
+    color: #d092e2;
+  }
   70% {
-    color: #b9d58c;
+    color: #e2b765;
   }
   80% {
     color: #e6d267;
   }
   90% {
-    color: #e2b765;
+    color: #b9d58c;
   }
   100% {
-    color: #4a6cc3;
+    color: #4cb8b8;
   }
 }

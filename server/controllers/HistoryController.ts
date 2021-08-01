@@ -3,7 +3,7 @@ import { HistoryService } from '../services/HistoryService';
 
 async function createHistory(req: Request, res: Response, next: NextFunction) {
   try {
-    const { id: userId } = req.user;
+    const { userId } = req.user;
 
     const { body } = req;
 
@@ -21,7 +21,7 @@ async function createHistory(req: Request, res: Response, next: NextFunction) {
 
 async function updateHistory(req: Request, res: Response, next: NextFunction) {
   try {
-    const { id: userId } = req.user;
+    const { userId } = req.user;
 
     const { historyId } = req.params;
 
@@ -40,7 +40,7 @@ async function updateHistory(req: Request, res: Response, next: NextFunction) {
 
 async function deleteHistory(req: Request, res: Response, next: NextFunction) {
   try {
-    const { id: userId } = req.user;
+    const { userId } = req.user;
 
     const { historyId } = req.params;
 

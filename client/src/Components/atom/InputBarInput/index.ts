@@ -20,7 +20,8 @@ export default class InputBarInput extends Component<
     const { setContent } = this.props;
 
     return jsx`
-      <input class='input' placeholder='입력하세요' />
+      <input onChange=${({ target }: { target: HTMLInputElement }) =>
+        setContent(target.value)} class='input' placeholder='입력하세요' />
     `;
   }
 }
