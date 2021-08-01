@@ -13,29 +13,27 @@ import InputBarInput from '@/Components/atom/InputBarInput';
 import InputBarSelect from '@/Components/atom/InputBarSelect';
 import SaveButton from '@/Components/atom/SaveButton';
 import './style';
+import { minus } from '@/../assets';
 
 export interface InputBarProps {}
 
 export interface InputBarStates {
   paymentType: 'income' | 'outcome';
-  date: string;
   category: {
     id: number;
     name: string;
   };
-  content: string | null;
   payment: {
     id: number;
     name: string;
   };
-  amount: number | null;
 }
 
 export default class InputBar extends Component<InputBarProps, InputBarStates> {
   $saveBtn: Element;
-  $dateInput: Element = jsx``;
-  $contentInput: Element = jsx``;
-  $amountInput: Element = jsx``;
+  $dateInput: Element;
+  $contentInput: Element;
+  $amountInput: Element;
   $categorySelect: Element = jsx``;
   $paymentSelect: Element = jsx``;
 
@@ -44,17 +42,14 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
 
     this.state = {
       paymentType: 'outcome',
-      date: '',
       category: {
         id: 0,
         name: '',
       },
-      content: null,
       payment: {
         id: 0,
         name: '',
       },
-      amount: null,
     };
 
     this.$saveBtn = new SaveButton({
@@ -64,9 +59,14 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
         createHistory({
           paymentId: this.state.payment.id ?? undefined,
           categoryId: this.state.category.id ?? undefined,
-          date: this.state.date,
-          content: this.state.content as string,
-          amount: this.state.amount as number,
+          date: (this.$dom.querySelector('#date-input') as HTMLInputElement)
+            .value,
+          content: (
+            this.$dom.querySelector('#content-input') as HTMLInputElement
+          ).value,
+          amount: parseInt(
+            (this.$dom.querySelector('#amount-input') as HTMLInputElement).value
+          ),
           paymentType: this.state.paymentType,
         }).then(() => $router.push('/'));
       },
@@ -81,18 +81,14 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
     getMyPayments().then((res) => setPayments(res));
 
     // 일자
-    this.$dateInput = new InputBarInput({
-      setContent: (date: string) => this.setState({ date }),
-    }).$dom;
+    this.$dateInput = new InputBarInput({}).$dom;
+    this.$dateInput.id = 'date-input';
     // 내용
-    this.$contentInput = new InputBarInput({
-      setContent: (content: string) => this.setState({ content }),
-    }).$dom;
+    this.$contentInput = new InputBarInput({}).$dom;
+    this.$contentInput.id = 'content-input';
     // 금액
-    this.$amountInput = new InputBarInput({
-      setContent: (amount: string) =>
-        this.setState({ amount: parseInt(amount) }),
-    }).$dom;
+    this.$amountInput = new InputBarInput({}).$dom;
+    this.$amountInput.id = 'amount-input';
 
     this.setDom();
   }
@@ -162,7 +158,14 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
         <div class='input-bar__input'>
           <div class='input-bar__input--label'>금액</div>
           <div class='input-bar__input--content amount'>
-            <div>${paymentType === 'income' ? '+' : '-'}</div>
+            <div>
+              <img src=${minus} />
+              ${
+                paymentType === 'outcome'
+                  ? ''
+                  : jsx`<img style='transform: rotate(90deg)' src=${minus} />`
+              }
+            </div>
             ${this.$amountInput} 원
           </div>
         </div>
