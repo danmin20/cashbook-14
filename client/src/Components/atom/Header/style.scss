@@ -19,8 +19,14 @@
   .date-controller {
     @include flex-center;
     img {
+      position: absolute;
       cursor: pointer;
-      margin: 0 5.2rem;
+      &:first-child {
+        left: 37rem;
+      }
+      &:last-child {
+        right: 35rem;
+      }
     }
     .date {
       @include flex-center;

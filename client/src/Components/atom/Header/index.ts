@@ -1,25 +1,19 @@
 import dayjs from 'dayjs';
-import { calendar, chart, file, left, right } from '../../../../assets';
-import { getMyMonthlyHistory } from '../../../api/me';
-import { controller } from '../../../Controller';
-import Component, { PropsType, StateType } from '../../../core/Component';
-import jsx from '../../../core/jsx';
-import { $router } from '../../../lib/router';
-import { dateState, userState } from '../../../Model';
-import { getState, setState, subscribe } from '../../../utils/observer';
+import { calendar, chart, file, left, right } from '@/../assets';
+import { getMyMonthlyHistory } from '@/api/me';
+import { controller } from '@/Controller';
+import Component, { PropsType, StateType } from '@/core/Component';
+import jsx from '@/core/jsx';
+import { $router } from '@/core/router';
+import { dateState, userState } from '@/Model';
+import { getState, setState, subscribe } from '@/core/observer';
 import './style';
 
 export default class Header extends Component<PropsType, StateType> {
-  pathname: '/' | '/calendar' | '/chart';
   $date: Element = jsx``;
 
   constructor(props: PropsType) {
     super(props);
-
-    this.pathname = window.location.href.split('/#')[1] as
-      | '/'
-      | '/calendar'
-      | '/chart';
 
     subscribe(dateState, 'date', this.update.bind(this));
 
@@ -61,13 +55,13 @@ export default class Header extends Component<PropsType, StateType> {
         
         <div class='buttons'>
           <img class='${
-            this.pathname === '/' ? '' : 'inactive'
+            location.pathname === '/' ? '' : 'inactive'
           }' onClick=${() => $router.push('/')} src=${file} />
           <img class='${
-            this.pathname === '/calendar' ? '' : 'inactive'
+            location.pathname === '/calendar' ? '' : 'inactive'
           }' onClick=${() => $router.push('/calendar')} src=${calendar} />
           <img class='${
-            this.pathname === '/chart' ? '' : 'inactive'
+            location.pathname === '/chart' ? '' : 'inactive'
           }' onClick=${() => $router.push('/chart')} src=${chart} />
         </div>
       </div>

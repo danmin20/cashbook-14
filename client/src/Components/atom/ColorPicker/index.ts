@@ -1,8 +1,8 @@
-import { refresh, delete as delBtn } from '../../../../assets';
-import Component, { PropsType } from '../../../core/Component';
-import jsx from '../../../core/jsx';
+import { refresh, delete as delBtn } from '@/../assets';
+import Component, { PropsType } from '@/core/Component';
+import jsx from '@/core/jsx';
 import './style';
-import { generateRandomColor, hexRegex } from '../../../utils/util';
+import { generateRandomColor, hexRegex } from '@/utils/util';
 
 export interface ColorPickerState {
   color: string;

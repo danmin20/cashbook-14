@@ -68,10 +68,10 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   err.status = 404;
   next(err);
 });
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-  res.status(err.status || 500).json({
+  res.status(500).json({
     error: err.message,
   });
 });

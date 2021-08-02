@@ -1,10 +1,12 @@
-import Component from '../../../core/Component';
-import jsx from '../../../core/jsx';
-import SaveButton from '../../atom/SaveButton';
+import Component from '@/core/Component';
+import jsx from '@/core/jsx';
+import SaveButton from '@/Components/atom/SaveButton';
 import './style';
 
 export interface InfoProps {
-  count: number;
+  totalCount: number;
+  incomeCount: number;
+  outcomeCount: number;
   income: number;
   outcome: number;
   checked: ('income' | 'outcome')[];
@@ -42,7 +44,7 @@ export default class Info extends Component<InfoProps> {
       if (checked.find((i) => i === 'outcome')) {
         newState.push('outcome');
       }
-      handleCheck(newState);
+      if (newState.length > 0) handleCheck(newState);
     };
     this.handleCheckOutcome = () => {
       const newState = [];
@@ -52,19 +54,26 @@ export default class Info extends Component<InfoProps> {
       if (checked.find((i) => i === 'income')) {
         newState.push('income');
       }
-      handleCheck(newState);
+      if (newState.length > 0) handleCheck(newState);
     };
 
     this.setDom();
   }
 
   render() {
-    const { count, income, outcome } = this.props;
+    const { totalCount, incomeCount, outcomeCount, income, outcome } =
+      this.props;
 
     return jsx`
       <div class='info-component'>
         <div>
-          전체 내역 ${count}건
+          전체 내역 ${
+            !this.props.checked.find((i) => i === 'income')
+              ? outcomeCount
+              : !this.props.checked.find((i) => i === 'outcome')
+              ? incomeCount
+              : totalCount
+          }건
         </div>
 
         <div class='buttons'>

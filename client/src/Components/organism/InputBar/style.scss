@@ -42,13 +42,17 @@
   .amount {
     @include flex-center;
     box-sizing: border-box;
-    padding-left: 0.5rem;
+    position: relative;
     div {
       width: 0.5rem;
     }
     input {
       text-align: end;
       margin-right: 1rem;
+    }
+    img {
+      position: absolute;
+      bottom: 0.5rem;
     }
   }
 }

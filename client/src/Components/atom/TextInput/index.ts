@@ -1,9 +1,10 @@
-import Component from '../../../core/Component';
-import jsx from '../../../core/jsx';
+import Component from '@/core/Component';
+import jsx from '@/core/jsx';
 import './style';
 
 export interface TextInputProps {
-  invalid?: boolean;
+  invalid: boolean;
+  defaultValue?: string;
 }
 
 export default class TextInput extends Component<TextInputProps> {
@@ -12,13 +13,16 @@ export default class TextInput extends Component<TextInputProps> {
 
     this.setDom();
   }
+  didMount() {
+    if (!this.props.invalid) this.$dom.removeAttribute('disabled');
+  }
   render() {
-    const { invalid = false } = this.props;
+    const { invalid, defaultValue } = this.props;
 
     return jsx`
-      <input autocomplete='off' class='text-input' placeholder='입력하세요' ${
-        invalid ? 'disabled' : ''
-      } />
+      <input value=${
+        invalid ? defaultValue : ''
+      } autocomplete='off' class='text-input' placeholder='입력하세요' disabled />
     `;
   }
 }

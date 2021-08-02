@@ -21,15 +21,20 @@
     }
   }
   .payment {
-    flex: 0.35;
-
     @include body-medium;
+    flex: 0.25;
     color: $body;
   }
   .amount {
-    flex: 0.1;
+    flex: 0.2;
     text-align: end;
     font-weight: 500;
+  }
+  .outcome {
+    color: $red;
+  }
+  .income {
+    color: $primary3;
   }
 }
 

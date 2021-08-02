@@ -53,6 +53,9 @@ module.exports = {
   resolve: {
     modules: ['node_modules'],
     extensions: ['.ts', '.js', '.json', '.scss'],
+    alias: {
+      '@': path.join(__dirname, 'src'),
+    },
   },
   output: { path: path.join(__dirname, './dist/src'), filename: '[name].js' },
   devtool: 'source-map',

@@ -1,4 +1,4 @@
-import { initState } from '../utils/observer';
+import { initState } from '@/core/observer';
 
 const myIncomeCategories = initState({
   key: 'myIncomeCategories',

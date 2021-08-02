@@ -3,7 +3,7 @@ import { CategoryService } from '../services/CategoryService';
 
 async function createCategory(req: Request, res: Response, next: NextFunction) {
   try {
-    const { id: userId } = req.user;
+    const { userId } = req.user;
 
     const { body } = req;
 
@@ -17,7 +17,7 @@ async function createCategory(req: Request, res: Response, next: NextFunction) {
 
 async function updateCategory(req: Request, res: Response, next: NextFunction) {
   try {
-    const { id: userId } = req.user;
+    const { userId } = req.user;
 
     const { categoryId } = req.params;
 
@@ -36,7 +36,7 @@ async function updateCategory(req: Request, res: Response, next: NextFunction) {
 
 async function deleteCategory(req: Request, res: Response, next: NextFunction) {
   try {
-    const { id: userId } = req.user;
+    const { userId } = req.user;
 
     const { categoryId } = req.params;
 

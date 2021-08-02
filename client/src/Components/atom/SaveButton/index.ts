@@ -1,6 +1,6 @@
-import { checkLarge, checkSmall } from '../../../../assets';
-import Component from '../../../core/Component';
-import jsx from '../../../core/jsx';
+import { checkLarge, checkSmall } from '@/../assets';
+import Component from '@/core/Component';
+import jsx from '@/core/jsx';
 import './style';
 
 export interface SaveButtonProps {

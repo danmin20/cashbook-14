@@ -1,7 +1,7 @@
-import Component from '../../../core/Component';
-import jsx from '../../../core/jsx';
-import { CategoryType, PaymentType } from '../../../shared/type';
-import CategoryTag from '../../atom/CategoryTag';
+import Component from '@/core/Component';
+import jsx from '@/core/jsx';
+import { CategoryType, PaymentType } from '@/shared/type';
+import CategoryTag from '@/Components/atom/CategoryTag';
 import './style';
 
 export interface ListProps {
@@ -43,7 +43,9 @@ export default class List extends Component<ListProps> {
         <div class='payment'>
           ${listType === 'large' ? payment.name : ''}
         </div>
-        <div class='amount'>
+        <div class='amount${
+          paymentType === 'outcome' ? ' outcome' : ' income'
+        }'>
           ${paymentType === 'outcome' ? '-' : ''}${amount}${
       listType === 'large' ? '원' : ''
     }

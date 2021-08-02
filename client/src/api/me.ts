@@ -1,12 +1,21 @@
-import { fetchWrap } from '../utils/util';
+import { fetchWrap } from '@/utils/util';
 
 export const getMyMonthlyHistory = ({ YYYYMM }: { YYYYMM: string }) =>
-  fetchWrap('get', '/me/histories', { data: YYYYMM });
+  fetchWrap({ method: 'get', url: '/me/histories', params: { date: YYYYMM } });
 
 export const getMyIncomeCategories = () =>
-  fetchWrap('get', '/me/categories', { type: 'income' });
+  fetchWrap({
+    method: 'get',
+    url: '/me/categories',
+    params: { type: 'income' },
+  });
 
 export const getMyOutcomeCategories = () =>
-  fetchWrap('get', '/me/categories', { type: 'outcome' });
+  fetchWrap({
+    method: 'get',
+    url: '/me/categories',
+    params: { type: 'outcome' },
+  });
 
-export const getMyPayments = () => fetchWrap('get', '/me/payments');
+export const getMyPayments = () =>
+  fetchWrap({ method: 'get', url: '/me/payments' });
