@@ -157,10 +157,41 @@ async function getSumOfAmounts(
   }
 }
 
+async function getMyPureHistories(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const { userId } = req.user;
+
+    const { query } = req;
+
+    const date = query.date ? new Date(query.date as string) : new Date();
+    const dateObject = { year: date.getFullYear(), month: date.getMonth() };
+
+    const histories = await HistoryService.findHistories({
+      userId,
+      ...query,
+      ...(query.date && { start: dateObject }),
+      ...(query.date && { last: dateObject }),
+    });
+
+    const result = {
+      histories,
+    };
+
+    res.status(200).json(result);
+  } catch (err) {
+    next(err);
+  }
+}
+
 export const MeController = {
   getMe,
   getMyPayments,
   getMyCategories,
   getMyHistories,
   getSumOfAmounts,
+  getMyPureHistories,
 };
