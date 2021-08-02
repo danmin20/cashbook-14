@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import Component from '@/core/Component';
 import jsx from '@/core/jsx';
 import './style';
+import { returnPrice } from '@/utils/util';
 
 export interface DayListProps {
   date: string;
@@ -29,11 +30,13 @@ export default class DayList extends Component<DayListProps> {
         <div class='day-list__sum'>
           ${
             income
-              ? jsx`<div class='day-list__sum--each'>수입 ${income}</div>`
+              ? jsx`<div class='day-list__sum--each'>수입 ${returnPrice(
+                  income
+                )}</div>`
               : ''
           }
           <div class='day-list__sum--each'>
-            지출 ${outcome}
+            지출 ${returnPrice(outcome)}
           </div>
         </div>
       </div>

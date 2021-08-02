@@ -3,13 +3,14 @@ import jsx from '@/core/jsx';
 import { CategoryType, PaymentType } from '@/shared/type';
 import CategoryTag from '@/Components/atom/CategoryTag';
 import './style';
+import { returnPrice } from '@/utils/util';
 
 export interface ListProps {
   category: CategoryType;
   listType: 'large' | 'small';
   type: 'income' | 'outcome';
   content: string;
-  payment: PaymentType;
+  payment?: PaymentType;
   amount: number;
   totalIncome?: number;
   totalOutcome?: number;
@@ -41,10 +42,10 @@ export default class List extends Component<ListProps> {
           ${content}
         </div>
         <div class='payment'>
-          ${listType === 'large' ? payment.name : ''}
+          ${listType === 'large' ? payment?.name : ''}
         </div>
         <div class='amount${type === 'outcome' ? ' outcome' : ' income'}'>
-          ${type === 'outcome' ? '-' : ''}${amount}${
+          ${type === 'outcome' ? '-' : ''}${returnPrice(amount)}${
       listType === 'large' ? '원' : ''
     }
         </div>
