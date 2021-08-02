@@ -26,41 +26,6 @@
   }
 }
 
-@keyframes typingAni {
-  0% {
-  }
-  10% {
-    color: #6ed5eb;
-  }
-  20% {
-    color: #94d3cc;
-  }
-  30% {
-    color: #4a6cc3;
-  }
-  40% {
-    color: #4ca1de;
-  }
-  50% {
-    color: #817dce;
-  }
-  60% {
-    color: #d092e2;
-  }
-  70% {
-    color: #e2b765;
-  }
-  80% {
-    color: #e6d267;
-  }
-  90% {
-    color: #b9d58c;
-  }
-  100% {
-    color: #4cb8b8;
-  }
-}
-
 @keyframes rotate {
   0% {
     -webkit-transform: rotate(0deg) scale(0.8);
@@ -116,5 +81,14 @@
   to {
     width: 80rem;
     opacity: 1;
+  }
+}
+
+@keyframes wave {
+  0% {
+    background-position: left 0px bottom -10rem;
+  }
+  100% {
+    background-position: left 150rem bottom 0;
   }
 }
