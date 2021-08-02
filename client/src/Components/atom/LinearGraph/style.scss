@@ -1,11 +1,11 @@
 @import '@/scss/theme';
 
-.pie-wrapper {
+.linear-wrapper {
   position: relative;
   width: 100%;
-  padding-bottom: 100%;
+  padding-bottom: 50%;
 
-  .pie {
+  .linear {
     position: absolute;
     width: 100%;
     height: 100%;
