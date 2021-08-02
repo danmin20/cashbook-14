@@ -1,5 +1,5 @@
 import { dateState, userState } from '@/Model';
-import { setState } from '@/core/observer';
+import { getState, setState } from '@/core/observer';
 
 export default {
   monList: [
@@ -19,6 +19,10 @@ export default {
   dayList: ['일', '월', '화', '수', '목', '금', '토'],
   today: new Date(),
   monForChange: new Date().getMonth(),
+
+  setMonForChange: function (mm: number) {
+    this.monForChange = mm;
+  },
 
   getFirstDay: (yy: number, mm: number) => new Date(yy, mm, 1),
   getLastDay: (yy: number, mm: number) => new Date(yy, mm + 1, 0),

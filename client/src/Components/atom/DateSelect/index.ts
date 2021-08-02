@@ -1,5 +1,6 @@
 import { arrow } from '@/../assets';
-import Component, { PropsType, StateType } from '@/core/Component';
+import { controller } from '@/Controller';
+import Component from '@/core/Component';
 import jsx from '@/core/jsx';
 import { setState } from '@/core/observer';
 import { dateState } from '@/Model';
@@ -36,6 +37,7 @@ export default class DateSelect extends Component<
       d.setMonth(parseInt(this.state.selectedMonth) - 1);
       d.setFullYear(parseInt(this.state.selectedYear));
       setDateState(d);
+      controller.calendar.setMonForChange(d.getMonth());
     };
 
     this.setDom();
@@ -43,7 +45,7 @@ export default class DateSelect extends Component<
   render() {
     const { selectedMonth, selectedYear } = this.state;
     return jsx`
-      <div class='date-select'>
+      <div class='date-select' onClick=${(e: Event) => e.stopPropagation()}>
         <div class='date-select__years'>
           ${this.years.map(
             (i) =>
