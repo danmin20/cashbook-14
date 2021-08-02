@@ -107,3 +107,14 @@
     margin-top: 0;
   }
 }
+
+@keyframes slide-open {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+  to {
+    width: 80rem;
+    opacity: 1;
+  }
+}
