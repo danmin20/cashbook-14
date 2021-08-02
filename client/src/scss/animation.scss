@@ -60,3 +60,61 @@
     color: #4cb8b8;
   }
 }
+
+@keyframes rotate {
+  0% {
+    -webkit-transform: rotate(0deg) scale(0.8);
+    -moz-transform: rotate(0deg) scale(0.8);
+  }
+  50% {
+    -webkit-transform: rotate(360deg) scale(1.2);
+    -moz-transform: rotate(360deg) scale(1.2);
+  }
+  100% {
+    -webkit-transform: rotate(720deg) scale(0.8);
+    -moz-transform: rotate(720deg) scale(0.8);
+  }
+}
+
+@keyframes ball1 {
+  0% {
+    box-shadow: 3rem 0 0 $primary2;
+  }
+  50% {
+    box-shadow: 0 0 0 $primary2;
+    margin-bottom: 0;
+    -webkit-transform: translate(1.5rem, 1.5rem);
+    -moz-transform: translate(1.5rem, 1.5rem);
+  }
+  100% {
+    box-shadow: 3rem 0 0 $primary2;
+    margin-bottom: 1rem;
+  }
+}
+
+@keyframes ball2 {
+  0% {
+    box-shadow: 3rem 0 0 $primary3;
+  }
+  50% {
+    box-shadow: 0 0 0 $primary3;
+    margin-top: -2rem;
+    -webkit-transform: translate(1.5rem, 1.5rem);
+    -moz-transform: translate(1.5rem, 1.5rem);
+  }
+  100% {
+    box-shadow: 3rem 0 0 $primary3;
+    margin-top: 0;
+  }
+}
+
+@keyframes slide-open {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+  to {
+    width: 80rem;
+    opacity: 1;
+  }
+}

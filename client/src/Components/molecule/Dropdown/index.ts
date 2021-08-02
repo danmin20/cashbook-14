@@ -59,7 +59,7 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
   }
 
   render() {
-    const { items, setContent } = this.props;
+    const { items, setContent, selectType } = this.props;
 
     return jsx`
       <div onClick=${(e: Event) => e.stopPropagation()}
@@ -69,10 +69,20 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
           ${items.map(
             (item) =>
               jsx`
-              <div onClick=${() => setContent(item)} class='dropdown__item'>${
-                item.name
-              }<img onClick=${(e: Event) =>
-                this.openDelAlert(e, item)} src=${delbtn} />
+              <div onClick=${() => setContent(item)} class='dropdown__item'>
+                <div class='dropdown__item--item'>
+                  ${
+                    selectType === 'category'
+                      ? jsx`<div class='color' style='background: ${
+                          (item as CategoryType).color
+                        }'></div>`
+                      : ''
+                  }
+                  ${item.name}
+                </div>
+
+                <img onClick=${(e: Event) =>
+                  this.openDelAlert(e, item)} src=${delbtn} />
               </div>`
           )}
         </div>

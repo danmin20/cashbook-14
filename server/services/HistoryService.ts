@@ -48,7 +48,7 @@ async function findHistories({
   // TODO: 필터링 개선(DB 수준에서의 필터링을 구현하기) 근데 쿼리 작성하기 귀찮다... ㅎㅎ
   if (date && date.length >= 8) {
     result = result.filter((history) => {
-      history.date === date;
+      return history.date === date;
     });
   }
 

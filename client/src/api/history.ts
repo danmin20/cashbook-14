@@ -6,17 +6,17 @@ export const createHistory = ({
   date,
   content,
   amount,
-  paymentType,
+  type,
 }: {
   paymentId?: number;
   categoryId?: number;
   date: string;
   content: string;
   amount: number;
-  paymentType: 'income' | 'outcome';
+  type: 'income' | 'outcome';
 }) =>
   fetchWrap({
     method: 'post',
     url: '/histories',
-    body: { paymentId, categoryId, date, content, amount, paymentType },
+    body: { paymentId, categoryId, date, content, amount, type },
   });
