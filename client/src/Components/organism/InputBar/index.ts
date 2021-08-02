@@ -70,7 +70,7 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
           amount: parseInt(
             (this.$dom.querySelector('#amount-input') as HTMLInputElement).value
           ),
-          paymentType: this.state.paymentType,
+          type: this.state.paymentType,
         }).then(() => $router.push('/'));
       },
     }).$dom;
