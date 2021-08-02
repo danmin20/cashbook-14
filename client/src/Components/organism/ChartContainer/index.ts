@@ -53,7 +53,9 @@ export default class ChartContainer extends Component<PropsType, StateType> {
   }
 
   async handleChangeDate() {
+    this.isOpened = false;
     this.totalOutcome = 0;
+
     const date = dayjs(getState(dateState) as Date).format('YYYY-MM');
     const promise = getMyPureHistory({ date, type: 'outcome' });
     this.lastPromise = promise;
@@ -70,7 +72,7 @@ export default class ChartContainer extends Component<PropsType, StateType> {
       };
     } = {};
 
-    histories.forEach((history) => {
+    histories.forEach((history: any) => {
       if (!groupedDataBuilder[history.category.id]) {
         groupedDataBuilder[history.category.id] = {
           category: history.category.name,
@@ -93,6 +95,15 @@ export default class ChartContainer extends Component<PropsType, StateType> {
     this.update();
   }
 
+  handleClickListItem(index: number) {
+    this.isOpened = true;
+    this.update();
+    window.scroll({
+      top: 600,
+      behavior: 'smooth',
+    });
+  }
+
   render() {
     if (!this.isLoaded) {
       return jsx`
@@ -110,7 +121,7 @@ export default class ChartContainer extends Component<PropsType, StateType> {
                   <div class="title-active">
                       이번 달 지출 금액 ${returnPrice(this.totalOutcome)}원
                   </div>
-                  ${this.groupedData.map((data) => {
+                  ${this.groupedData.map((data, index) => {
                     return new List({
                       category: { name: data.category, color: data.color },
                       listType: 'small',
@@ -119,12 +130,17 @@ export default class ChartContainer extends Component<PropsType, StateType> {
                         (data.amount / this.totalOutcome) * 100
                       )}%`,
                       amount: data.amount,
+                      onClick: () => {
+                        this.handleClickListItem(index);
+                      },
                     }).$dom;
                   })}
                 </div>
             </div>
 
-            <div class="paper">
+            ${
+              this.isOpened
+                ? jsx`<div class="paper">
                 <div class="title-active">
                 생활 카테고리 소비 추이
                 </div>
@@ -135,7 +151,9 @@ export default class ChartContainer extends Component<PropsType, StateType> {
             </div>
 
             <div>
-            </div>
+            </div>`
+                : ''
+            }
         </div>
     `;
   }

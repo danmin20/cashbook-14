@@ -43,3 +43,10 @@
 .list-large {
   width: 84.8rem;
 }
+
+.list-clickable {
+  cursor: pointer;
+  &:hover {
+    background-color: $background;
+  }
+}

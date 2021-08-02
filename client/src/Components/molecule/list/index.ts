@@ -15,6 +15,7 @@ export interface ListProps {
   totalIncome?: number;
   totalOutcome?: number;
   date?: string;
+  onClick?: any;
 }
 
 export default class List extends Component<ListProps> {
@@ -31,12 +32,12 @@ export default class List extends Component<ListProps> {
     this.setDom();
   }
   render() {
-    const { type, content, payment, amount, listType } = this.props;
+    const { type, content, payment, amount, listType, onClick } = this.props;
 
     return jsx`
       <div class='list-component${
         this.props.listType === 'large' ? ' list-large' : ''
-      }'>
+      }${this.props.onClick ? ' list-clickable' : ''}' onClick=${onClick}>
         <div class='title'>
           ${this.$categoryTag}
           ${content}
