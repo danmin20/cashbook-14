@@ -67,7 +67,7 @@ function getGroupedHistory(histories: History[]) {
       };
     }
 
-    switch (history.paymentType) {
+    switch (history.type) {
       case 'income':
         groupedHistories[history.date].totalIncome += +history.amount;
         break;
@@ -108,7 +108,7 @@ async function getMyHistories(req: Request, res: Response, next: NextFunction) {
     };
 
     for (const history of histories) {
-      switch (history.paymentType) {
+      switch (history.type) {
         case 'income':
           result.totalIncome += +history.amount;
           result.totalIncomeCount += 1;

@@ -19,7 +19,7 @@ export class History {
   date!: string;
 
   @Column({ type: 'varchar', length: 7 })
-  paymentType!: string;
+  type!: string;
 
   @Column({ type: 'varchar', length: 255 })
   content!: string;

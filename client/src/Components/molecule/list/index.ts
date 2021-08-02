@@ -7,7 +7,7 @@ import './style';
 export interface ListProps {
   category: CategoryType;
   listType: 'large' | 'small';
-  paymentType: 'income' | 'outcome';
+  type: 'income' | 'outcome';
   content: string;
   payment: PaymentType;
   amount: number;
@@ -30,7 +30,7 @@ export default class List extends Component<ListProps> {
     this.setDom();
   }
   render() {
-    const { paymentType, content, payment, amount, listType } = this.props;
+    const { type, content, payment, amount, listType } = this.props;
 
     return jsx`
       <div class='list-component${
@@ -43,10 +43,8 @@ export default class List extends Component<ListProps> {
         <div class='payment'>
           ${listType === 'large' ? payment.name : ''}
         </div>
-        <div class='amount${
-          paymentType === 'outcome' ? ' outcome' : ' income'
-        }'>
-          ${paymentType === 'outcome' ? '-' : ''}${amount}${
+        <div class='amount${type === 'outcome' ? ' outcome' : ' income'}'>
+          ${type === 'outcome' ? '-' : ''}${amount}${
       listType === 'large' ? '원' : ''
     }
         </div>

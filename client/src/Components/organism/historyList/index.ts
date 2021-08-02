@@ -71,9 +71,9 @@ export default class HistoryList extends Component<
               }
          ${histories.map((history: ListProps) => {
            if (
-             (history.paymentType === 'income' &&
+             (history.type === 'income' &&
                checked.find((i) => i === 'income')) ||
-             (history.paymentType === 'outcome' &&
+             (history.type === 'outcome' &&
                checked.find((i) => i === 'outcome'))
            ) {
              return jsx`<div>${
@@ -81,7 +81,7 @@ export default class HistoryList extends Component<
                  listType: 'large',
                  content: history.content,
                  payment: history.payment,
-                 paymentType: history.paymentType,
+                 type: history.type,
                  amount: history.amount,
                  category: {
                    name: history.category.name,
