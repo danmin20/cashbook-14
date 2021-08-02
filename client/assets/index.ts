@@ -10,3 +10,4 @@ export { default as drop } from './drop.svg';
 export { default as refresh } from './refresh.svg';
 export { default as github } from './github.svg';
 export { default as minus } from './minus.svg';
+export { default as arrow } from './arrow.svg';

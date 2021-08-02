@@ -1,0 +1,54 @@
+@import '../../../scss/theme';
+
+.date-select {
+  @include body-medium;
+  text-align: center;
+  font-family: 'BMDOHYEON';
+  border-radius: 2rem;
+  z-index: 100;
+  color: $title-active;
+  position: absolute;
+  top: 14rem;
+  width: 25rem;
+  padding: 2rem;
+  box-sizing: border-box;
+  background-color: #fff;
+  box-shadow: $shadow;
+  padding-bottom: 3.5rem;
+  &__years {
+    cursor: pointer;
+    display: flex;
+    width: 100%;
+    gap: 0.5rem;
+    overflow-x: scroll;
+  }
+  &__months {
+    cursor: pointer;
+    margin-top: 1rem;
+    gap: 0.5rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 0.1rem solid $line;
+    padding-top: 1rem;
+  }
+  .box {
+    padding: 0.5rem 1rem;
+    box-sizing: border-box;
+    border-radius: 0.5rem;
+    &:hover {
+      background-color: $primary2;
+    }
+  }
+  .selected {
+    color: #fff;
+    background-color: $primary1;
+  }
+
+  img {
+    cursor: pointer;
+    width: 2rem;
+    position: absolute;
+    right: 3rem;
+    bottom: 1rem;
+  }
+}
