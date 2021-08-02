@@ -30,7 +30,7 @@ export default class Main extends Component<PropsType, StateType> {
           <div class='input-bar-wrapper'>
             ${this.$inputBar}
           </div>
-          <div class='content__list'>
+          <div>
             ${this.$historyList}
           </div>
         </div>

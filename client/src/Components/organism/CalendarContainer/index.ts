@@ -4,7 +4,7 @@ import jsx from '@/core/jsx';
 import { dateState } from '@/Model';
 import { HistoriesType } from '@/shared/type';
 import { getState, subscribe } from '@/core/observer';
-import Calendar from '@/Components/atom/Calendar';
+import Calendar from '@/Components/molecule/Calendar';
 import './style';
 
 export default class CalendarContainer extends Component<PropsType, StateType> {

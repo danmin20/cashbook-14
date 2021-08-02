@@ -1,0 +1,44 @@
+@import '../../../scss//theme';
+
+.detail-info {
+  position: absolute;
+  z-index: 100;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 80rem;
+  background: #fff;
+  padding: 1rem;
+  box-sizing: border-box;
+  border-radius: 0 1rem 1rem 0;
+  box-shadow: $shadow;
+  animation: slide-open 0.5s;
+  .day-list {
+    width: 100%;
+  }
+  .list-component {
+    width: 100%;
+  }
+  .del-btn {
+    @include flex-center;
+    cursor: pointer;
+    position: absolute;
+    left: -1rem;
+    top: -1rem;
+    width: 3rem;
+    height: 3rem;
+    background: #fff;
+    border-radius: 50%;
+    padding: 0.5rem;
+    box-sizing: border-box;
+    box-shadow: $shadow;
+  }
+  &__content {
+    width: 100%;
+    height: 100%;
+    background: $background;
+    padding: 1rem 2rem;
+    box-sizing: border-box;
+    border-radius: 0.5rem;
+  }
+}
