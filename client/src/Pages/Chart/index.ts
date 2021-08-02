@@ -1,17 +1,17 @@
 import Component, { PropsType, StateType } from '@/core/Component';
 import jsx from '@/core/jsx';
 import Header from '@/Components/atom/Header';
-import PieGraph from '@/Components/atom/PieGraph';
+import ChartContainer from '@/Components/organism/ChartContainer';
 
 export default class Chart extends Component<PropsType, StateType> {
   $header: Element;
-  $pieGraph: Element;
+  $chartContainer: Element;
 
   constructor(props: PropsType) {
     super(props);
 
     this.$header = new Header({}).$dom;
-    this.$pieGraph = new PieGraph({}).$dom;
+    this.$chartContainer = new ChartContainer({}).$dom;
 
     this.setDom();
   }
@@ -23,14 +23,7 @@ export default class Chart extends Component<PropsType, StateType> {
           ${this.$header}
         </div>
 
-        <div class="chart-wrapper">
-          <div class="chart">
-            ${this.$pieGraph}
-            <div>
-              List is here
-            </div>
-        </div>
-
+        ${this.$chartContainer}
       </div>
     `;
   }
