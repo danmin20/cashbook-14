@@ -62,10 +62,22 @@ async function findHistories({
   if (order === 'ASC') {
     // 오름차
     result = result.sort((a, b) => {
+      const cmpTime = new Date(a.date).getTime() - new Date(b.date).getTime();
+
+      if (cmpTime !== 0) {
+        return cmpTime;
+      }
+
       return a.id - b.id;
     });
   } else {
     result = result.sort((a, b) => {
+      const cmpTime = new Date(b.date).getTime() - new Date(a.date).getTime();
+
+      if (cmpTime !== 0) {
+        return cmpTime;
+      }
+
       return b.id - a.id;
     });
   }
