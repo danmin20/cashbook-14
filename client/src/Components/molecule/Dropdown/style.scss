@@ -14,12 +14,24 @@
     box-sizing: border-box;
     animation: open 0.3s;
 
+    .color {
+      width: 1rem;
+      height: 1rem;
+      border-radius: 0.5rem;
+    }
+
     &__item {
+      &--item {
+        @include flex-center;
+        div {
+          margin-right: 0.8rem;
+        }
+      }
       @include body-regular;
       @include flex-center;
       justify-content: space-between;
       position: relative;
-      padding: 1.6rem 2.4rem;
+      padding: 1.6rem 2rem;
       color: $title-active;
       box-sizing: border-box;
       cursor: pointer;
@@ -37,8 +49,8 @@
           position: absolute;
           content: '';
           top: 0;
-          left: 2.4rem;
-          width: 10rem;
+          left: 2rem;
+          width: 10.6rem;
           height: 0.1rem;
           background-color: $line;
         }

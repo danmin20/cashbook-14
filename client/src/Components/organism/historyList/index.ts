@@ -6,6 +6,7 @@ import DayList from '@/Components/atom/DayList';
 import List, { ListProps } from '@/Components/molecule/list';
 import Info from '@/Components/molecule/Info';
 import { AllHistorytype } from '@/shared/type';
+import './style';
 
 interface HistoryListState {
   checked: ('income' | 'outcome')[];
@@ -58,46 +59,46 @@ export default class HistoryList extends Component<
     return jsx`
     <div>
      ${this.$info}
-    <div>${
-      this.histories?.histories
-        ? this.histories?.histories.map(
-            ({ date, histories, totalIncome, totalOutcome }) => {
+      <div class='history-list'>${
+        this.histories?.histories
+          ? this.histories?.histories.map(
+              ({ date, histories, totalIncome, totalOutcome }) => {
+                return jsx`<div>${
+                  new DayList({
+                    date,
+                    income: totalIncome,
+                    outcome: totalOutcome,
+                  }).$dom
+                }
+          ${histories.map((history: ListProps) => {
+            if (
+              (history.type === 'income' &&
+                checked.find((i) => i === 'income')) ||
+              (history.type === 'outcome' &&
+                checked.find((i) => i === 'outcome'))
+            ) {
               return jsx`<div>${
-                new DayList({
-                  date,
-                  income: totalIncome,
-                  outcome: totalOutcome,
+                new List({
+                  listType: 'large',
+                  content: history.content,
+                  payment: history.payment,
+                  type: history.type,
+                  amount: history.amount,
+                  category: {
+                    name: history.category.name,
+                    color: history.category.color,
+                  },
                 }).$dom
-              }
-         ${histories.map((history: ListProps) => {
-           if (
-             (history.type === 'income' &&
-               checked.find((i) => i === 'income')) ||
-             (history.type === 'outcome' &&
-               checked.find((i) => i === 'outcome'))
-           ) {
-             return jsx`<div>${
-               new List({
-                 listType: 'large',
-                 content: history.content,
-                 payment: history.payment,
-                 type: history.type,
-                 amount: history.amount,
-                 category: {
-                   name: history.category.name,
-                   color: history.category.color,
-                 },
-               }).$dom
-             }</div>`;
-           } else {
-             return jsx``;
-           }
-         })}
-        </div>`;
+              }</div>`;
+            } else {
+              return jsx``;
             }
-          )
-        : ''
-    }</div>
+          })}
+          </div>`;
+              }
+            )
+          : ''
+      }</div>
     </div>`;
   }
 }
