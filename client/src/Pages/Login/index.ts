@@ -17,7 +17,7 @@ export default class Login extends Component<PropsType, StateType> {
         <div class="wave -two"></div>
         <div class="wave -three"></div>
 
-        <div class='title'>
+        <div class='title-wave'>
           우아한 가계부
         </div>
 
