@@ -23,6 +23,7 @@ async function findHistories({
   type,
   start,
   last,
+  date,
   order,
 }: {
   userId?: number;
@@ -30,6 +31,7 @@ async function findHistories({
   type?: string;
   start?: { year: number; month: number };
   last?: { year: number; month: number };
+  date?: string;
   order?: string;
 }) {
   const repo = getRepository(History);
@@ -44,6 +46,12 @@ async function findHistories({
   });
 
   // TODO: 필터링 개선(DB 수준에서의 필터링을 구현하기) 근데 쿼리 작성하기 귀찮다... ㅎㅎ
+  if (date && date.length >= 8) {
+    result = result.filter((history) => {
+      history.date === date;
+    });
+  }
+
   if (start) {
     result = result.filter((history) => {
       const cmpFullYear = new Date(history.date).getFullYear() - start.year;
