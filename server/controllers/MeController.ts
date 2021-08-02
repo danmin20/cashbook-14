@@ -177,9 +177,7 @@ async function getMyPureHistories(
       ...(query.date && { last: dateObject }),
     });
 
-    const result = {
-      histories,
-    };
+    const result = histories;
 
     res.status(200).json(result);
   } catch (err) {
