@@ -10,7 +10,6 @@ async function createHistory(req: Request, res: Response, next: NextFunction) {
     const result = await HistoryService.createHistory({
       userId,
       ...body,
-      ...(body.date && { date: new Date(body.date) }),
     });
 
     res.status(200).json(result);
