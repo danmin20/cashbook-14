@@ -24,12 +24,38 @@ body {
   @include theme(light);
   height: 100vh;
   width: 100%;
+  position: relative;
   color: $title-active;
   background-color: $background;
   overflow-x: hidden;
   #app {
     height: 100vh;
     width: 100%;
+  }
+  #theme-btn {
+    @include flex-center;
+    cursor: pointer;
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    width: 5rem;
+    height: 5rem;
+    background-color: $background;
+    border-radius: 50%;
+    box-shadow: $shadow;
+  }
+  .theme-btn-img {
+    width: 4rem;
+    height: 4rem;
+    background-image: url('../../assets/sun.svg');
+  }
+}
+
+.dark-mode {
+  .theme-btn-img {
+    width: 3rem;
+    height: 3rem;
+    background-image: url('../../assets/moon.svg');
   }
 }
 

@@ -11,13 +11,15 @@
       <div class="wave -three"></div>
     </div>
 
-    <button id="gitOauth">테마토글</button>
+    <div id="theme-btn">
+      <div class="theme-btn-img"></div>
+    </div>
 
     <div id="app" class="app"></div>
 
     <script type="text/javascript">
       document
-        .getElementById('gitOauth')
+        .getElementById('theme-btn')
         .addEventListener('click', async () => {
           document.body.classList.toggle('dark-mode');
         });

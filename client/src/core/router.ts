@@ -1,12 +1,7 @@
 import { updateRealDOM } from '../index';
 import Component from '@/core/Component';
 import { customEventEmitter } from '@/utils/helpers';
-
-type Route = {
-  path: string;
-  page: typeof Component;
-  redirect?: string;
-};
+import { Route } from '@/shared/type';
 
 class Router {
   $app: HTMLElement;
