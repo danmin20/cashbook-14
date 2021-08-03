@@ -15,7 +15,7 @@ export interface ListProps {
   totalIncome?: number;
   totalOutcome?: number;
   date?: string;
-  onClick?: any;
+  hover?: boolean;
 }
 
 export default class List extends Component<ListProps> {
@@ -32,12 +32,12 @@ export default class List extends Component<ListProps> {
     this.setDom();
   }
   render() {
-    const { type, content, payment, amount, listType, onClick } = this.props;
+    const { type, content, payment, amount, listType, hover } = this.props;
 
     return jsx`
-      <div class='list-component${
-        this.props.listType === 'large' ? ' list-large' : ''
-      }${this.props.onClick ? ' list-clickable' : ''}' onClick=${onClick}>
+      <div class='list-component${listType === 'large' ? ' list-large' : ''}${
+      hover ? ' list-clickable' : ''
+    }'>
         <div class='title'>
           ${this.$categoryTag}
           ${content}

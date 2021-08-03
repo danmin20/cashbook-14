@@ -1,0 +1,41 @@
+@import '@/scss/theme';
+@import '@/scss/animation';
+
+.chart-wrapper {
+  @include flex-center;
+  flex-direction: column;
+  width: 100%;
+  margin-top: -3.2rem;
+
+  & > * {
+    margin-bottom: 1rem;
+    width: 84.8rem;
+  }
+
+  .chart {
+    @include flex-center;
+    @include body-regular;
+    justify-content: space-around;
+
+    & > * {
+      flex: 1;
+    }
+  }
+
+  .paper {
+    position: static;
+    box-shadow: $shadow;
+    background-color: $off-white;
+    color: $label;
+    border: 0.1rem solid $line;
+    border-radius: 1rem;
+    padding: 2rem;
+    box-sizing: border-box;
+  }
+
+  .title-active {
+    @include body-large;
+    color: $title-active;
+    margin: 1rem 0 1rem 2rem;
+  }
+}
