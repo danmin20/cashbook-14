@@ -18,7 +18,7 @@
 
   .date-controller {
     @include flex-center;
-    img {
+    .arrow-btn {
       position: absolute;
       cursor: pointer;
       &:first-child {
@@ -30,6 +30,7 @@
     }
     .date {
       @include flex-center;
+      cursor: pointer;
       flex-direction: column;
       &__month {
         @include display-large;

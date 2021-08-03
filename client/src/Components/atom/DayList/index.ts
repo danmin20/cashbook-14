@@ -36,7 +36,7 @@ export default class DayList extends Component<DayListProps> {
               : ''
           }
           <div class='day-list__sum--each'>
-            지출 ${returnPrice(outcome)}
+            지출 ${returnPrice(outcome || 0)}
           </div>
         </div>
       </div>

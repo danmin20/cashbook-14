@@ -60,7 +60,7 @@ export default class HistoryList extends Component<
     <div>
      ${this.$info}
       <div class='history-list'>${
-        this.histories?.histories
+        this.histories?.histories?.length > 0
           ? this.histories?.histories.map(
               ({ date, histories, totalIncome, totalOutcome }) => {
                 return jsx`<div>${
@@ -97,7 +97,10 @@ export default class HistoryList extends Component<
           </div>`;
               }
             )
-          : ''
+          : jsx`
+          <div class='no-data'>
+            <div class='title-wave'>NO DATA</div>
+          </div>`
       }</div>
     </div>`;
   }
