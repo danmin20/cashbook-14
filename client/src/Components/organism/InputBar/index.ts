@@ -30,6 +30,7 @@ export interface InputBarStates {
     id: number;
     name: string;
   };
+  isBarOpened: boolean;
 }
 
 export default class InputBar extends Component<InputBarProps, InputBarStates> {
@@ -53,6 +54,7 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
         id: 0,
         name: '',
       },
+      isBarOpened: false,
     };
 
     this.$saveBtn = new SaveButton({
@@ -118,10 +120,22 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
   }
 
   render() {
-    const { paymentType } = this.state;
+    const { paymentType, isBarOpened } = this.state;
 
     return jsx`
-      <div class='input-bar'>
+      <div onClick=${() =>
+        this.setState({ isBarOpened: true })} class='input-bar ${
+      !isBarOpened ? 'close' : ''
+    }'>
+
+    ${
+      isBarOpened
+        ? jsx`<div onClick=${(e: Event) => {
+            e.stopPropagation();
+            this.setState({ isBarOpened: false });
+          }} class='open'></div>`
+        : ''
+    }
 
         <div class='input-bar__buttons'>
           <div onClick=${() => {

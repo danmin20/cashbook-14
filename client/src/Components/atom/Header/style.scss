@@ -1,7 +1,6 @@
 @import '../../../scss/theme';
 
 .header {
-  position: relative;
   width: 90.4rem;
   height: 14.6rem;
   display: flex;
@@ -26,6 +25,7 @@
     @include flex-center;
     .arrow-btn {
       position: absolute;
+      z-index: 10;
       cursor: pointer;
       &:first-child {
         left: 37rem;

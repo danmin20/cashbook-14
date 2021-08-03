@@ -8,7 +8,7 @@
   border-radius: 1rem;
   box-shadow: $shadow;
   position: fixed;
-  z-index: 4;
+  z-index: 3;
   transition: 0.3s;
   top: 15rem;
   @media (max-width: $phone-max-width) {
@@ -138,6 +138,36 @@
     img {
       position: absolute;
       bottom: 0.5rem;
+    }
+  }
+  &.close {
+    @media (max-width: $phone-max-width) {
+      div {
+        display: none;
+      }
+      cursor: pointer;
+      background-color: $background;
+      width: 4rem;
+      height: 4rem;
+      border-radius: 50%;
+      background-image: url('../../../../assets/drop.svg');
+      background-size: cover;
+    }
+  }
+  .open {
+    display: none;
+    @media (max-width: $phone-max-width) {
+      cursor: pointer;
+      position: absolute;
+      left: 21.5rem;
+      background-color: $background;
+      display: block;
+      width: 4rem;
+      height: 4rem;
+      border-radius: 50%;
+      background-image: url('../../../../assets/drop.svg');
+      background-size: cover;
+      transform: rotate(180deg);
     }
   }
 }
