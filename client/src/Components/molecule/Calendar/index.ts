@@ -115,16 +115,25 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
                       ? jsx`
                       <div class='cal-box__history' onClick=${() =>
                         this.openDetail(dayjs(item.date).format('YYYY-MM-DD'))}>
+                        
                         <div class="amount income ${
                           item.totalIncome ? '' : 'none'
                         }">
                           ${returnPrice(item.totalIncome)}
                         </div>
+                        <div class="${
+                          item.totalIncome ? 'amount-mobile income' : ''
+                        }"></div>
+
                         <div class="amount outcome ${
                           item.totalOutcome ? '' : 'none'
                         }">
                           ${returnPrice(-item.totalOutcome)}
                         </div>
+                        <div class="${
+                          item.totalOutcome ? 'amount-mobile outcome' : ''
+                        }"></div>
+
                         <div class="amount">
                           ${returnPrice(item.totalIncome - item.totalOutcome)}
                         </div>

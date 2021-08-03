@@ -15,6 +15,9 @@
     color: $title-active;
     border: 0.1rem solid $line;
     border-radius: 1rem;
+    @media (max-width: $phone-max-width) {
+      width: 50rem;
+    }
   }
   .cal-body {
     position: relative;
@@ -24,6 +27,9 @@
     color: $label;
     border: 0.1rem solid $line;
     border-radius: 1rem;
+    @media (max-width: $phone-max-width) {
+      width: 50rem;
+    }
   }
   .footer {
     @include bold-medium;
