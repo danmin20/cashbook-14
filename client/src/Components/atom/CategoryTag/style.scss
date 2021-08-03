@@ -7,4 +7,7 @@
   width: 9.2rem;
   height: 3rem;
   border-radius: 99.9rem;
+  @media (max-width: $phone-max-width) {
+    width: 7.5rem;
+  }
 }

@@ -6,7 +6,12 @@
   color: $primary3;
   justify-content: space-between;
   width: 84.8rem;
-  margin-top: 9.2rem;
+  position: fixed;
+  top: 26rem;
+  z-index: 2;
+  @media (max-width: $phone-max-width) {
+    width: 50rem;
+  }
   .buttons {
     @include flex-center;
     @include body-medium;

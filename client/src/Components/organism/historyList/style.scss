@@ -1,3 +1,8 @@
+@import '../../../scss//theme';
+
 .history-list {
+  @include flex-center;
+  flex-direction: column;
+  padding-top: 10rem;
   padding-bottom: 3rem;
 }

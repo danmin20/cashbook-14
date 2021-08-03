@@ -3,6 +3,9 @@
 .day-list {
   @include flex-center;
   @include bold-medium;
+  @media (max-width: $phone-max-width) {
+    width: 50rem;
+  }
   width: 84.8rem;
   justify-content: space-between;
   margin-top: 3.2rem;

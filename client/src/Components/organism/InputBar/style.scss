@@ -7,6 +7,10 @@
   background-color: $off-white;
   border-radius: 1rem;
   box-shadow: $shadow;
+  position: fixed;
+  z-index: 2;
+  transition: 0.3s;
+  top: 15rem;
   &__buttons {
     @include flex-center;
     flex-direction: column;
