@@ -33,6 +33,13 @@
       top: 16rem;
     }
   }
+  .content-wrapper {
+    @include flex-center;
+    width: 100%;
+    position: fixed;
+    top: 15rem;
+    z-index: 2;
+  }
   .chart {
     @include flex-center;
     @include body-regular;

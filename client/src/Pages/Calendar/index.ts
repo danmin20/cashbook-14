@@ -22,7 +22,10 @@ export default class CalendarPage extends Component<PropsType, StateType> {
         <div class='top'>
           ${this.$header}
         </div>
-        ${this.$calendar}
+
+        <div class='content-wrapper'>
+          ${this.$calendar}
+        </div>
       </div>
     `;
   }

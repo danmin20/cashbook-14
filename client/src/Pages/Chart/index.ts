@@ -23,7 +23,9 @@ export default class Chart extends Component<PropsType, StateType> {
           ${this.$header}
         </div>
 
-        ${this.$chartContainer}
+        <div class='content-wrapper'>
+          ${this.$chartContainer}
+        </div>
       </div>
     `;
   }
