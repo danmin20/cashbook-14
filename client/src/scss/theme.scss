@@ -1,17 +1,93 @@
-// color
-$title-active: #1e2222;
-$body: #626666;
-$label: #8d9393;
-$placeholder: #c1c5c5;
-$grey1: #888888;
-$grey2: #bbbbbb;
-$line: #ccd3d3;
-$background: #f5f5f5;
-$off-white: #fcfcfc;
-$primary1: #2ac1bc;
-$primary2: #a0e1e0;
-$primary3: #219a95;
-$red: #f45452;
+// color var
+$title-active: var(--title-active-color);
+$body: var(--body-color);
+$label: var(--label-color);
+$placeholder: var(--placeholder-color);
+$grey1: var(--grey1-color);
+$grey2: var(--grey2-color);
+$line: var(--line-color);
+$background: var(--background-color);
+$off-white: var(--off-white-color);
+$primary1: var(--primary1-color);
+$primary2: var(--primary2-color);
+$primary3: var(--primary3-color);
+$red: var(--red-color);
+$wave-img: var(--wave-img);
+
+$config: (
+  light: (
+    title-active: #1e2222,
+    body: #626666,
+    label: #8d9393,
+    placeholder: #c1c5c5,
+    grey1: #888888,
+    grey2: #bbbbbb,
+    line: #ccd3d3,
+    background: #f5f5f5,
+    off-white: #fcfcfc,
+    primary1: #2ac1bc,
+    primary2: #a0e1e0,
+    primary3: #219a95,
+    red: #f45452,
+    wave-img:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 90 240 300' preserveAspectRatio='none'%3E%3Crect x='0' y='0' width='500' height='800' style='stroke: none; fill: rgb(42, 193, 188);' /%3E%3Cpath d='M0,100 C150,200 350,0 500,100 L500,00 L0,0 Z' style='stroke: none;'%3E%3C/path%3E%3C/svg%3E"),
+  ),
+  dark: (
+    title-active: #fff,
+    body: #888888,
+    label: #8d9393,
+    placeholder: #c1c5c5,
+    grey1: #888888,
+    grey2: #bbbbbb,
+    line: #888888,
+    background: #1e2222,
+    off-white: #3d4545,
+    primary1: #16de8e,
+    primary2: #85e1b2,
+    primary3: #16de8e,
+    red: #f13734,
+    wave-img:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 90 240 300' preserveAspectRatio='none'%3E%3Crect x='0' y='0' width='500' height='800' style='stroke: none; fill: rgb(22, 222, 142);' /%3E%3Cpath d='M0,100 C150,200 350,0 500,100 L500,00 L0,0 Z' style='stroke: none;'%3E%3C/path%3E%3C/svg%3E"),
+  ),
+);
+
+@function setStyle($map, $object, $style) {
+  @if map-has-key($map, $object) {
+    @return map-get(map-get($map, $object), $style);
+  }
+  @warn "The key ´#{$object} is not available in the map.";
+  @return null;
+}
+
+@mixin theme($key) {
+  --title-active-color: #{setStyle($config, $key, title-active)};
+  --body-color: #{setStyle($config, $key, body)};
+  --label-color: #{setStyle($config, $key, label)};
+  --placeholder-color: #{setStyle($config, $key, placeholder)};
+  --grey1-color: #{setStyle($config, $key, grey1)};
+  --grey1-color: #{setStyle($config, $key, grey2)};
+  --line-color: #{setStyle($config, $key, line)};
+  --background-color: #{setStyle($config, $key, background)};
+  --off-white-color: #{setStyle($config, $key, off-white)};
+  --primary1-color: #{setStyle($config, $key, primary1)};
+  --primary2-color: #{setStyle($config, $key, primary2)};
+  --primary3-color: #{setStyle($config, $key, primary3)};
+  --red-color: #{setStyle($config, $key, red)};
+  --wave-img: #{setStyle($config, $key, wave-img)};
+}
+
+// @media (prefers-color-scheme: dark) {
+//   body {
+//     @include theme(dark);
+//   }
+// }
+
+// toggle
+@each $theme in dark, light {
+  body.#{$theme}-mode {
+    @include theme($theme);
+  }
+}
 
 // typography
 @mixin display-small {

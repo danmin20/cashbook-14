@@ -11,6 +11,26 @@
       <div class="wave -three"></div>
     </div>
 
+    <div id="theme-btn">
+      <div class="theme-btn-img"></div>
+    </div>
+
     <div id="app" class="app"></div>
+
+    <script type="text/javascript">
+      if (localStorage.getItem('theme') === 'dark-mode') {
+        document.body.classList.add('dark-mode');
+      }
+      document
+        .getElementById('theme-btn')
+        .addEventListener('click', async () => {
+          document.body.classList.toggle('dark-mode');
+          if (document.body.className === 'dark-mode') {
+            localStorage.setItem('theme', 'dark-mode');
+          } else {
+            localStorage.setItem('theme', 'light-mode');
+          }
+        });
+    </script>
   </body>
 </html>

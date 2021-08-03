@@ -12,7 +12,6 @@
 @import 'animation';
 
 html {
-  color: $title-active;
   font-size: 10px;
   font-family: 'Noto Sans KR', sans-serif;
 }
@@ -22,13 +21,41 @@ html {
 }
 
 body {
+  @include theme(light);
   height: 100vh;
   width: 100%;
+  position: relative;
+  color: $title-active;
   background-color: $background;
   overflow-x: hidden;
   #app {
     height: 100vh;
     width: 100%;
+  }
+  #theme-btn {
+    @include flex-center;
+    cursor: pointer;
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    width: 5rem;
+    height: 5rem;
+    background-color: $background;
+    border-radius: 50%;
+    box-shadow: $shadow;
+  }
+  .theme-btn-img {
+    width: 4rem;
+    height: 4rem;
+    background-image: url('../../assets/sun.svg');
+  }
+}
+
+.dark-mode {
+  .theme-btn-img {
+    width: 3rem;
+    height: 3rem;
+    background-image: url('../../assets/moon.svg');
   }
 }
 
@@ -64,7 +91,7 @@ body {
   height: 100vh;
   left: 0;
   top: 0;
-  background-color: $title-active;
+  background-color: $background;
   opacity: 0.5;
 }
 
@@ -89,6 +116,6 @@ body {
   -webkit-background-clip: text;
   -moz-background-clip: text;
   background-clip: text;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 90 240 300' preserveAspectRatio='none'%3E%3Crect x='0' y='0' width='500' height='800' style='stroke: none; fill: rgb(41, 189, 184);' /%3E%3Cpath d='M0,100 C150,200 350,0 500,100 L500,00 L0,0 Z' style='stroke: none;'%3E%3C/path%3E%3C/svg%3E");
+  background-image: $wave-img;
   animation: wave 3s both linear;
 }
