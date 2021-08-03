@@ -16,6 +16,21 @@ export const getMyPureHistory = ({
     params: { date, type },
   });
 
+export const getSumOfAmounts = ({
+  date,
+  categoryId,
+  type,
+}: {
+  date: string;
+  categoryId: number;
+  type: 'income' | 'outcome';
+}) =>
+  fetchWrap({
+    method: 'get',
+    url: '/me/sum-of-amounts',
+    params: { date, type, categoryId },
+  });
+
 export const getMyIncomeCategories = () =>
   fetchWrap({
     method: 'get',

@@ -3,11 +3,6 @@ import './style';
 import LinearGraphConfig from './configType';
 import linearGraphDefaultConfig from './defaultConfig';
 
-const mockDate = '2021-08';
-const mockData = [
-  0, 0, 0, 0, -3000, -3600, -1000, -3000, -400, -5909, -2000, -3003,
-];
-
 export default class LinearGraph {
   date: string;
   data: number[];
@@ -21,10 +16,9 @@ export default class LinearGraph {
   cur: number;
   end: number;
 
-  constructor({}) {
-    //   constructor({ data, date }) {
-    this.date = mockDate;
-    this.data = mockData;
+  constructor({ data, date }: { data: number[]; date: string }) {
+    this.date = date;
+    this.data = data;
     this.minData = Math.min(...this.data);
 
     this.config = linearGraphDefaultConfig;

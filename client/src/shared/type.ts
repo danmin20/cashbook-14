@@ -48,6 +48,7 @@ export type HistoriesType = {
 };
 
 export interface GroupedHistoriesByCategory {
+  categoryId: number;
   category: string;
   amount: number;
   color: string;

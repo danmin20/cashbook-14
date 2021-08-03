@@ -54,11 +54,12 @@ export default class ChartContainer extends Component<
     }
 
     const groupedDataBuilder: {
-      [key: string]: GroupedData;
+      [key: string]: GroupedHistoriesByCategory;
     } = {};
     histories.forEach((history: HistoryType) => {
       if (!groupedDataBuilder[history.category.id]) {
         groupedDataBuilder[history.category.id] = {
+          categoryId: history.category.id,
           category: history.category.name,
           amount: 0,
           color: history.category.color,
