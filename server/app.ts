@@ -7,12 +7,20 @@ import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import router from './routes';
 import createConnection from './database';
+import dotenv from 'dotenv';
 
 const app = express();
 const FileStore = require('session-file-store')(session);
 
+dotenv.config({
+  path: path.resolve(
+    process.cwd(),
+    process.env.NODE_ENV == 'production' ? '.env' : '.env.dev'
+  ),
+});
+
 let corsOption = {
-  origin: 'http://localhost:8080',
+  origin: true,
   credentials: true,
 };
 

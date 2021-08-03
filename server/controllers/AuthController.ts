@@ -11,14 +11,16 @@ function githubLogin(req: Request, res: Response, next: NextFunction) {
   try {
     const state = rs.generate();
 
-    const url = 'https://github.com/login/oauth/authorize?';
-    const query = QueryString.stringify({
-      client_id: process.env.GITHUB_CLIENT_ID,
-      redirect_uri: 'http://localhost:3000/api/auth/callback',
-      state: state,
-      scope: 'user:email',
-    });
-    res.redirect(url + query);
+    console.log(process.env.NODE_ENV, process.env.SERVER_URL);
+
+    // const url = 'https://github.com/login/oauth/authorize?';
+    // const query = QueryString.stringify({
+    //   client_id: process.env.GITHUB_CLIENT_ID,
+    //   redirect_uri: 'http://localhost:3000/api/auth/callback',
+    //   state: state,
+    //   scope: 'user:email',
+    // });
+    // res.redirect(url + query);
   } catch (err) {
     next(err);
   }
