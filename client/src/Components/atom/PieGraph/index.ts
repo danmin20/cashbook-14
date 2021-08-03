@@ -73,11 +73,13 @@ export default class PieGraph {
     });
 
     this.cur += (this.end - this.cur) / animationCoefficient;
-    if (this.cur <= this.end) {
+    if (this.cur < this.end) {
       if (this.cur >= this.end - 0.1) {
         this.cur = this.end;
+        window.requestAnimationFrame(this.render.bind(this));
+      } else {
+        window.requestAnimationFrame(this.render.bind(this));
       }
-      window.requestAnimationFrame(this.render.bind(this));
     }
   }
 }

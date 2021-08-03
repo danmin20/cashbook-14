@@ -3,13 +3,14 @@ import './style';
 import LinearGraphConfig from './configType';
 import linearGraphDefaultConfig from './defaultConfig';
 
-const mock = [
+const mockDate = '2021-08';
+const mockData = [
   0, 0, 0, 0, -3000, -3600, -1000, -3000, -400, -5909, -2000, -3003,
 ];
 
 export default class LinearGraph {
   date: string;
-  data: number[]; // 상위 콘텍스트(api 또는 component)의 환경에 따라 변경 가능하기 때문에 우선은 any로 지정
+  data: number[];
   minData: number;
 
   $wrapper: HTMLElement;
@@ -21,20 +22,18 @@ export default class LinearGraph {
   end: number;
 
   constructor({}) {
-    //   constructor({ data }) {
+    //   constructor({ data, date }) {
+    this.date = mockDate;
+    this.data = mockData;
+    this.minData = Math.min(...this.data);
 
     this.config = linearGraphDefaultConfig;
-
     const {
       canvasWidth,
       canvasHeight,
       animationStartPoint,
       animationEndPoint,
     } = this.config;
-
-    this.date = '2021-07';
-    this.data = mock;
-    this.minData = Math.min(...this.data);
 
     this.$canvas = document.createElement('canvas');
     this.$canvas.className = 'linear';
@@ -99,8 +98,13 @@ export default class LinearGraph {
     ctx.fillStyle = fontColor;
     ctx.textAlign = 'center';
     for (let i = 0; i < this.data.length; i++) {
+      const calculatedDate = new Date(this.date);
+      calculatedDate.setMonth(
+        calculatedDate.getMonth() + i - this.data.length + 1
+      );
+
       ctx.fillText(
-        (i + 1).toString(),
+        (calculatedDate.getMonth() + 1).toString(),
         marginX + (i * (width - marginX * 2)) / (this.data.length - 1),
         height - marginBottom + fontSize * 2
       );
@@ -167,11 +171,13 @@ export default class LinearGraph {
     this.renderData();
 
     this.cur += (this.end - this.cur) / this.config.animationCoefficient;
-    if (this.cur <= this.end) {
+    if (this.cur < this.end) {
       if (this.cur >= this.end - 0.1) {
         this.cur = this.end;
+        window.requestAnimationFrame(this.render.bind(this));
+      } else {
+        window.requestAnimationFrame(this.render.bind(this));
       }
-      window.requestAnimationFrame(this.render.bind(this));
     }
   }
 }
