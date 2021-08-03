@@ -11,6 +11,16 @@
       <div class="wave -three"></div>
     </div>
 
+    <button id="gitOauth">테마토글</button>
+
     <div id="app" class="app"></div>
+
+    <script type="text/javascript">
+      document
+        .getElementById('gitOauth')
+        .addEventListener('click', async () => {
+          document.body.classList.toggle('light-mode');
+        });
+    </script>
   </body>
 </html>

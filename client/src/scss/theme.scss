@@ -1,20 +1,92 @@
-// color
-$title-active: #1e2222;
-$body: #626666;
-$label: #8d9393;
-$placeholder: #c1c5c5;
-$grey1: #888888;
-$grey2: #bbbbbb;
-$line: #ccd3d3;
-$background: #f5f5f5;
-$off-white: #fcfcfc;
-$primary1: #2ac1bc;
-$primary2: #a0e1e0;
-$primary3: #219a95;
-$red: #f45452;
+// color var
+$title-active: var(--title-active);
+$body: var(--body-color);
+$label: var(--label-color);
+$placeholder: var(--placeholder-color);
+$grey1: var(--grey1-color);
+$grey2: var(--grey2-color);
+$line: var(--line-color);
+$background: var(--background-color);
+$off-white: var(--off-white-color);
+$primary1: var(--primary1-color);
+$primary2: var(--primary2-color);
+$primary3: var(--primary3-color);
+$red: var(--red-color);
+
+$config: (
+  light: (
+    title-active: #1e2222,
+    body: #626666,
+    label: #8d9393,
+    placeholder: #c1c5c5,
+    grey1: #888888,
+    grey2: #bbbbbb,
+    line: #ccd3d3,
+    background: #f5f5f5,
+    off-white: #fcfcfc,
+    primary1: #2ac1bc,
+    primary2: #a0e1e0,
+    primary3: #219a95,
+    red: #f45452,
+  ),
+  dark: (
+    title-active: #fff,
+    body: #888888,
+    label: #8d9393,
+    placeholder: #c1c5c5,
+    grey1: #888888,
+    grey2: #bbbbbb,
+    line: #ccd3d3,
+    background: #1e2222,
+    off-white: #fcfcfc,
+    primary1: #2ac1bc,
+    primary2: #a0e1e0,
+    primary3: #219a95,
+    red: #f45452,
+  ),
+);
+
+@function setStyle($map, $object, $style) {
+  @if map-has-key($map, $object) {
+    @return map-get(map-get($map, $object), $style);
+  }
+  @warn "The key ´#{$object} is not available in the map.";
+  @return null;
+}
+
+@mixin theme($key) {
+  --title-active-color: #{setStyle($config, $key, title-active)};
+  --body-color: #{setStyle($config, $key, body)};
+  --label-color: #{setStyle($config, $key, label)};
+  --placeholder-color: #{setStyle($config, $key, placeholder)};
+  --grey1-color: #{setStyle($config, $key, grey1)};
+  --grey1-color: #{setStyle($config, $key, grey2)};
+  --line-color: #{setStyle($config, $key, line)};
+  --background-color: #{setStyle($config, $key, background)};
+  --off-white-color: #{setStyle($config, $key, off-white)};
+  --primary1-color: #{setStyle($config, $key, primary1)};
+  --primary2-color: #{setStyle($config, $key, primary2)};
+  --primary3-color: #{setStyle($config, $key, primary3)};
+  --red-color: #{setStyle($config, $key, red)};
+}
+
+//컴퓨터가 dark모드로 되있을 경우 상태적용
+@media (prefers-color-scheme: dark) {
+  body {
+    @include theme(dark);
+  }
+}
+
+// toggle
+@each $theme in dark, light {
+  body.#{$theme}-mode {
+    @include theme($theme);
+  }
+}
 
 // typography
 @mixin display-small {
+  color: $title-active;
   font-family: 'BMDOHYEON';
   font-style: normal;
   font-weight: normal;
@@ -29,6 +101,8 @@ $red: #f45452;
   line-height: 5.6rem;
 }
 @mixin body-regular {
+  color: $title-active;
+
   font-family: Noto Sans KR;
   font-style: normal;
   font-weight: normal;
@@ -36,6 +110,8 @@ $red: #f45452;
   line-height: 2.4rem;
 }
 @mixin body-medium {
+  color: $title-active;
+
   font-family: Noto Sans KR;
   font-style: normal;
   font-weight: normal;
@@ -43,6 +119,8 @@ $red: #f45452;
   line-height: 2.4rem;
 }
 @mixin body-large {
+  color: $title-active;
+
   font-family: Noto Sans KR;
   font-style: normal;
   font-weight: normal;
@@ -50,6 +128,8 @@ $red: #f45452;
   line-height: 3.2rem;
 }
 @mixin bold-small {
+  color: $title-active;
+
   font-family: Noto Sans KR;
   font-style: normal;
   font-weight: 500;
@@ -57,6 +137,8 @@ $red: #f45452;
   line-height: 1.6rem;
 }
 @mixin bold-medium {
+  color: $title-active;
+
   font-family: Noto Sans KR;
   font-style: normal;
   font-weight: 500;
@@ -64,6 +146,8 @@ $red: #f45452;
   line-height: 2.4rem;
 }
 @mixin bold-large {
+  color: $title-active;
+
   font-family: Noto Sans KR;
   font-style: normal;
   font-weight: 500;
