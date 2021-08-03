@@ -16,7 +16,6 @@ export default class Header extends Component<PropsType, StateType> {
   }
 
   willMount() {
-    console.log('aa');
     this.$headerDate = new HeaderDate({}).$dom;
   }
 

@@ -40,8 +40,8 @@
 
 .cal-line {
   @include flex-center;
-  &:not(:last-child) {
-    border-bottom: 0.1rem solid $line;
+  &:not(:first-child) {
+    border-top: 0.1rem solid $line;
   }
   .cal-box {
     cursor: pointer;

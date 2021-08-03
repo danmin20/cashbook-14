@@ -1,5 +1,5 @@
 // color var
-$title-active: var(--title-active);
+$title-active: var(--title-active-color);
 $body: var(--body-color);
 $label: var(--label-color);
 $placeholder: var(--placeholder-color);
@@ -12,6 +12,7 @@ $primary1: var(--primary1-color);
 $primary2: var(--primary2-color);
 $primary3: var(--primary3-color);
 $red: var(--red-color);
+$wave-img: var(--wave-img);
 
 $config: (
   light: (
@@ -28,6 +29,8 @@ $config: (
     primary2: #a0e1e0,
     primary3: #219a95,
     red: #f45452,
+    wave-img:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 90 240 300' preserveAspectRatio='none'%3E%3Crect x='0' y='0' width='500' height='800' style='stroke: none; fill: rgb(42, 193, 188);' /%3E%3Cpath d='M0,100 C150,200 350,0 500,100 L500,00 L0,0 Z' style='stroke: none;'%3E%3C/path%3E%3C/svg%3E"),
   ),
   dark: (
     title-active: #fff,
@@ -36,13 +39,15 @@ $config: (
     placeholder: #c1c5c5,
     grey1: #888888,
     grey2: #bbbbbb,
-    line: #ccd3d3,
+    line: #888888,
     background: #1e2222,
-    off-white: #fcfcfc,
-    primary1: #2ac1bc,
-    primary2: #a0e1e0,
-    primary3: #219a95,
-    red: #f45452,
+    off-white: #3d4545,
+    primary1: #16de8e,
+    primary2: #85e1b2,
+    primary3: #16de8e,
+    red: #f13734,
+    wave-img:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 90 240 300' preserveAspectRatio='none'%3E%3Crect x='0' y='0' width='500' height='800' style='stroke: none; fill: rgb(22, 222, 142);' /%3E%3Cpath d='M0,100 C150,200 350,0 500,100 L500,00 L0,0 Z' style='stroke: none;'%3E%3C/path%3E%3C/svg%3E"),
   ),
 );
 
@@ -68,14 +73,14 @@ $config: (
   --primary2-color: #{setStyle($config, $key, primary2)};
   --primary3-color: #{setStyle($config, $key, primary3)};
   --red-color: #{setStyle($config, $key, red)};
+  --wave-img: #{setStyle($config, $key, wave-img)};
 }
 
-//컴퓨터가 dark모드로 되있을 경우 상태적용
-@media (prefers-color-scheme: dark) {
-  body {
-    @include theme(dark);
-  }
-}
+// @media (prefers-color-scheme: dark) {
+//   body {
+//     @include theme(dark);
+//   }
+// }
 
 // toggle
 @each $theme in dark, light {
@@ -86,7 +91,6 @@ $config: (
 
 // typography
 @mixin display-small {
-  color: $title-active;
   font-family: 'BMDOHYEON';
   font-style: normal;
   font-weight: normal;
@@ -101,8 +105,6 @@ $config: (
   line-height: 5.6rem;
 }
 @mixin body-regular {
-  color: $title-active;
-
   font-family: Noto Sans KR;
   font-style: normal;
   font-weight: normal;
@@ -110,8 +112,6 @@ $config: (
   line-height: 2.4rem;
 }
 @mixin body-medium {
-  color: $title-active;
-
   font-family: Noto Sans KR;
   font-style: normal;
   font-weight: normal;
@@ -119,8 +119,6 @@ $config: (
   line-height: 2.4rem;
 }
 @mixin body-large {
-  color: $title-active;
-
   font-family: Noto Sans KR;
   font-style: normal;
   font-weight: normal;
@@ -128,8 +126,6 @@ $config: (
   line-height: 3.2rem;
 }
 @mixin bold-small {
-  color: $title-active;
-
   font-family: Noto Sans KR;
   font-style: normal;
   font-weight: 500;
@@ -137,8 +133,6 @@ $config: (
   line-height: 1.6rem;
 }
 @mixin bold-medium {
-  color: $title-active;
-
   font-family: Noto Sans KR;
   font-style: normal;
   font-weight: 500;
@@ -146,8 +140,6 @@ $config: (
   line-height: 2.4rem;
 }
 @mixin bold-large {
-  color: $title-active;
-
   font-family: Noto Sans KR;
   font-style: normal;
   font-weight: 500;
