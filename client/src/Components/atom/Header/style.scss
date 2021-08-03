@@ -1,7 +1,6 @@
 @import '../../../scss/theme';
 
 .header {
-  position: relative;
   width: 90.4rem;
   height: 14.6rem;
   display: flex;
@@ -24,20 +23,16 @@
 
   .date-controller {
     @include flex-center;
+    position: relative;
     .arrow-btn {
       position: absolute;
+      z-index: 10;
       cursor: pointer;
       &:first-child {
-        left: 37rem;
-        @media (max-width: $phone-max-width) {
-          left: 4rem;
-        }
+        left: -5rem;
       }
       &:last-child {
-        right: 35rem;
-        @media (max-width: $phone-max-width) {
-          left: 20rem;
-        }
+        right: -5rem;
       }
     }
     .date {
