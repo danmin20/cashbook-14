@@ -8,13 +8,22 @@
   border-radius: 1rem;
   box-shadow: $shadow;
   position: fixed;
-  z-index: 2;
+  z-index: 4;
   transition: 0.3s;
   top: 15rem;
+  @media (max-width: $phone-max-width) {
+    width: 50rem;
+    height: 25rem;
+    display: block;
+  }
   &__buttons {
     @include flex-center;
     flex-direction: column;
     margin-right: 1.5rem;
+    @media (max-width: $phone-max-width) {
+      flex-direction: row;
+      margin: 0;
+    }
     div {
       @include bold-small;
       cursor: pointer;
@@ -24,24 +33,96 @@
       box-sizing: border-box;
       color: $placeholder;
       border-radius: 0.5rem;
-
+      @media (max-width: $phone-max-width) {
+        width: 100%;
+        font-size: 2rem;
+        padding: 1rem;
+        &:first-child {
+          border-radius: 0;
+          border-top-left-radius: 1rem;
+        }
+        &:last-child {
+          border-radius: 0;
+          border-top-right-radius: 1rem;
+        }
+      }
       &.active {
         background-color: $primary1;
         color: #fff;
       }
     }
   }
+  &__inputs {
+    display: flex;
+    @media (max-width: $phone-max-width) {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      :nth-child(2) {
+        order: 3;
+      }
+      :nth-child(4) {
+        order: 4;
+      }
+    }
+  }
+  &__price {
+    display: flex;
+    align-items: center;
+    position: relative;
+    @media (max-width: $phone-max-width) {
+      flex: 1;
+      margin-top: 0.5rem;
+      .input-bar__input {
+        flex: 0.6;
+        margin-left: -0.5rem;
+        img {
+          display: none;
+        }
+        input {
+          font-size: 2rem;
+          padding: 1rem;
+          width: 100%;
+          background: $primary2;
+          border-radius: 0.5rem;
+          &::placeholder {
+            color: $primary2;
+          }
+        }
+        &--label {
+          display: none;
+        }
+        &--content {
+          font-family: 'BMDOHYEON';
+          font-size: 3rem;
+          color: $primary1;
+        }
+      }
+      .save-button {
+        position: absolute;
+        right: 2.5rem;
+      }
+    }
+  }
   &__input {
+    @media (max-width: $phone-max-width) {
+      margin: 1rem;
+    }
     &--label {
       @include bold-small;
       color: $primary3;
+      @media (max-width: $phone-max-width) {
+        margin-bottom: 0.5rem;
+      }
     }
     &--content {
       @include body-regular;
     }
-    padding: 0 2em;
+    padding: 0 2rem;
     border: 0 solid $placeholder;
     border-left-width: 0.1rem;
+    @media (max-width: $phone-max-width) {
+      border: none;
+    }
   }
   .amount {
     @include flex-center;

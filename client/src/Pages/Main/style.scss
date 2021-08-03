@@ -9,8 +9,9 @@
     justify-content: center;
     width: 100%;
     height: 19.4rem;
-    z-index: 2;
+    z-index: 5;
   }
+
   .top-background {
     position: fixed;
     transition: 0.3s;
@@ -20,12 +21,18 @@
     height: 32rem;
     background-color: $background;
     z-index: 0;
+    @media (max-width: $phone-max-width) {
+      height: 42rem;
+    }
   }
   .content {
     @include flex-center;
     margin-top: 19.4rem;
     width: 100%;
     flex-direction: column;
+    @media (max-width: $phone-max-width) {
+      margin-top: 30rem;
+    }
     .input-bar-wrapper {
       @include flex-center;
       position: absolute;

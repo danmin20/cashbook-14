@@ -134,6 +134,8 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
           }} class='${paymentType === 'income' ? 'active' : ''}'>수입</div>
         </div>
 
+        <div class='input-bar__inputs'>
+
         <div class='input-bar__input'>
           <div class='input-bar__input--label'>일자</div>
           <div class='input-bar__input--content'>
@@ -158,21 +160,27 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
             ${this.$paymentSelect}
           </div>
         </div>
-        <div class='input-bar__input'>
-          <div class='input-bar__input--label'>금액</div>
-          <div class='input-bar__input--content amount'>
-            <div>
-              <img src=${minus} />
-              ${
-                paymentType === 'outcome'
-                  ? ''
-                  : jsx`<img style='transform: rotate(90deg)' src=${minus} />`
-              }
-            </div>
-            ${this.$amountInput} 원
-          </div>
+
         </div>
-        ${this.$saveBtn}
+
+        <div class='input-bar__price'>
+          <div class='input-bar__input'>
+            <div class='input-bar__input--label'>금액</div>
+            <div class='input-bar__input--content amount'>
+              <div>
+                <img src=${minus} />
+                ${
+                  paymentType === 'outcome'
+                    ? ''
+                    : jsx`<img style='transform: rotate(90deg)' src=${minus} />`
+                }
+              </div>
+              ${this.$amountInput} 원
+            </div>
+          </div>
+          ${this.$saveBtn}
+        </div>
+
       </div>
     `;
   }
