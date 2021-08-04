@@ -52,7 +52,51 @@ export default class Chart {
 
     this.isOpened = true;
     this.selectedIndex = +target.dataset.index; // dirtyindex
-    this.render();
+    this.update();
+  }
+
+  update() {
+    const $oldLinear = this.$dom.querySelector('.linear-container');
+    const $oldDayList = this.$dom.querySelector('.day-list-container');
+
+    $oldLinear?.remove();
+    $oldDayList?.remove();
+
+    const $chartWrapper = this.$dom.querySelector('.chart-wrapper');
+
+    $chartWrapper?.appendChild(jsx`
+    <div class="paper linear-container">
+      <div class="title-active">
+      ${this.data[this.selectedIndex].category} 카테고리 소비 추이
+      </div>
+
+      <div>
+        ${
+          new LinearGraphWrapper({
+            categoryId: this.data[this.selectedIndex].categoryId,
+          }).$dom
+        }
+      </div>
+    </div>
+    `);
+    $chartWrapper?.appendChild(jsx`
+    <div class="day-list-container">
+      ${this.data[this.selectedIndex].histories.map((history) => {
+        return jsx`<div>${
+          new List({
+            category: {
+              name: history.category.name,
+              color: history.category.color,
+            },
+            listType: 'large',
+            type: 'outcome',
+            content: history.content,
+            amount: history.amount,
+            payment: history.payment,
+          }).$dom
+        }</div>`;
+      })}
+    </div>`);
   }
 
   render() {
@@ -62,7 +106,7 @@ export default class Chart {
       <div class="chart-wrapper">
       <div class="chart paper">
           ${this.$pieGraph}
-          <div>
+          <div class="chart-list">
             <div class="title-active">
                 이번 달 지출 금액 ${returnPrice(this.totalOutcome)}원
             </div>
@@ -90,50 +134,6 @@ export default class Chart {
             })}
           </div>
       </div>
-
-      ${
-        this.isOpened
-          ? jsx`
-          <div class="paper">
-            <div class="title-active">
-            ${this.data[this.selectedIndex].category} 카테고리 소비 추이
-            </div>
-
-            <div>
-              ${
-                new LinearGraphWrapper({
-                  categoryId: this.data[this.selectedIndex].categoryId,
-                }).$dom
-              }
-            </div>
-          </div>
-          `
-          : ''
-      }
-
-      ${
-        this.isOpened
-          ? jsx`
-        <div>
-          ${this.data[this.selectedIndex].histories.map((history) => {
-            return jsx`<div>${
-              new List({
-                category: {
-                  name: history.category.name,
-                  color: history.category.color,
-                },
-                listType: 'large',
-                type: 'outcome',
-                content: history.content,
-                amount: history.amount,
-                payment: history.payment,
-              }).$dom
-            }</div>`;
-          })}
-        </div>`
-          : ''
-      }
-
   </div>`
     );
   }

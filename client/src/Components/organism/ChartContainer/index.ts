@@ -82,8 +82,10 @@ export default class ChartContainer extends Component<
     // TODO: 로딩이 된 시점에 자연스러운 fade out
     if (!isLoaded) {
       return jsx`
+      <div class="chart-wrapper">
         <div class='chart-loading'>
           <div class="loader" />
+        </div>
         </div>
       `;
     }
