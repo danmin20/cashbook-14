@@ -12,11 +12,9 @@ export default class Header extends Component<PropsType, StateType> {
   constructor(props: PropsType) {
     super(props);
 
-    this.setDom();
-  }
-
-  willMount() {
     this.$headerDate = new HeaderDate({}).$dom;
+
+    this.setDom();
   }
 
   render() {

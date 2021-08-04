@@ -105,26 +105,26 @@ export default class InputBar extends Component<PropsType, InputBarStates> {
       onlyNum(this.$amountInput);
     });
 
-    this.setDom();
-  }
-
-  willMount() {
     // 타입 버튼
     this.$paymentTypeBtn = new PaymentTypeBtn({}).$dom;
     // 분류
     this.$categorySelect = new CategorySelect({}).$dom;
     // 결제수단
     this.$paymentSelect = new PaymentSelect({}).$dom;
+
+    this.setDom();
   }
 
   render() {
     const { isBarOpened } = this.state;
 
     return jsx`
-      <div onClick=${() =>
-        this.setState({ isBarOpened: true })} class='input-bar ${
-      !isBarOpened ? 'close' : ''
-    }'>
+      <div onClick=${() => {
+        const size = visualViewport.width;
+        if (size <= 400) {
+          this.setState({ isBarOpened: true });
+        }
+      }} class='input-bar ${!isBarOpened ? 'close' : ''}'>
 
         ${
           isBarOpened
