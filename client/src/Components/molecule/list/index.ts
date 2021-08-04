@@ -16,6 +16,7 @@ export interface ListProps {
   totalOutcome?: number;
   date?: string;
   hover?: boolean;
+  percentage?: number;
 }
 
 export default class List extends Component<ListProps> {
@@ -32,19 +33,37 @@ export default class List extends Component<ListProps> {
     this.setDom();
   }
   render() {
-    const { type, content, payment, amount, listType, hover } = this.props;
+    const { type, content, payment, amount, listType, hover, percentage } =
+      this.props;
 
     return jsx`
       <div class='list-component${listType === 'large' ? ' list-large' : ''}${
       hover ? ' list-clickable' : ''
     }'>
         <div class='title'>
-          ${this.$categoryTag}
-          ${content}
+          ${this.$categoryTag}${content}
         </div>
-        <div class='payment'>
-          ${listType === 'large' ? payment?.name : ''}
-        </div>
+        ${
+          payment
+            ? jsx`
+              <div class='payment'>
+                ${listType === 'large' ? payment?.name : ''}
+              </div>
+            `
+            : ''
+        }
+        ${
+          percentage
+            ? jsx`
+              <div class='percentage'>
+                <div class='progress-bar' style='width: ${
+                  percentage * 100
+                }%; background-color: ${this.props.category.color}'>
+                </div>
+              </div>
+            `
+            : ''
+        }
         <div class='amount${type === 'outcome' ? ' outcome' : ' income'}'>
           ${type === 'outcome' ? '-' : ''}${returnPrice(amount)}${
       listType === 'large' ? '원' : ''

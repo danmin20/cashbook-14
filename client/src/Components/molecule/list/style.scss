@@ -43,6 +43,28 @@
   .income {
     color: $primary3;
   }
+
+  .percentage {
+    flex: 0.3;
+    height: 8px;
+    background-color: $label;
+    border-radius: 1rem;
+    overflow: hidden;
+    margin-left: 1rem;
+    margin-right: 2rem;
+  }
+
+  .progress-bar {
+    height: 8px;
+    animation-duration: 1s;
+    animation-name: slidein;
+  }
+
+  @keyframes slidein {
+    from {
+      width: 0%;
+    }
+  }
 }
 
 .list-large {

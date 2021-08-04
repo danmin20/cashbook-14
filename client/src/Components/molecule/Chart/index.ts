@@ -138,6 +138,7 @@ export default class Chart {
                   )}%`,
                   amount: data.amount,
                   hover: true,
+                  percentage: data.amount / this.totalOutcome,
                 }).$dom
               );
               return itemList;
