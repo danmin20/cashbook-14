@@ -6,7 +6,7 @@ import { User } from '../models/user';
 import rs from 'randomstring';
 import QueryString from 'qs';
 import fetch from 'node-fetch';
-import { env } from '../app';
+import { env } from '../envConfig';
 
 function githubLogin(req: Request, res: Response, next: NextFunction) {
   try {

@@ -6,18 +6,9 @@ import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import router from './routes';
 import createConnection from './database';
-import dotenv from 'dotenv';
 
 const app = express();
 const FileStore = require('session-file-store')(session);
-
-const envResult = dotenv.config({
-  path: path.resolve(
-    process.cwd(),
-    process.env.NODE_ENV === 'production' ? '.env' : '.env.dev'
-  ),
-});
-export const env = envResult.parsed;
 
 let corsOption = {
   origin: 'http://localhost:8080',
@@ -59,6 +50,17 @@ app.use(
 
 app.use('/api', router);
 app.get('/', (req: Request, res: Response) => {
+  res.sendFile(
+    path.join(
+      __dirname,
+      process.env.NODE_ENV === 'production'
+        ? '../../client/dist/src'
+        : '../client/dist/src',
+      'index.html'
+    )
+  );
+});
+app.get('/:id', (req: Request, res: Response) => {
   res.sendFile(
     path.join(
       __dirname,

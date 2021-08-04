@@ -45,7 +45,7 @@ module.exports = (env) => {
         chunkFilename: '[id].css',
       }),
       new dotenv({
-        path: env.production ? './env/prod.env' : './env/local.env',
+        path: env.production ? '.env' : 'dev.env',
       }),
     ],
     devServer: {
