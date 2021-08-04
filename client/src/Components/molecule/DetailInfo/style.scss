@@ -7,6 +7,10 @@
   top: 0;
   height: 100%;
   width: 80rem;
+  @media (max-width: $phone-max-width) {
+    width: 48rem;
+    animation: slide-open-mobile 0.5s;
+  }
   background: #fff;
   padding: 1rem;
   box-sizing: border-box;

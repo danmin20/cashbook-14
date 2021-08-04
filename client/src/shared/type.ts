@@ -1,4 +1,11 @@
 import { ListProps } from '@/Components/molecule/list';
+import Component from '@/core/Component';
+
+export type Route = {
+  path: string;
+  page: typeof Component;
+  redirect?: string;
+};
 
 export type HistoryType = {
   id: number;

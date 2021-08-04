@@ -40,8 +40,8 @@
 
 .cal-line {
   @include flex-center;
-  &:not(:last-child) {
-    border-bottom: 0.1rem solid $line;
+  &:not(:first-child) {
+    border-top: 0.1rem solid $line;
   }
   .cal-box {
     cursor: pointer;
@@ -69,20 +69,39 @@
       .amount {
         color: $title-active;
         height: 2.2rem;
+        @media (max-width: $phone-max-width) {
+          display: none;
+        }
         &:last-child {
           border-top: 0.1rem solid $line;
           margin-top: 0.4rem;
           padding-top: 0.8rem;
         }
+        &.income {
+          color: $primary3;
+        }
+        &.outcome {
+          color: $red;
+        }
+        &.none {
+          display: none;
+        }
       }
-      .income {
-        color: $primary3;
-      }
-      .outcome {
-        color: $red;
-      }
-      .none {
+      .amount-mobile {
         display: none;
+        width: 1rem;
+        height: 1rem;
+        margin: 0.3rem;
+        border-radius: 50%;
+        &.income {
+          background: $primary3;
+        }
+        &.outcome {
+          background: $red;
+        }
+        @media (max-width: $phone-max-width) {
+          display: block;
+        }
       }
     }
     &:not(:last-child) {

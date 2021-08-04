@@ -23,6 +23,7 @@ export default class Main extends Component<PropsType, StateType> {
   render() {
     return jsx`
       <div class='wrapper'>
+        <div class='top-background'></div>
         <div class='top'>
           ${this.$header}
         </div>

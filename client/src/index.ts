@@ -5,6 +5,8 @@ import Main from './Pages/Main';
 import Calendar from './Pages/Calendar';
 import Chart from './Pages/Chart';
 import Login from './Pages/Login';
+import { Route } from './shared/type';
+import Component from '@/core/Component';
 
 declare global {
   interface Window {
@@ -12,11 +14,11 @@ declare global {
   }
 }
 
-const routes = [
-  { path: '/', page: Main },
-  { path: '/login', page: Login },
-  { path: '/calendar', page: Calendar },
-  { path: '/chart', page: Chart },
+const routes: Route[] = [
+  { path: '/', page: Main as typeof Component },
+  { path: '/login', page: Login as typeof Component },
+  { path: '/calendar', page: Calendar as typeof Component },
+  { path: '/chart', page: Chart as typeof Component },
 ];
 
 const $app = document.querySelector('#app');

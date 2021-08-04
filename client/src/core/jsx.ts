@@ -30,18 +30,25 @@ const jsx = (strings: TemplateStringsArray, ...args: any[]): HTMLElement => {
     if (typeof value === 'function') {
       element.addEventListener(name.replace('on', '').toLowerCase(), value);
       element.removeAttribute(name);
-    } else if (typeof value === 'string') {
+    } else if (['string', 'number'].includes(typeof value)) {
       const attribute = element.getAttribute(name);
       const replaced_attr = attribute?.replace(
         DIRTY_REGEX_G,
         replaceSubstitution
       );
       element.setAttribute(name, replaced_attr ?? '');
+    } else if (typeof value === 'boolean') {
+      if (value === true) {
+        element.setAttribute(name, '');
+      } else {
+        element.removeAttribute(name);
+      }
     }
   }
 
-  function buildDocumentFragmentWith(str: string) {
+  function buildDocumentFragmentWith(str?: string) {
     const df = document.createDocumentFragment();
+    if (!str) return df;
     df.appendChild(document.createTextNode(str));
     return df;
   }

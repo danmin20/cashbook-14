@@ -5,7 +5,6 @@
   @include flex-center;
   flex-direction: column;
   width: 100%;
-  margin-top: -3.2rem;
 
   & > * {
     margin-bottom: 1rem;
@@ -29,7 +28,7 @@
     color: $label;
     border: 0.1rem solid $line;
     border-radius: 1rem;
-    padding: 2rem;
+    // padding: 2rem;
     box-sizing: border-box;
   }
 

@@ -30,6 +30,7 @@ export interface InputBarStates {
     id: number;
     name: string;
   };
+  isBarOpened: boolean;
 }
 
 export default class InputBar extends Component<InputBarProps, InputBarStates> {
@@ -53,6 +54,7 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
         id: 0,
         name: '',
       },
+      isBarOpened: false,
     };
 
     this.$saveBtn = new SaveButton({
@@ -118,10 +120,22 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
   }
 
   render() {
-    const { paymentType } = this.state;
+    const { paymentType, isBarOpened } = this.state;
 
     return jsx`
-      <div class='input-bar'>
+      <div onClick=${() =>
+        this.setState({ isBarOpened: true })} class='input-bar ${
+      !isBarOpened ? 'close' : ''
+    }'>
+
+    ${
+      isBarOpened
+        ? jsx`<div onClick=${(e: Event) => {
+            e.stopPropagation();
+            this.setState({ isBarOpened: false });
+          }} class='open'></div>`
+        : ''
+    }
 
         <div class='input-bar__buttons'>
           <div onClick=${() => {
@@ -133,6 +147,8 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
             this.setState({ category: { id: 0, name: '' } });
           }} class='${paymentType === 'income' ? 'active' : ''}'>수입</div>
         </div>
+
+        <div class='input-bar__inputs'>
 
         <div class='input-bar__input'>
           <div class='input-bar__input--label'>일자</div>
@@ -158,21 +174,27 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
             ${this.$paymentSelect}
           </div>
         </div>
-        <div class='input-bar__input'>
-          <div class='input-bar__input--label'>금액</div>
-          <div class='input-bar__input--content amount'>
-            <div>
-              <img src=${minus} />
-              ${
-                paymentType === 'outcome'
-                  ? ''
-                  : jsx`<img style='transform: rotate(90deg)' src=${minus} />`
-              }
-            </div>
-            ${this.$amountInput} 원
-          </div>
+
         </div>
-        ${this.$saveBtn}
+
+        <div class='input-bar__price'>
+          <div class='input-bar__input'>
+            <div class='input-bar__input--label'>금액</div>
+            <div class='input-bar__input--content amount'>
+              <div>
+                <img src=${minus} />
+                ${
+                  paymentType === 'outcome'
+                    ? ''
+                    : jsx`<img style='transform: rotate(90deg)' src=${minus} />`
+                }
+              </div>
+              ${this.$amountInput} 원
+            </div>
+          </div>
+          ${this.$saveBtn}
+        </div>
+
       </div>
     `;
   }
