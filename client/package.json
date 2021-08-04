@@ -4,9 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "webpack serve --mode=production --host=0.0.0.0 --disable-host-check",
+    "start": "webpack serve --mode=production --host=0.0.0.0 --disable-host-check --env production",
     "start:dev": "webpack serve --mode=development",
-    "build": "webpack --mode=production",
+    "build": "webpack --mode=production --env production",
     "build:dev": "webpack --mode=development"
   },
   "devDependencies": {
@@ -17,6 +17,7 @@
     "@typescript-eslint/parser": "^4.28.2",
     "babel-loader": "^8.2.2",
     "css-loader": "^5.2.6",
+    "dotenv-webpack": "^7.0.3",
     "eslint": "^7.30.0",
     "eslint-config-prettier": "^8.3.0",
     "file-loader": "^6.2.0",

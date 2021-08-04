@@ -6,7 +6,7 @@ import { User } from '../models/user';
 import rs from 'randomstring';
 import QueryString from 'qs';
 import fetch from 'node-fetch';
-import { env } from '../app';
+import { env } from '../envConfig';
 
 function githubLogin(req: Request, res: Response, next: NextFunction) {
   try {
@@ -20,7 +20,6 @@ function githubLogin(req: Request, res: Response, next: NextFunction) {
       scope: 'user:email',
     });
     res.redirect(url + query);
-    console.log(env?.GITHUB_CLIENT_ID, env?.SERVER_URL);
   } catch (err) {
     next(err);
   }
@@ -73,14 +72,13 @@ async function login(req: Request, res: Response, next: NextFunction) {
     res.redirect(
       process.env.NODE_ENV === 'production'
         ? 'http://3.36.99.206:3000'
-        : 'http://localhost:3000'
+        : 'http://localhost:8080'
     );
   } catch (err) {
-    console.log(err);
     res.redirect(
       process.env.NODE_ENV === 'production'
         ? 'http://3.36.99.206:3000/error'
-        : 'http://localhost:3000/error'
+        : 'http://localhost:8080/error'
     );
   }
 }

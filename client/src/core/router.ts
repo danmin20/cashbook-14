@@ -40,6 +40,10 @@ class Router {
       'moveroutes',
       this.moveroutesHandler.bind(this) as EventListener
     );
+    window.addEventListener(
+      'popstate',
+      this.popstateHandler.bind(this) as EventListener
+    );
   }
 
   hasRoute(path: string) {
@@ -58,6 +62,14 @@ class Router {
     const path: string = event.detail.path;
     history.pushState(event.detail, '', path);
 
+    this.renderComponent(path);
+  }
+
+  popstateHandler() {
+    this.renderComponent(history.state.path);
+  }
+
+  renderComponent(path: string) {
     let route = this.getNotFoundRouter();
     const regex = /\w{1,}$/;
 

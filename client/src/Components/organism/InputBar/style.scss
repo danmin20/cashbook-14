@@ -10,7 +10,7 @@
   position: fixed;
   z-index: 3;
   transition: 0.3s;
-  top: 15rem;
+  top: 19rem;
   @media (max-width: $phone-max-width) {
     width: 47rem;
     height: 25rem;
@@ -116,6 +116,19 @@
     }
     &--content {
       @include body-regular;
+      &.date {
+        @include flex-center;
+        input {
+          border-bottom: 0.1rem solid $line;
+          width: 2rem;
+          &:first-child {
+            width: 4rem;
+          }
+          &::placeholder {
+            color: $off-white;
+          }
+        }
+      }
     }
     padding: 0 2rem;
     border: 0 solid $placeholder;

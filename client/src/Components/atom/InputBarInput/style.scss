@@ -5,6 +5,7 @@
   border: none;
   outline: none;
   box-sizing: border-box;
+  padding: 0;
   width: 10rem;
   &::placeholder {
     color: $label;
