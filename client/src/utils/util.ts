@@ -7,6 +7,16 @@ export const generateRandomColor = () => {
 
 export const hexRegex = /^#(?:[0-9a-f]{3}){1,2}$/i;
 
+export const dateRegex = /^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/;
+
+export const onlyNum = (element: HTMLInputElement) => {
+  const regex = /[^0-9]/g;
+  if (regex.test(element.value)) {
+    const output = element.value.replace(regex, '');
+    element.value = output;
+  }
+};
+
 export const returnPrice = (price: number) =>
   price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
