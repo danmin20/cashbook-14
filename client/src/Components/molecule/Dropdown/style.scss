@@ -5,6 +5,10 @@
   top: 5rem;
   left: -2rem;
   z-index: 100;
+  @media (max-width: $phone-max-width) {
+    left: 0;
+    top: 3.5rem;
+  }
 
   .dropdown {
     border: 0.1rem solid $line;
@@ -14,6 +18,9 @@
     width: 14.8rem;
     box-sizing: border-box;
     animation: open 0.3s;
+    @media (max-width: $phone-max-width) {
+      width: 19rem;
+    }
 
     .color {
       width: 1rem;
@@ -54,6 +61,9 @@
           width: 10.6rem;
           height: 0.1rem;
           background-color: $line;
+          @media (max-width: $phone-max-width) {
+            width: 14.5rem;
+          }
         }
       }
     }

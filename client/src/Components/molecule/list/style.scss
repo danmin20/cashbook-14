@@ -27,11 +27,15 @@
     @include body-medium;
     flex: 0.25;
     color: $body;
+    @media (max-width: $phone-max-width) {
+      font-size: 1rem;
+    }
   }
   .amount {
     flex: 0.2;
     text-align: end;
     font-weight: 500;
+    white-space: nowrap;
   }
   .outcome {
     color: $red;
@@ -43,6 +47,9 @@
 
 .list-large {
   width: 84.8rem;
+  @media (max-width: $phone-max-width) {
+    width: 47rem;
+  }
 }
 
 .list-clickable {

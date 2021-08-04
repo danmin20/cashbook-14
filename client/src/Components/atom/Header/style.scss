@@ -1,12 +1,14 @@
 @import '../../../scss/theme';
 
 .header {
-  position: relative;
   width: 90.4rem;
   height: 14.6rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  @media (max-width: $phone-max-width) {
+    justify-content: space-around;
+  }
   box-sizing: border-box;
   padding: 0 2.8rem;
   color: #fff;
@@ -14,18 +16,28 @@
   &__title {
     @include display-small;
     cursor: pointer;
+    @media (max-width: $phone-max-width) {
+      display: none;
+    }
   }
 
   .date-controller {
     @include flex-center;
     .arrow-btn {
       position: absolute;
+      z-index: 10;
       cursor: pointer;
       &:first-child {
         left: 37rem;
+        @media (max-width: $phone-max-width) {
+          left: 4rem;
+        }
       }
       &:last-child {
         right: 35rem;
+        @media (max-width: $phone-max-width) {
+          left: 20rem;
+        }
       }
     }
     .date {

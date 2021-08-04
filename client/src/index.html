@@ -2,10 +2,12 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <title>woowamarket</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>우아한 가계부</title>
   </head>
   <body>
-    <div style="width: 100%; overflow: hidden">
+    <div class="wave-wrapper">
       <div class="wave -one"></div>
       <div class="wave -two"></div>
       <div class="wave -three"></div>
@@ -17,7 +19,7 @@
 
     <div id="app" class="app"></div>
 
-    <script type="text/javascript">
+    <script defer type="text/javascript">
       if (localStorage.getItem('theme') === 'dark-mode') {
         document.body.classList.add('dark-mode');
       }
