@@ -132,6 +132,23 @@ async function getSumOfAmountsGroupByMonth({
   return result;
 }
 
+function getFormattedDate(dateString: string) {
+  console.log(dateString);
+
+  const parsedDate = new Date(dateString);
+
+  const month = parsedDate.getMonth() + 1;
+  const date = parsedDate.getDate();
+
+  const formattedDate = `${parsedDate.getFullYear()}-${
+    month < 10 ? '0' : ''
+  }${month}-${date < 10 ? '0' : ''}${date}`;
+
+  console.log(formattedDate);
+
+  return formattedDate;
+}
+
 async function createHistory({
   userId,
   paymentId,
@@ -152,7 +169,7 @@ async function createHistory({
   const repo = getRepository(History);
 
   const history = repo.create({
-    date,
+    date: getFormattedDate(date),
     type,
     content,
     amount,
@@ -190,7 +207,7 @@ async function updateHistory(
     {
       ...(paymentId && { payment: { id: paymentId } }),
       ...(categoryId && { category: { id: categoryId } }),
-      ...(date && { date }),
+      ...(date && { date: getFormattedDate(date) }),
       ...(content && { content }),
       ...(amount && { amount }),
       ...(type && { type }),
