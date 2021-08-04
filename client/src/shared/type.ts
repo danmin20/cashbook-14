@@ -15,6 +15,7 @@ export type HistoryType = {
     id: number;
     name: string;
     type: string;
+    color: string;
   };
   content: string;
   date: string;
@@ -52,3 +53,11 @@ export type HistoriesType = {
   totalIncome: number;
   totalOutcome: number;
 };
+
+export interface GroupedHistoriesByCategory {
+  categoryId: number;
+  category: string;
+  amount: number;
+  color: string;
+  histories: HistoryType[];
+}
