@@ -2,14 +2,22 @@ import express, { Request, Response, NextFunction } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import path from 'path';
-import 'dotenv/config';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import router from './routes';
 import createConnection from './database';
+import dotenv from 'dotenv';
 
 const app = express();
 const FileStore = require('session-file-store')(session);
+
+const envResult = dotenv.config({
+  path: path.resolve(
+    process.cwd(),
+    process.env.NODE_ENV === 'production' ? '.env' : '.env.dev'
+  ),
+});
+export const env = envResult.parsed;
 
 let corsOption = {
   origin: 'http://localhost:8080',

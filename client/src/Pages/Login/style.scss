@@ -25,6 +25,10 @@
     position: fixed;
     top: 30rem;
     z-index: 1;
+    @media (max-width: $phone-max-width) {
+      top: 40rem;
+      font-size: 8rem;
+    }
   }
 
   .wave {
@@ -45,12 +49,12 @@
 
   .wave.-three {
     animation: drift 17s infinite linear;
-    background: #fff;
+    background: $background;
   }
 
   .wave.-two {
     opacity: 0.4;
     animation: drift 19s infinite linear;
-    background: #fff;
+    background: $background;
   }
 }

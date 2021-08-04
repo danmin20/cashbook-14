@@ -6,6 +6,7 @@ import { User } from '../models/user';
 import rs from 'randomstring';
 import QueryString from 'qs';
 import fetch from 'node-fetch';
+import { env } from '../app';
 
 function githubLogin(req: Request, res: Response, next: NextFunction) {
   try {
@@ -13,12 +14,13 @@ function githubLogin(req: Request, res: Response, next: NextFunction) {
 
     const url = 'https://github.com/login/oauth/authorize?';
     const query = QueryString.stringify({
-      client_id: process.env.GITHUB_CLIENT_ID,
-      redirect_uri: 'http://localhost:3000/api/auth/callback',
+      client_id: env?.GITHUB_CLIENT_ID,
+      redirect_uri: `${env?.SERVER_URL}/api/auth/callback`,
       state: state,
       scope: 'user:email',
     });
     res.redirect(url + query);
+    console.log(env?.GITHUB_CLIENT_ID, env?.SERVER_URL);
   } catch (err) {
     next(err);
   }
@@ -68,9 +70,18 @@ async function login(req: Request, res: Response, next: NextFunction) {
       githubName: userData.name,
     };
 
-    res.redirect('http://localhost:8080');
+    res.redirect(
+      process.env.NODE_ENV === 'production'
+        ? 'http://3.36.99.206:3000'
+        : 'http://localhost:3000'
+    );
   } catch (err) {
-    res.redirect('http://localhost:8080/error');
+    console.log(err);
+    res.redirect(
+      process.env.NODE_ENV === 'production'
+        ? 'http://3.36.99.206:3000/error'
+        : 'http://localhost:3000/error'
+    );
   }
 }
 
@@ -83,10 +94,10 @@ async function getAccessToken(code: string): Promise<string> {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      client_id: process.env.GITHUB_CLIENT_ID,
-      client_secret: process.env.GITHUB_CLIENT_SECRETS,
+      client_id: env?.GITHUB_CLIENT_ID,
+      client_secret: env?.GITHUB_CLIENT_SECRETS,
       code: code as string,
-      redirect_uri: 'http://localhost:3000/',
+      redirect_uri: env?.SERVER_URL,
     }),
   });
   const accessTokenJson = await accessTokenResponse.json();
