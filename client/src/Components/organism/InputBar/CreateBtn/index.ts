@@ -40,7 +40,7 @@ export class CreateBtn extends Component<PropsType, CreateBtnState> {
   }
   willMount() {
     const data = getState(historyInputState) as HistoryInputType;
-    console.log(data);
+
     if (
       data.amount &&
       data.category.name &&
@@ -51,8 +51,9 @@ export class CreateBtn extends Component<PropsType, CreateBtnState> {
       data.payment.name &&
       data.paymentType
     ) {
-      console.log('isactive');
       this.setState({ isActive: true });
+    } else {
+      this.setState({ isActive: false });
     }
 
     this.$saveBtn = new SaveButton({
@@ -62,7 +63,6 @@ export class CreateBtn extends Component<PropsType, CreateBtnState> {
     }).$dom;
   }
   willUpdate() {
-    console.log('aaa');
     this.$saveBtn = new SaveButton({
       disabled: !this.state.isActive,
       type: 'large',
