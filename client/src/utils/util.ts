@@ -37,7 +37,7 @@ export const fetchWrap = async ({
 }) => {
   try {
     const config = {
-      baseURL: 'http://localhost:3000/api',
+      baseURL: process.env.API_URL,
       withCredentials: true,
       params,
     };

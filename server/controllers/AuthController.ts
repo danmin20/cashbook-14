@@ -20,7 +20,6 @@ function githubLogin(req: Request, res: Response, next: NextFunction) {
       scope: 'user:email',
     });
     res.redirect(url + query);
-    console.log(env?.GITHUB_CLIENT_ID, env?.SERVER_URL);
   } catch (err) {
     next(err);
   }
@@ -76,7 +75,6 @@ async function login(req: Request, res: Response, next: NextFunction) {
         : 'http://localhost:8080'
     );
   } catch (err) {
-    console.log(err);
     res.redirect(
       process.env.NODE_ENV === 'production'
         ? 'http://3.36.99.206:3000/error'

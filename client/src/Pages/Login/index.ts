@@ -21,7 +21,7 @@ export default class Login extends Component<PropsType, StateType> {
           우아한 가계부
         </div>
 
-        <a class='github' href="http://localhost:3000/api/auth">
+        <a class='github' href="${process.env.API_URL}/auth">
           <img src=${github} />
           <div>깃허브로 시작하기</div>
         </a>
