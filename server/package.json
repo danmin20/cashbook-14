@@ -6,7 +6,7 @@
   "scripts": {
     "start": "tsc && NODE_ENV=production node build/app",
     "start:pm2": "tsc && NODE_ENV=production pm2 restart build/app.js --update-env",
-    "dev": "nodemon --watch \"**\" --ext \"ts\" --exec \"ts-node\" --files \"app.ts\""
+    "dev": "NODE_ENV=development nodemon --watch \"**\" --ext \"ts\" --exec \"ts-node\" --files \"app.ts\""
   },
   "dependencies": {
     "axios": "^0.21.1",
