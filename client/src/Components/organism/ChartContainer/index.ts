@@ -70,7 +70,7 @@ export default class ChartContainer extends Component<
       groupedDataBuilder[history.category.id].histories.push(history);
     });
     const groupedData = Object.values(groupedDataBuilder).sort(
-      (a, b) => a.amount - b.amount
+      (a, b) => b.amount - a.amount
     );
 
     this.setState({ isLoaded: true, groupedData });
@@ -82,10 +82,10 @@ export default class ChartContainer extends Component<
     // TODO: 로딩이 된 시점에 자연스러운 fade out
     if (!isLoaded) {
       return jsx`
-      <div class="chart-wrapper">
-        <div class='chart-loading'>
-          <div class="loader" />
-        </div>
+        <div class="chart-wrapper">
+          <div class='chart-loading'>
+            <div class="loader" />
+          </div>
         </div>
       `;
     }
