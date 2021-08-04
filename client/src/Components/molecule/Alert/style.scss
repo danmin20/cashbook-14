@@ -12,6 +12,8 @@
   background-color: $off-white;
   border-radius: 1rem;
   position: absolute;
+  z-index: 100;
+  box-shadow: $shadow;
 
   &__header {
     @include flex-center;

@@ -62,8 +62,8 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
     const { items, setContent, selectType } = this.props;
 
     return jsx`
-      <div onClick=${(e: Event) => e.stopPropagation()}
-        class='dropdown-wrapper'>
+    <div onClick=${(e: Event) => e.stopPropagation()}>
+      <div class='dropdown-wrapper'>
 
         <div class='dropdown'>
           ${items.map(
@@ -89,18 +89,19 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
         
         <div onClick=${this.openAddAlert} class='add-btn'>+</div>
 
-          ${
-            this.state.isAlertOpened
-              ? jsx`
-                <div>
-                  <div class='modal-container'>
-                    ${this.$alert}
-                  </div>
-                  <div class='background' />
-                </div>
-              `
-              : ''
-          }
+      </div>
+      ${
+        this.state.isAlertOpened
+          ? jsx`
+            <div>
+              <div class='modal-container'>
+                ${this.$alert}
+              </div>
+              <div class='background' />
+            </div>
+          `
+          : ''
+      }
       </div>
     `;
   }
