@@ -1,5 +1,3 @@
-export { default as check } from './check.svg';
-export { default as checkDisabled } from './check-disabled.svg';
 export { default as file } from './file.svg';
 export { default as calendar } from './calendar.svg';
 export { default as chart } from './chart.svg';

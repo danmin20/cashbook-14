@@ -1,43 +1,30 @@
-import { createHistory } from '@/api/history';
 import {
   getMyIncomeCategories,
   getMyOutcomeCategories,
   getMyPayments,
 } from '@/api/me';
-import Component from '@/core/Component';
+import Component, { PropsType } from '@/core/Component';
 import jsx from '@/core/jsx';
-import { $router } from '@/core/router';
 import { userState } from '@/Model';
-import { getState, setState } from '@/core/observer';
-import InputBarInput from '@/Components/atom/InputBarInput';
+import { setState } from '@/core/observer';
+import { InputBarInput } from '@/Components/organism/InputBar/InputBarInput';
 import {
   CategorySelect,
   PaymentSelect,
-} from '@/Components/molecule/InputBarSelect';
-import SaveButton from '@/Components/atom/SaveButton';
+} from '@/Components/organism/InputBar/InputBarSelect';
 import './style';
-import { minus } from '@/../assets';
 import { onlyNum } from '@/utils/util';
-import { CategoryType } from '@/shared/type';
-
-export interface InputBarProps {}
+import { PaymentTypeBtn } from './PaymentTypeBtn';
+import { CreateBtn } from './CreateBtn';
 
 export interface InputBarStates {
-  paymentType: 'income' | 'outcome';
-  category: {
-    id?: number;
-    name: string;
-  };
-  payment: {
-    id: number;
-    name: string;
-  };
   isBarOpened: boolean;
   isSaveable: boolean;
 }
 
-export default class InputBar extends Component<InputBarProps, InputBarStates> {
+export default class InputBar extends Component<PropsType, InputBarStates> {
   $saveBtn: Element = jsx``;
+  $paymentTypeBtn: Element = jsx``;
 
   $yearInput: HTMLInputElement;
   $monthInput: HTMLInputElement;
@@ -48,44 +35,15 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
   $categorySelect: Element = jsx``;
   $paymentSelect: Element = jsx``;
 
-  handleClickSaveBtn = () => {
-    createHistory({
-      paymentId: this.state.payment.id ?? undefined,
-      categoryId: this.state.category.id ?? undefined,
-      date: `${this.$yearInput.value}-${this.$monthInput.value}-${this.$dateInput.value}`,
-      content: (this.$dom.querySelector('#content-input') as HTMLInputElement)
-        .value,
-      amount: parseInt(
-        (
-          this.$dom.querySelector('#amount-input') as HTMLInputElement
-        ).value.replace(/,/g, '')
-      ),
-      type: this.state.paymentType,
-    }).then(() => $router.push('/'));
-  };
-
-  constructor(props: InputBarProps) {
+  constructor(props: PropsType) {
     super(props);
 
     this.state = {
-      paymentType: 'outcome',
-      category: {
-        id: 0,
-        name: '',
-      },
-      payment: {
-        id: 0,
-        name: '',
-      },
       isBarOpened: false,
       isSaveable: false,
     };
 
-    this.$saveBtn = new SaveButton({
-      disabled: !this.state.isSaveable,
-      type: 'large',
-      onClick: this.state.isSaveable ? this.handleClickSaveBtn : () => {},
-    }).$dom;
+    this.$saveBtn = new CreateBtn({}).$dom;
 
     const setIncomeCategories = setState(userState.myIncomeCategories);
     const setOutcomeCategories = setState(userState.myOutcomeCategories);
@@ -95,18 +53,25 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
     getMyOutcomeCategories().then((res) => setOutcomeCategories(res));
     getMyPayments().then((res) => setPayments(res));
 
-    // 일자
-    this.$yearInput = new InputBarInput({}).$dom as HTMLInputElement;
+    // 년
+    this.$yearInput = new InputBarInput({ type: 'year' })
+      .$dom as HTMLInputElement;
     this.$yearInput.id = 'year-input';
-    this.$monthInput = new InputBarInput({}).$dom as HTMLInputElement;
+    // 월
+    this.$monthInput = new InputBarInput({ type: 'month' })
+      .$dom as HTMLInputElement;
     this.$monthInput.id = 'month-input';
-    this.$dateInput = new InputBarInput({}).$dom as HTMLInputElement;
+    // 일
+    this.$dateInput = new InputBarInput({ type: 'date' })
+      .$dom as HTMLInputElement;
     this.$dateInput.id = 'date-input';
     // 내용
-    this.$contentInput = new InputBarInput({}).$dom as HTMLInputElement;
+    this.$contentInput = new InputBarInput({ type: 'content' })
+      .$dom as HTMLInputElement;
     this.$contentInput.id = 'content-input';
     // 금액
-    this.$amountInput = new InputBarInput({}).$dom as HTMLInputElement;
+    this.$amountInput = new InputBarInput({ type: 'amount' })
+      .$dom as HTMLInputElement;
     this.$amountInput.id = 'amount-input';
 
     // 날짜 체크
@@ -130,10 +95,6 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
       onlyNum(this.$dateInput);
     });
 
-    this.$dom.addEventListener('input', () => {
-      console.log('asdf');
-    });
-
     // 금액 체크
     this.$amountInput.addEventListener('change', () => {
       // 콤마 추가
@@ -144,42 +105,20 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
       onlyNum(this.$amountInput);
     });
 
-    this.$dom.querySelector('form')?.addEventListener('input', () => {
-      console.log('ad');
-    });
-
-    if (this.state.paymentType === 'income') {
-      this.setState({
-        category: (getState(userState.myIncomeCategories) as CategoryType[])[0],
-      });
-    }
-
     this.setDom();
   }
 
   willMount() {
+    // 타입 버튼
+    this.$paymentTypeBtn = new PaymentTypeBtn({}).$dom;
     // 분류
-    this.$categorySelect = new CategorySelect({
-      content: this.state.category.name,
-      setContent: (category: { id: number; name: string }) =>
-        this.setState({ category }),
-      type:
-        this.state.paymentType === 'income'
-          ? 'incomeCategories'
-          : 'outcomeCategories',
-    }).$dom;
-
+    this.$categorySelect = new CategorySelect({}).$dom;
     // 결제수단
-    this.$paymentSelect = new PaymentSelect({
-      content: this.state.payment.name,
-      setContent: (payment: { id: number; name: string }) =>
-        this.setState({ payment }),
-      type: 'payments',
-    }).$dom;
+    this.$paymentSelect = new PaymentSelect({}).$dom;
   }
 
   render() {
-    const { paymentType, isBarOpened } = this.state;
+    const { isBarOpened } = this.state;
 
     return jsx`
       <div onClick=${() =>
@@ -187,27 +126,18 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
       !isBarOpened ? 'close' : ''
     }'>
 
-    ${
-      isBarOpened
-        ? jsx`<div onClick=${(e: Event) => {
-            e.stopPropagation();
-            this.setState({ isBarOpened: false });
-          }} class='open'></div>`
-        : ''
-    }
+        ${
+          isBarOpened
+            ? jsx`<div onClick=${(e: Event) => {
+                e.stopPropagation();
+                this.setState({ isBarOpened: false });
+              }} class='open'></div>`
+            : ''
+        }
+        ${this.$paymentTypeBtn}
 
-        <div class='input-bar__buttons'>
-          <div onClick=${() => {
-            this.setState({ paymentType: 'outcome' });
-            this.setState({ category: { id: 0, name: '' } });
-          }} class='${paymentType === 'outcome' ? 'active' : ''}'>지출</div>
-          <div onClick=${() => {
-            this.setState({ paymentType: 'income' });
-            this.setState({ category: { id: 0, name: '' } });
-          }} class='${paymentType === 'income' ? 'active' : ''}'>수입</div>
-        </div>
+        <div class='input-bar__inputs'>
 
-        <form class='input-bar__inputs'>
           <div class='input-bar__input'>
             <div class='input-bar__input--label'>일자</div>
             <div class='input-bar__input--content date'>
@@ -234,20 +164,13 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
               ${this.$paymentSelect}
             </div>
           </div>
-        </form>
+
+        </div>
 
         <div class='input-bar__price'>
           <div class='input-bar__input'>
             <div class='input-bar__input--label'>금액</div>
             <div class='input-bar__input--content amount'>
-              <div>
-                <img src=${minus} />
-                ${
-                  paymentType === 'outcome'
-                    ? ''
-                    : jsx`<img style='transform: rotate(90deg)' src=${minus} />`
-                }
-              </div>
               ${this.$amountInput} 원
             </div>
           </div>

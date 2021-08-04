@@ -26,8 +26,6 @@
 
   &.disabled {
     cursor: default;
-    background-color: transparent;
-    border: 0.3rem solid $primary1;
-    background-image: url('../../../../assets/check-disabled.svg');
+    opacity: 0.3;
   }
 }
