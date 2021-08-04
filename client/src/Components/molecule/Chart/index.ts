@@ -104,7 +104,17 @@ export default class Chart {
     this.$dom.appendChild(
       jsx`
       <div class="chart-wrapper">
-      <div class="chart paper">
+      ${
+        this.data.length === 0
+          ? jsx`
+        <div class="chart paper">
+          <div class='no-data'>
+            <div class='title-wave'>NO DATA</div>
+          </div>
+        </div>
+        `
+          : jsx`
+        <div class="chart paper">
           ${this.$pieGraph}
           <div class="chart-list">
             <div class="title-active">
@@ -133,8 +143,10 @@ export default class Chart {
               return itemList;
             })}
           </div>
-      </div>
-  </div>`
+        </div>
+        `
+      }
+      </div>`
     );
   }
 }
