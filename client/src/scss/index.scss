@@ -117,6 +117,8 @@ body {
   @include display-large;
   position: relative;
   width: 100%;
+  line-height: 1;
+  text-align: center;
   .title-wave {
     margin-top: 15rem;
   }

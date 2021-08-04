@@ -58,7 +58,7 @@ export default class HistoryList extends Component<
 
     return jsx`
     <div>
-     ${this.$info}
+    ${this.histories?.histories?.length > 0 ? this.$info : ''}
       <div class='history-list'>${
         this.histories?.histories?.length > 0
           ? this.histories?.histories.map(
