@@ -25,7 +25,7 @@
     box-shadow: $shadow;
     background-color: $off-white;
     color: $label;
-    border: 0.1rem solid $line;
+    border: 0.1rem solid $background;
     border-radius: 1rem;
     @media (max-width: $phone-max-width) {
       width: 47rem;
