@@ -8,7 +8,7 @@ import Component from '@/core/Component';
 import jsx from '@/core/jsx';
 import { $router } from '@/core/router';
 import { userState } from '@/Model';
-import { setState } from '@/core/observer';
+import { getState, setState } from '@/core/observer';
 import InputBarInput from '@/Components/atom/InputBarInput';
 import {
   CategorySelect,
@@ -17,14 +17,15 @@ import {
 import SaveButton from '@/Components/atom/SaveButton';
 import './style';
 import { minus } from '@/../assets';
-import { dateRegex, onlyNum } from '@/utils/util';
+import { onlyNum } from '@/utils/util';
+import { CategoryType } from '@/shared/type';
 
 export interface InputBarProps {}
 
 export interface InputBarStates {
   paymentType: 'income' | 'outcome';
   category: {
-    id: number;
+    id?: number;
     name: string;
   };
   payment: {
@@ -32,10 +33,11 @@ export interface InputBarStates {
     name: string;
   };
   isBarOpened: boolean;
+  isSaveable: boolean;
 }
 
 export default class InputBar extends Component<InputBarProps, InputBarStates> {
-  $saveBtn: Element;
+  $saveBtn: Element = jsx``;
 
   $yearInput: HTMLInputElement;
   $monthInput: HTMLInputElement;
@@ -45,6 +47,22 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
   $amountInput: HTMLInputElement;
   $categorySelect: Element = jsx``;
   $paymentSelect: Element = jsx``;
+
+  handleClickSaveBtn = () => {
+    createHistory({
+      paymentId: this.state.payment.id ?? undefined,
+      categoryId: this.state.category.id ?? undefined,
+      date: `${this.$yearInput.value}-${this.$monthInput.value}-${this.$dateInput.value}`,
+      content: (this.$dom.querySelector('#content-input') as HTMLInputElement)
+        .value,
+      amount: parseInt(
+        (
+          this.$dom.querySelector('#amount-input') as HTMLInputElement
+        ).value.replace(/,/g, '')
+      ),
+      type: this.state.paymentType,
+    }).then(() => $router.push('/'));
+  };
 
   constructor(props: InputBarProps) {
     super(props);
@@ -60,27 +78,13 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
         name: '',
       },
       isBarOpened: false,
+      isSaveable: false,
     };
 
     this.$saveBtn = new SaveButton({
-      isActive: true,
+      disabled: !this.state.isSaveable,
       type: 'large',
-      onClick: () => {
-        createHistory({
-          paymentId: this.state.payment.id ?? undefined,
-          categoryId: this.state.category.id ?? undefined,
-          date: `${this.$yearInput.value}-${this.$monthInput.value}-${this.$dateInput.value}`,
-          content: (
-            this.$dom.querySelector('#content-input') as HTMLInputElement
-          ).value,
-          amount: parseInt(
-            (
-              this.$dom.querySelector('#amount-input') as HTMLInputElement
-            ).value.replace(/,/g, '')
-          ),
-          type: this.state.paymentType,
-        }).then(() => $router.push('/'));
-      },
+      onClick: this.state.isSaveable ? this.handleClickSaveBtn : () => {},
     }).$dom;
 
     const setIncomeCategories = setState(userState.myIncomeCategories);
@@ -126,6 +130,10 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
       onlyNum(this.$dateInput);
     });
 
+    this.$dom.addEventListener('input', () => {
+      console.log('asdf');
+    });
+
     // 금액 체크
     this.$amountInput.addEventListener('change', () => {
       // 콤마 추가
@@ -135,6 +143,16 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
     this.$amountInput.addEventListener('input', () => {
       onlyNum(this.$amountInput);
     });
+
+    this.$dom.querySelector('form')?.addEventListener('input', () => {
+      console.log('ad');
+    });
+
+    if (this.state.paymentType === 'income') {
+      this.setState({
+        category: (getState(userState.myIncomeCategories) as CategoryType[])[0],
+      });
+    }
 
     this.setDom();
   }
@@ -189,36 +207,34 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
           }} class='${paymentType === 'income' ? 'active' : ''}'>수입</div>
         </div>
 
-        <div class='input-bar__inputs'>
-
-        <div class='input-bar__input'>
-          <div class='input-bar__input--label'>일자</div>
-          <div class='input-bar__input--content date'>
-            ${this.$yearInput}/
-            ${this.$monthInput}/
-            ${this.$dateInput}
+        <form class='input-bar__inputs'>
+          <div class='input-bar__input'>
+            <div class='input-bar__input--label'>일자</div>
+            <div class='input-bar__input--content date'>
+              ${this.$yearInput}/
+              ${this.$monthInput}/
+              ${this.$dateInput}
+            </div>
           </div>
-        </div>
-        <div class='input-bar__input'>
-          <div class='input-bar__input--label'>분류</div>
-          <div class='input-bar__input--content'>
-            ${this.$categorySelect}
+          <div class='input-bar__input'>
+            <div class='input-bar__input--label'>분류</div>
+            <div class='input-bar__input--content'>
+              ${this.$categorySelect}
+            </div>
           </div>
-        </div>
-        <div class='input-bar__input'>
-          <div class='input-bar__input--label'>내용</div>
-          <div class='input-bar__input--content'>
-            ${this.$contentInput}
+          <div class='input-bar__input'>
+            <div class='input-bar__input--label'>내용</div>
+            <div class='input-bar__input--content'>
+              ${this.$contentInput}
+            </div>
           </div>
-        </div>
-        <div class='input-bar__input'>
-          <div class='input-bar__input--label'>결제수단</div>
-          <div class='input-bar__input--content'>
-            ${this.$paymentSelect}
+          <div class='input-bar__input'>
+            <div class='input-bar__input--label'>결제수단</div>
+            <div class='input-bar__input--content'>
+              ${this.$paymentSelect}
+            </div>
           </div>
-        </div>
-
-        </div>
+        </form>
 
         <div class='input-bar__price'>
           <div class='input-bar__input'>

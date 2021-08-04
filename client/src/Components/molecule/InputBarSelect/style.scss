@@ -2,11 +2,14 @@
 
 .select {
   @include flex-center;
+  position: relative;
   width: 10.5rem;
   justify-content: space-between;
-  position: relative;
   cursor: pointer;
-  position: relative;
+  .drop-icon {
+    position: absolute;
+    right: 0;
+  }
   @media (max-width: $phone-max-width) {
     width: 100%;
   }

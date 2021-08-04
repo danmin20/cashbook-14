@@ -1,12 +1,12 @@
-import { checkLarge, checkSmall } from '@/../assets';
 import Component from '@/core/Component';
 import jsx from '@/core/jsx';
 import './style';
 
 export interface SaveButtonProps {
-  isActive: boolean;
+  isActive?: boolean;
   type: 'small' | 'large';
   onClick: Function;
+  disabled?: boolean;
 }
 
 export default class SaveButton extends Component<SaveButtonProps> {
@@ -16,13 +16,13 @@ export default class SaveButton extends Component<SaveButtonProps> {
     this.setDom();
   }
   render() {
-    const { isActive, type, onClick } = this.props;
+    const { isActive, type, onClick, disabled } = this.props;
 
     return jsx`
-      <div onClick=${onClick} class='save-button${isActive ? ' active' : ''}${
-      type === 'large' ? ' button-large' : ''
-    }'>
-        <img src=${type === 'small' ? checkSmall : checkLarge} />
+      <div onClick=${onClick}
+       class='save-button${isActive ? ' active' : ''}
+       ${type === 'large' ? ' button-large' : ''}
+       ${disabled ? ' disabled' : ''}'>
       </div>
     `;
   }

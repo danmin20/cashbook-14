@@ -44,7 +44,7 @@ class InputBarSelect extends Component<
     return jsx`
       <div class='select${content ? '' : ' none'}' onClick=${handleOpen}>
         ${content || '선택하세요'}
-        <img src=${drop} style='transform: ${
+        <img class='drop-icon' src=${drop} style='transform: ${
       isOpened ? 'rotate(180deg)' : ''
     }' />
         ${isOpened ? this.$dropdown : ''}
