@@ -25,6 +25,23 @@ export type HistoryType = {
   };
 };
 
+export type HistoryInputType = {
+  paymentType: 'income' | 'outcome';
+  year: string;
+  month: string;
+  date: string;
+  category: {
+    id: number;
+    name: string;
+  };
+  content: string;
+  payment: {
+    id: number;
+    name: string;
+  };
+  amount: string;
+};
+
 export type CategoryType = {
   id?: number;
   name: string;

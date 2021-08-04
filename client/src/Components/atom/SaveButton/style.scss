@@ -1,21 +1,31 @@
 @import '../../../scss/theme';
 
 .save-button {
+  @include flex-center;
   cursor: pointer;
   width: 2rem;
-  background: $grey2;
+  border: 0.2rem solid $grey1;
   height: 2rem;
   border-radius: 0.5rem;
   box-sizing: border-box;
-  @include flex-center;
-}
+  background-size: cover;
 
-.active {
-  background: $primary1;
-}
+  &.button-large {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 1rem;
+    background-color: $primary1;
+    border: 0.2rem solid $primary1;
+    background-image: url('../../../../assets/check.svg');
+  }
+  &.active {
+    background-color: $primary1;
+    border: 0.2rem solid $primary1;
+    background-image: url('../../../../assets/check.svg');
+  }
 
-.button-large {
-  width: 4rem;
-  height: 4rem;
-  border-radius: 1rem;
+  &.disabled {
+    cursor: default;
+    opacity: 0.3;
+  }
 }
