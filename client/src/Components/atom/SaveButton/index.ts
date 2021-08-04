@@ -1,7 +1,5 @@
 import Component from '@/core/Component';
 import jsx from '@/core/jsx';
-import { getState, subscribe } from '@/core/observer';
-import { historyInputState } from '@/Model';
 import './style';
 
 export interface SaveButtonProps {

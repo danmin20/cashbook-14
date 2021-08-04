@@ -170,9 +170,7 @@ export default class InputBar extends Component<PropsType, InputBarStates> {
         <div class='input-bar__price'>
           <div class='input-bar__input'>
             <div class='input-bar__input--label'>금액</div>
-            <div class='input-bar__input--content amount'>
-              ${this.$amountInput} 원
-            </div>
+            ${this.$amountInput}
           </div>
           ${this.$saveBtn}
         </div>

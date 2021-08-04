@@ -137,22 +137,6 @@
       border: none;
     }
   }
-  .amount {
-    @include flex-center;
-    box-sizing: border-box;
-    position: relative;
-    div {
-      width: 0.5rem;
-    }
-    input {
-      text-align: end;
-      margin-right: 1rem;
-    }
-    img {
-      position: absolute;
-      bottom: 0.5rem;
-    }
-  }
   &.close {
     @media (max-width: $phone-max-width) {
       div {

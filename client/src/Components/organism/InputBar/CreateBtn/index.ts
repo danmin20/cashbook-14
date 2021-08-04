@@ -1,7 +1,9 @@
+import { createHistory } from '@/api/history';
 import SaveButton from '@/Components/atom/SaveButton';
-import Component, { PropsType, StateType } from '@/core/Component';
+import Component, { PropsType } from '@/core/Component';
 import jsx from '@/core/jsx';
-import { getState, setState, subscribe } from '@/core/observer';
+import { getState, subscribe } from '@/core/observer';
+import { $router } from '@/core/router';
 import { historyInputState } from '@/Model';
 import { HistoryInputType } from '@/shared/type';
 
@@ -13,22 +15,17 @@ export class CreateBtn extends Component<PropsType, CreateBtnState> {
   $saveBtn: Element = jsx``;
 
   handleClickSaveBtn = () => {
-    // createHistory({
-    //   paymentId: this.state.payment.id ?? undefined,
-    //   categoryId:
-    //     (this.state.paymentType === 'income'
-    //       ? this.state.incomeCategory.id
-    //       : this.state.outcomeCategory.id) ?? undefined,
-    //   date: `${this.$yearInput.value}-${this.$monthInput.value}-${this.$dateInput.value}`,
-    //   content: (this.$dom.querySelector('#content-input') as HTMLInputElement)
-    //     .value,
-    //   amount: parseInt(
-    //     (
-    //       this.$dom.querySelector('#amount-input') as HTMLInputElement
-    //     ).value.replace(/,/g, '')
-    //   ),
-    //   type: this.state.paymentType,
-    // }).then(() => $router.push('/'));
+    const data = getState(historyInputState) as HistoryInputType;
+
+    if (this.state.isActive)
+      createHistory({
+        paymentId: data.payment.id ?? undefined,
+        categoryId: data.category.id ?? undefined,
+        date: `${data.year}-${data.month}-${data.date}`,
+        content: data.content,
+        amount: parseInt(data.amount.replace(/,/g, '')),
+        type: data.paymentType,
+      }).then(() => $router.push('/'));
   };
 
   constructor(props: PropsType) {
