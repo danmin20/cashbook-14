@@ -17,6 +17,7 @@ import {
 import SaveButton from '@/Components/atom/SaveButton';
 import './style';
 import { minus } from '@/../assets';
+import { dateRegex, onlyNum } from '@/utils/util';
 
 export interface InputBarProps {}
 
@@ -35,9 +36,13 @@ export interface InputBarStates {
 
 export default class InputBar extends Component<InputBarProps, InputBarStates> {
   $saveBtn: Element;
-  $dateInput: Element;
-  $contentInput: Element;
-  $amountInput: Element;
+
+  $yearInput: HTMLInputElement;
+  $monthInput: HTMLInputElement;
+  $dateInput: HTMLInputElement;
+
+  $contentInput: HTMLInputElement;
+  $amountInput: HTMLInputElement;
   $categorySelect: Element = jsx``;
   $paymentSelect: Element = jsx``;
 
@@ -64,13 +69,14 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
         createHistory({
           paymentId: this.state.payment.id ?? undefined,
           categoryId: this.state.category.id ?? undefined,
-          date: (this.$dom.querySelector('#date-input') as HTMLInputElement)
-            .value,
+          date: `${this.$yearInput.value}-${this.$monthInput.value}-${this.$dateInput.value}`,
           content: (
             this.$dom.querySelector('#content-input') as HTMLInputElement
           ).value,
           amount: parseInt(
-            (this.$dom.querySelector('#amount-input') as HTMLInputElement).value
+            (
+              this.$dom.querySelector('#amount-input') as HTMLInputElement
+            ).value.replace(/,/g, '')
           ),
           type: this.state.paymentType,
         }).then(() => $router.push('/'));
@@ -86,14 +92,49 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
     getMyPayments().then((res) => setPayments(res));
 
     // 일자
-    this.$dateInput = new InputBarInput({}).$dom;
+    this.$yearInput = new InputBarInput({}).$dom as HTMLInputElement;
+    this.$yearInput.id = 'year-input';
+    this.$monthInput = new InputBarInput({}).$dom as HTMLInputElement;
+    this.$monthInput.id = 'month-input';
+    this.$dateInput = new InputBarInput({}).$dom as HTMLInputElement;
     this.$dateInput.id = 'date-input';
     // 내용
-    this.$contentInput = new InputBarInput({}).$dom;
+    this.$contentInput = new InputBarInput({}).$dom as HTMLInputElement;
     this.$contentInput.id = 'content-input';
     // 금액
-    this.$amountInput = new InputBarInput({}).$dom;
+    this.$amountInput = new InputBarInput({}).$dom as HTMLInputElement;
     this.$amountInput.id = 'amount-input';
+
+    // 날짜 체크
+    this.$yearInput.addEventListener('input', () => {
+      onlyNum(this.$yearInput);
+      if (this.$yearInput.value.length === 4) {
+        this.$monthInput.focus();
+      }
+    });
+    this.$monthInput.addEventListener('input', () => {
+      onlyNum(this.$monthInput);
+      if (this.$monthInput.value.length === 1) {
+        if (parseInt(this.$monthInput.value) > 1) {
+          this.$dateInput.focus();
+        }
+      } else if (this.$monthInput.value.length === 2) {
+        this.$dateInput.focus();
+      }
+    });
+    this.$dateInput.addEventListener('input', () => {
+      onlyNum(this.$dateInput);
+    });
+
+    // 금액 체크
+    this.$amountInput.addEventListener('change', () => {
+      // 콤마 추가
+      const input = this.$amountInput.value.replace(/,/g, '');
+      this.$amountInput.value = input.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    });
+    this.$amountInput.addEventListener('input', () => {
+      onlyNum(this.$amountInput);
+    });
 
     this.setDom();
   }
@@ -152,7 +193,9 @@ export default class InputBar extends Component<InputBarProps, InputBarStates> {
 
         <div class='input-bar__input'>
           <div class='input-bar__input--label'>일자</div>
-          <div class='input-bar__input--content'>
+          <div class='input-bar__input--content date'>
+            ${this.$yearInput}/
+            ${this.$monthInput}/
             ${this.$dateInput}
           </div>
         </div>

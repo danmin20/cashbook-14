@@ -16,6 +16,10 @@
   border-radius: 0 1rem 1rem 0;
   box-shadow: $shadow;
   animation: slide-open 0.5s;
+  .contents {
+    height: 49.9rem;
+    overflow-y: scroll;
+  }
   .day-list {
     width: 100%;
   }

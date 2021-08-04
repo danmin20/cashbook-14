@@ -31,28 +31,30 @@ export default class DetailInfo extends Component<DetailInfoProps, StateType> {
             histories?.histories
               ? histories?.histories.map(
                   ({ date, histories, totalIncome, totalOutcome }) => {
-                    return jsx`<div>${
+                    return jsx`<div style='height: 100%'>${
                       new DayList({
                         date,
                         income: totalIncome,
                         outcome: totalOutcome,
                       }).$dom
                     }
-                ${histories.map((history: ListProps) => {
-                  return jsx`<div>${
-                    new List({
-                      listType: 'large',
-                      content: history.content,
-                      payment: history.payment,
-                      type: history.type,
-                      amount: history.amount,
-                      category: {
-                        name: history.category.name,
-                        color: history.category.color,
-                      },
-                    }).$dom
-                  }</div>`;
-                })}
+                ${jsx`<div class='contents'>${histories.map(
+                  (history: ListProps) => {
+                    return jsx`<div>${
+                      new List({
+                        listType: 'large',
+                        content: history.content,
+                        payment: history.payment,
+                        type: history.type,
+                        amount: history.amount,
+                        category: {
+                          name: history.category.name,
+                          color: history.category.color,
+                        },
+                      }).$dom
+                    }</div>`;
+                  }
+                )}</div>`}
                 </div>`;
                   }
                 )

@@ -19,7 +19,7 @@
     box-sizing: border-box;
     animation: open 0.3s;
     @media (max-width: $phone-max-width) {
-      width: 19rem;
+      width: 18rem;
     }
 
     .color {
@@ -62,7 +62,7 @@
           height: 0.1rem;
           background-color: $line;
           @media (max-width: $phone-max-width) {
-            width: 14.5rem;
+            width: 13.5rem;
           }
         }
       }

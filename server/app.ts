@@ -14,7 +14,7 @@ const FileStore = require('session-file-store')(session);
 const envResult = dotenv.config({
   path: path.resolve(
     process.cwd(),
-    process.env.NODE_ENV === 'production' ? '.env' : '.env.dev'
+    process.env.NODE_ENV === 'production' ? '.env' : 'dev.env'
   ),
 });
 export const env = envResult.parsed;

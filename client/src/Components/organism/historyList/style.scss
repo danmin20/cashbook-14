@@ -3,6 +3,9 @@
 .history-list {
   @include flex-center;
   flex-direction: column;
-  padding-top: 10rem;
+  padding-top: 32rem;
   padding-bottom: 3rem;
+  @media (max-width: $phone-max-width) {
+    padding-top: 28rem;
+  }
 }
