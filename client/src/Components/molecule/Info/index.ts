@@ -82,14 +82,14 @@ export default class Info extends Component<InfoProps> {
             this.props.checked.find((i) => i === 'income') ? ' active' : ''
           }' onClick=${this.handleCheckIncome}>
             ${this.$incomeButton} <span>수입 ${
-      income && returnPrice(income)
+      (income && returnPrice(income)) || '0'
     }</span>
           </div>
           <div class='buttons__button${
             this.props.checked.find((i) => i === 'outcome') ? ' active' : ''
           }' onClick=${this.handleCheckOutcome}>
             ${this.$outcomeButton} <span>지출 ${
-      outcome && returnPrice(outcome)
+      (outcome && returnPrice(outcome)) || '0'
     }</span>
           </div>
         </div>
