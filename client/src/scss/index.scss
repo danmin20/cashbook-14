@@ -61,6 +61,13 @@ body {
   }
 }
 
+.pc-only {
+  display: block;
+  @media (max-width: $phone-max-width) {
+    display: none;
+  }
+}
+
 .dark-mode {
   .theme-btn-img {
     width: 3rem;
