@@ -1,5 +1,5 @@
-@import '../../scss/theme';
-@import '../../scss/animation';
+@import '@/scss/theme';
+@import '@/scss/animation';
 
 .login-wrapper {
   @include flex-center;

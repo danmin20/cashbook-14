@@ -13,7 +13,7 @@ import {
 import { setState } from '@/core/observer';
 import { userState } from '@/Model';
 import { CategoryType, PaymentType } from '@/shared/type';
-import { removeHistory } from '@/api/history';
+import { deleteHistory } from '@/api/history';
 import { $router } from '@/core/router';
 
 export interface AlertProps {
@@ -103,7 +103,7 @@ export default class Alert extends Component<AlertProps> {
             .then(() => closeAlert());
         }
       } else if (select === 'history') {
-        removeHistory({ historyId: delItem?.id as number }).then(() =>
+        deleteHistory({ historyId: delItem?.id as number }).then(() =>
           $router.push('/')
         );
       }
