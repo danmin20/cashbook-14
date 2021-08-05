@@ -36,8 +36,9 @@ export default class PieGraph {
     this.$wrapper.className = 'pie-wrapper';
     this.$wrapper.appendChild(this.$canvas);
 
-    this.$dom = document.createElement('div');
-    this.$dom.appendChild(this.$wrapper);
+    this.$dom = this.$wrapper;
+    // this.$dom = document.createElement('div');
+    // this.$dom.appendChild(this.$wrapper);
 
     this.cur = animationStartPoint;
     this.end = animationEndPoint;
