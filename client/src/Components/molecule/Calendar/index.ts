@@ -1,11 +1,11 @@
 import Component from '@/core/Component';
 import jsx from '@/core/jsx';
-import { getState, subscribe } from '@/core/observer';
-import { userState } from '@/Model';
+import { getState, setState, subscribe } from '@/core/observer';
+import { historyDetailState, userState } from '@/Model';
 import { AllHistorytype, HistoriesType } from '@/shared/type';
-import DetailModal from '../DetailInfo';
-import './style';
 import CalBody from './calBody';
+import { DetailSlide } from './detailSlide';
+import './style';
 
 interface CalendarProps {
   firstDay: Date;
@@ -33,14 +33,18 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     this.histories = [];
     const { firstDay, lastDay, markToday } = this.props;
 
+    const setHistoryDetailState = setState(historyDetailState);
+
     this.$calBody = new CalBody({
       firstDay,
       lastDay,
       markToday,
       setHistoryDetail: (arr: HistoriesType) =>
-        this.setState({ isDetailModalOpened: true, historyDetail: arr }),
+        setHistoryDetailState({ isModalOpened: true, histories: arr }),
       histories: [],
     }).$dom;
+
+    this.$detailModal = new DetailSlide({}).$dom;
 
     subscribe(
       userState.myHistories,
@@ -51,42 +55,31 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     this.setDom();
   }
 
-  willMount() {
-    this.$detailModal = new DetailModal({
-      histories: this.state.historyDetail as HistoriesType,
-      handleClose: () => this.setState({ isDetailModalOpened: false }),
-    }).$dom;
-  }
-
   willUpdate() {
     const { firstDay, lastDay, markToday } = this.props;
     const histories = (getState(userState.myHistories) as AllHistorytype)
       .histories;
+
+    const setHistoryDetailState = setState(historyDetailState);
     if (histories != this.histories) {
       this.$calBody = new CalBody({
         firstDay,
         lastDay,
         markToday,
         setHistoryDetail: (arr: HistoriesType) =>
-          this.setState({ isDetailModalOpened: true, historyDetail: arr }),
+          setHistoryDetailState({ isModalOpened: true, histories: arr }),
         histories:
           (getState(userState.myHistories) as AllHistorytype).histories ?? [],
       }).$dom;
       this.histories = histories;
     }
-
-    this.$detailModal = new DetailModal({
-      histories: this.state.historyDetail as HistoriesType,
-      handleClose: () => this.setState({ isDetailModalOpened: false }),
-    }).$dom;
   }
 
   render() {
-    const { isDetailModalOpened } = this.state;
     return jsx`
     <div>
       ${this.$calBody}
-      ${isDetailModalOpened ? this.$detailModal : ''}
+      ${this.$detailModal}
     </div>
     `;
   }

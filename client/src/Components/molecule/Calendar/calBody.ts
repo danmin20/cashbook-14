@@ -15,7 +15,7 @@ interface CalBodyProps {
 }
 
 interface CalBodyState {
-  isLoading: boolean;
+  // isLoading: boolean;
   totalIncome: number;
   totalOutcome: number;
 }
@@ -33,7 +33,7 @@ export default class CalBody extends Component<CalBodyProps, CalBodyState> {
     super(props);
 
     this.state = {
-      isLoading: false,
+      // isLoading: true,
       totalIncome: 0,
       totalOutcome: 0,
     };
@@ -42,9 +42,8 @@ export default class CalBody extends Component<CalBodyProps, CalBodyState> {
   }
 
   willUpdate() {
-    console.log('willupdate');
     this.state = {
-      isLoading: false,
+      // isLoading: false,
       totalIncome: (getState(userState.myHistories) as AllHistorytype)
         .totalIncome,
       totalOutcome: (getState(userState.myHistories) as AllHistorytype)
@@ -57,19 +56,10 @@ export default class CalBody extends Component<CalBodyProps, CalBodyState> {
     let countDay = 0;
 
     const { histories, firstDay, lastDay, markToday } = this.props;
-    const { totalIncome, totalOutcome, isLoading } = this.state;
+    const { totalIncome, totalOutcome } = this.state;
 
     return jsx`
       <div>
-      ${
-        isLoading
-          ? jsx`
-            <div class='cal-loading'>
-              <div class="loader" />
-            </div>`
-          : ''
-      }
-
         ${[...Array(6).keys()].map(
           (i) =>
             jsx`<div class='${lastDay.getDate() > countDay ? 'cal-line' : ''}'>
