@@ -35,8 +35,8 @@ export default class List extends Component<ListProps> {
     super(props);
 
     this.$categoryTag = new CategoryTag({
-      title: this.props.category.name,
-      color: this.props.category.color,
+      title: this.props.category?.name ?? '-',
+      color: this.props.category?.color ?? '#000',
     }).$dom;
 
     this.setDom();
@@ -53,7 +53,7 @@ export default class List extends Component<ListProps> {
           ${this.$categoryTag}<div class='text'>${content}</div>
         </div>
         ${
-          payment
+          payment !== undefined
             ? jsx`
               <div class='payment'>
                 ${listType === 'large' ? payment?.name : ''}
