@@ -47,8 +47,8 @@ export default class DetailInfo extends Component<DetailInfoProps, StateType> {
                   type: history.type,
                   amount: history.amount,
                   category: {
-                    name: history.category.name,
-                    color: history.category.color,
+                    name: history.category?.name,
+                    color: history.category?.color,
                   },
                 }).$dom
               }</div>`;
