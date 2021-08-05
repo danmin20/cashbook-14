@@ -86,8 +86,8 @@ export default class HistoryList extends Component<
                   type: history.type,
                   amount: history.amount,
                   category: {
-                    name: history.category.name,
-                    color: history.category.color,
+                    name: history.category?.name,
+                    color: history.category?.color,
                   },
                 }).$dom
               }</div>`;
