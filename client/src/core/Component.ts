@@ -68,5 +68,6 @@ export default class Component<
     this.state = nextState;
     this.update();
     updateRealDOM();
+    console.log('asdf', this.state);
   }
 }

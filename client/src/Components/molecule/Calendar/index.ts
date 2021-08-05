@@ -5,7 +5,6 @@ import { userState } from '@/Model';
 import dayjs from 'dayjs';
 import { returnPrice } from '@/utils/util';
 import { AllHistorytype, HistoriesType } from '@/shared/type';
-import { getMyMonthlyHistory } from '@/api/me';
 import DetailModal from '../DetailInfo';
 import './style';
 
@@ -16,7 +15,7 @@ interface CalendarProps {
 }
 
 interface CalendarState {
-  historyDetail: AllHistorytype | null;
+  historyDetail: HistoriesType | null;
   isLoading: boolean;
   isDetailModalOpened: boolean;
 }
@@ -28,9 +27,9 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
   totalIncome: number = 0;
   totalOutcome: number = 0;
   openDetail = (date: string) => {
-    getMyMonthlyHistory({ YYYYMM: date })
-      .then((res) => this.setState({ historyDetail: res }))
-      .then(() => this.setState({ isDetailModalOpened: true }));
+    const arr = this.histories.find((item) => item.date === date);
+    console.log(arr);
+    this.setState({ isDetailModalOpened: true, historyDetail: arr });
   };
 
   constructor(props: CalendarProps) {
@@ -52,8 +51,9 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
   }
 
   willMount() {
+    console.log('calendar will mount');
     this.$detailModal = new DetailModal({
-      histories: this.state.historyDetail as AllHistorytype,
+      histories: this.state.historyDetail as HistoriesType,
       handleClose: () => this.setState({ isDetailModalOpened: false }),
     }).$dom;
   }
@@ -79,6 +79,8 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
 
     const { isLoading, isDetailModalOpened } = this.state;
     const { firstDay, lastDay, markToday } = this.props;
+
+    console.log('isDetailModalOpened', isDetailModalOpened);
 
     return jsx`
     <div>
