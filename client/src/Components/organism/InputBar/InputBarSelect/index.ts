@@ -1,8 +1,8 @@
 import { drop } from '@/../assets';
-import Component, { PropsType, StateType } from '@/core/Component';
+import Component, { PropsType } from '@/core/Component';
 import jsx from '@/core/jsx';
 import { historyInputState, userState } from '@/Model';
-import { CategoryType, HistoryInputType, PaymentType } from '@/shared/type';
+import { HistoryInputType } from '@/shared/type';
 import { getState, setState, subscribe } from '@/core/observer';
 import DropDown from '@/Components/molecule/Dropdown';
 import './style';
@@ -40,7 +40,12 @@ export class CategorySelect extends InputBarSelect {
       'input-bar-incomecategories',
       this.update.bind(this)
     );
-    subscribe(historyInputState, 'incomecategories', this.update.bind(this));
+    subscribe(
+      userState.myOutcomeCategories,
+      'input-bar-outcomecategories',
+      this.update.bind(this)
+    );
+    subscribe(historyInputState, 'category-select', this.update.bind(this));
   }
 
   willUpdate() {
@@ -49,12 +54,8 @@ export class CategorySelect extends InputBarSelect {
     const { paymentType } = getState(historyInputState) as HistoryInputType;
 
     this.$dropdown = new DropDown({
-      selectType: 'category',
-      items: getState(
-        paymentType === 'income'
-          ? userState.myIncomeCategories
-          : userState.myOutcomeCategories
-      ) as CategoryType[],
+      selectType:
+        paymentType === 'income' ? 'incomeCategory' : 'outcomeCategory',
       setContent: (category: { id: number; name: string }) => {
         this.state.isOpened = false;
         handleSetState((oldState: HistoryInputType) => {
@@ -98,7 +99,7 @@ export class PaymentSelect extends InputBarSelect {
       'input-bar-payments',
       this.update.bind(this)
     );
-    subscribe(historyInputState, 'payments', this.update.bind(this));
+    subscribe(historyInputState, 'payment-select', this.update.bind(this));
   }
 
   willUpdate() {
@@ -106,7 +107,6 @@ export class PaymentSelect extends InputBarSelect {
 
     this.$dropdown = new DropDown({
       selectType: 'payment',
-      items: getState(userState.myPayments) as PaymentType[],
       setContent: (payment: { id: number; name: string }) => {
         this.state.isOpened = false;
         handleSetState((oldState: HistoryInputType) => {

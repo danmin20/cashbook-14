@@ -61,8 +61,10 @@ export default class Chart {
 
     const $newLinear = jsx`
     <div class="paper linear-container">
-      <div class="title-active">
-      ${this.data[this.selectedIndex].category} 카테고리 소비 추이
+      <div class="title-active line-chart">
+      <span class='primary'>${
+        this.data[this.selectedIndex].category
+      }</span> 카테고리 소비 추이
       </div>
 
       <div>
@@ -104,7 +106,9 @@ export default class Chart {
           </div>
           <div class="chart-list">
             <div class="title-active total-outcome">
-                이번 달 지출 금액 ${returnPrice(this.totalOutcome)}원
+                이번 달 지출 금액 <span class='primary'>${returnPrice(
+                  this.totalOutcome
+                )}</span>원
             </div>
             <div class="chart-item-wrapper">
               ${this.data.map((data, index) => {

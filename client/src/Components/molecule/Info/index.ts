@@ -67,14 +67,14 @@ export default class Info extends Component<InfoProps> {
 
     return jsx`
       <div class='info-component'>
-        <div>
-          전체 내역 ${
+        <div class='total-num'>
+          <div class='pc-only'>전체 내역 </div> <div class='total-num__num'>${
             !this.props.checked.find((i) => i === 'income')
               ? outcomeCount
               : !this.props.checked.find((i) => i === 'outcome')
               ? incomeCount
               : totalCount
-          }건
+          }</div><div class='pc-only'>건</div>
         </div>
 
         <div class='buttons'>

@@ -50,7 +50,7 @@ export default class List extends Component<ListProps> {
       hover ? ' list-clickable' : ''
     }'>
         <div class='title'>
-          ${this.$categoryTag}${content}
+          ${this.$categoryTag}<div class='text'>${content}</div>
         </div>
         ${
           payment
