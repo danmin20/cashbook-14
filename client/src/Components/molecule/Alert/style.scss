@@ -27,16 +27,13 @@
   }
 
   &__btn {
+    color: $title-active;
     cursor: pointer;
   }
 
   .inactive {
     cursor: default;
     opacity: 0.5;
-  }
-  .delete {
-    font-weight: 500;
-    color: $red;
   }
   .delete {
     font-weight: 500;
