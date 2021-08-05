@@ -49,23 +49,33 @@
 
   .paper {
     position: static;
-    // box-shadow: $shadow;
     background-color: $off-white;
     color: $label;
     border: 0.1rem solid $line;
     border-radius: 1rem;
     box-sizing: border-box;
-    box-shadow: $shadow;
   }
 
   .title-active {
-    @include body-large;
+    @include display-small;
+    font-size: 2rem;
     color: $title-active;
     margin: 2rem 2rem 1rem 2rem;
+    &.line-chart {
+      padding-top: 1rem;
+      padding-left: 3.5rem;
+      margin-bottom: -1rem;
+    }
+  }
+
+  .primary {
+    color: $primary3;
+    font-weight: 800;
   }
 
   .total-outcome {
-    padding: 2rem;
+    padding-top: 2rem;
+    padding-bottom: 1rem;
   }
 
   .no-data {
@@ -80,5 +90,6 @@
 
   .chart-item-wrapper {
     overflow-y: scroll;
+    padding-bottom: 1rem;
   }
 }

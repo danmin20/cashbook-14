@@ -68,12 +68,12 @@
   .percentage {
     position: absolute;
 
-    left: 1rem;
-    right: 1rem;
+    left: 1.5rem;
+    right: 1.5rem;
     bottom: 0.5rem;
-    top: 6.3rem;
+    top: 6.1rem;
 
-    background-color: $label;
+    background-color: $line;
     border-radius: 1rem;
     overflow: hidden;
   }
