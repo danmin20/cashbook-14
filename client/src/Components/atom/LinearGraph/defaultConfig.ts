@@ -12,7 +12,7 @@ const linearGraphDefaultConfig: LinearGraphConfig = {
   backLineColor: '#ccd3d3',
   dataArcColor: '#2AC1BC',
   dataLineColor: '#A0E1E0',
-  fontColor: '#626666',
+  fontColor: '#f45452',
   fontSize: 20,
   fontFamily: 'Noto Sans KR',
   dataLineWidth: 4,
