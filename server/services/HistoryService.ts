@@ -133,8 +133,6 @@ async function getSumOfAmountsGroupByMonth({
 }
 
 function getFormattedDate(dateString: string) {
-  console.log(dateString);
-
   const parsedDate = new Date(dateString);
 
   const month = parsedDate.getMonth() + 1;
@@ -143,8 +141,6 @@ function getFormattedDate(dateString: string) {
   const formattedDate = `${parsedDate.getFullYear()}-${
     month < 10 ? '0' : ''
   }${month}-${date < 10 ? '0' : ''}${date}`;
-
-  console.log(formattedDate);
 
   return formattedDate;
 }
