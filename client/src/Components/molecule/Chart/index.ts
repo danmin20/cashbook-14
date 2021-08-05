@@ -57,14 +57,9 @@ export default class Chart {
 
   update() {
     const $oldLinear = this.$dom.querySelector('.linear-container');
-    const $oldDayList = this.$dom.querySelector('.day-list-container');
-
     $oldLinear?.remove();
-    $oldDayList?.remove();
 
-    const $chartWrapper = this.$dom.querySelector('.chart-wrapper');
-
-    $chartWrapper?.appendChild(jsx`
+    const $newLinear = jsx`
     <div class="paper linear-container">
       <div class="title-active">
       ${this.data[this.selectedIndex].category} 카테고리 소비 추이
@@ -78,25 +73,14 @@ export default class Chart {
         }
       </div>
     </div>
-    `);
-    $chartWrapper?.appendChild(jsx`
-    <div class="day-list-container">
-      ${this.data[this.selectedIndex].histories.map((history) => {
-        return jsx`<div>${
-          new List({
-            category: {
-              name: history.category.name,
-              color: history.category.color,
-            },
-            listType: 'large',
-            type: 'outcome',
-            content: history.content,
-            amount: history.amount,
-            payment: history.payment,
-          }).$dom
-        }</div>`;
-      })}
-    </div>`);
+    `;
+
+    const $chartWrapper = this.$dom.querySelector('.chart-wrapper');
+    $chartWrapper?.appendChild($newLinear);
+    $chartWrapper?.scrollBy({
+      top: $newLinear.getBoundingClientRect().top,
+      behavior: 'smooth',
+    });
   }
 
   render() {
@@ -140,6 +124,7 @@ export default class Chart {
                       (data.amount / this.totalOutcome) * 100
                     )}%`,
                     amount: data.amount,
+                    payment: { id: -1, name: '' },
                     hover: true,
                     percentage: data.amount / this.totalOutcome,
                   }).$dom
