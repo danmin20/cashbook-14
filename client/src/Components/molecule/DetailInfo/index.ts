@@ -18,7 +18,6 @@ export default class DetailInfo extends Component<DetailInfoProps, StateType> {
   constructor(props: DetailInfoProps) {
     super(props);
 
-    console.log('constructor detailinfo');
     const { histories } = this.props;
 
     this.$dayList = new DayList({
@@ -32,7 +31,6 @@ export default class DetailInfo extends Component<DetailInfoProps, StateType> {
 
   render() {
     const { histories, handleClose } = this.props;
-    console.log('render detailinfo');
 
     return jsx`
       <div class='detail-info'>
@@ -41,7 +39,6 @@ export default class DetailInfo extends Component<DetailInfoProps, StateType> {
         ${jsx`
           <div>${this.$dayList}
             ${histories?.histories.map((history: ListProps) => {
-              console.log('aaa');
               return jsx`<div>${
                 new List({
                   listType: 'large',
