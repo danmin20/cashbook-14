@@ -104,7 +104,17 @@ export default class Chart {
     this.$dom.appendChild(
       jsx`
       <div class="chart-wrapper">
-      <div class="chart paper">
+      ${
+        this.data.length === 0
+          ? jsx`
+        <div class="chart paper">
+          <div class='no-data'>
+            <div class='title-wave'>NO DATA</div>
+          </div>
+        </div>
+        `
+          : jsx`
+        <div class="chart paper">
           ${this.$pieGraph}
           <div class="chart-list">
             <div class="title-active">
@@ -128,13 +138,16 @@ export default class Chart {
                   )}%`,
                   amount: data.amount,
                   hover: true,
+                  percentage: data.amount / this.totalOutcome,
                 }).$dom
               );
               return itemList;
             })}
           </div>
-      </div>
-  </div>`
+        </div>
+        `
+      }
+      </div>`
     );
   }
 }

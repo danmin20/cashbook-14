@@ -56,7 +56,7 @@
     border: 0.1rem solid $line;
     border-radius: 1rem;
 
-    * {
+    & > * {
       flex: 1;
     }
   }

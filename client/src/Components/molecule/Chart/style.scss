@@ -6,25 +6,39 @@
   flex-direction: column;
   justify-content: flex-start;
   width: 100%;
-  height: 75vh;
+  height: 80vh;
   overflow-y: scroll;
 
   & > * {
     margin-bottom: 1rem;
     width: 84.8rem;
+
+    @media (max-width: $phone-max-width) {
+      width: 47rem;
+    }
   }
 
   .chart {
     @include flex-center;
     @include body-regular;
-    // flex-direction: column;
+
+    @media (max-width: $phone-max-width) {
+      flex-direction: column;
+      width: 47rem;
+      height: 78rem;
+    }
     justify-content: space-around;
 
-    height: 425px;
+    height: 45rem;
 
     & > * {
-      width: 50%;
-      flex: 1;
+      width: 100%;
+
+      @media (max-width: $phone-max-width) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
     }
   }
 
@@ -43,7 +57,12 @@
   .title-active {
     @include body-large;
     color: $title-active;
-    margin: 1rem 0 1rem 2rem;
+    margin: 2rem 0 1rem 2rem;
+  }
+
+  .no-data {
+    text-align: center;
+    margin-bottom: 15rem;
   }
 }
 
