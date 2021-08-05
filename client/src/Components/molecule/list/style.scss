@@ -46,7 +46,7 @@
 
   .percentage {
     flex: 0.3;
-    height: 8px;
+    height: 0.5rem;
     background-color: $label;
     border-radius: 1rem;
     overflow: hidden;
@@ -55,7 +55,7 @@
   }
 
   .progress-bar {
-    height: 8px;
+    height: 0.5rem;
     animation-duration: 1s;
     animation-name: slidein;
   }
