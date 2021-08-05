@@ -7,6 +7,7 @@ import './style';
 import { returnPrice } from '@/utils/util';
 import { removeHistory } from '@/api/history';
 import { $router } from '@/core/router';
+import Alert from '../Alert';
 
 export interface ListProps {
   id?: number;
@@ -23,16 +24,34 @@ export interface ListProps {
   percentage?: number;
 }
 
-export default class List extends Component<ListProps> {
-  $categoryTag: Element;
+interface ListState {
+  isAlertOpened: boolean;
+}
 
-  handleRemove = () => {
-    const { id } = this.props;
-    removeHistory({ historyId: id as number }).then(() => $router.push('/'));
+export default class List extends Component<ListProps, ListState> {
+  $categoryTag: Element;
+  $alert: Element = jsx``;
+
+  openDelAlert = (e: Event, item: { id: number; content: string }) => {
+    e.stopPropagation();
+
+    this.$alert = new Alert({
+      closeAlert: () => this.setState({ isAlertOpened: false }),
+      select: 'history',
+      type: 'delete',
+      delItem: item,
+      content: `해당 내역을 삭제하시겠습니까?`,
+    }).$dom;
+
+    this.setState({ isAlertOpened: true });
   };
 
   constructor(props: ListProps) {
     super(props);
+
+    this.state = {
+      isAlertOpened: false,
+    };
 
     this.$categoryTag = new CategoryTag({
       title: this.props.category?.name ?? '-',
@@ -42,7 +61,7 @@ export default class List extends Component<ListProps> {
     this.setDom();
   }
   render() {
-    const { type, content, payment, amount, listType, hover, percentage } =
+    const { id, type, content, payment, amount, listType, hover, percentage } =
       this.props;
 
     return jsx`
@@ -81,7 +100,24 @@ export default class List extends Component<ListProps> {
 
         ${
           location.pathname === '/'
-            ? jsx`<img onClick=${this.handleRemove} class='del-btn'' src=${delBtn} />`
+            ? jsx`<img onClick=${(e: Event) =>
+                this.openDelAlert(e, {
+                  id: id as number,
+                  content,
+                })} class='del-btn'' src=${delBtn} />`
+            : ''
+        }
+
+        ${
+          this.state.isAlertOpened
+            ? jsx`
+              <div>
+                <div class='modal-container'>
+                  ${this.$alert}
+                </div>
+                <div class='background' />
+              </div>
+            `
             : ''
         }
       </div>
