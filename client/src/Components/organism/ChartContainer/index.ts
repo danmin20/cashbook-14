@@ -1,15 +1,11 @@
 import dayjs from 'dayjs';
-import Component, { PropsType, StateType } from '@/core/Component';
+import Component, { PropsType } from '@/core/Component';
 import jsx from '@/core/jsx';
 import './style';
 import { getState, subscribe } from '@/core/observer';
 import { dateState } from '@/Model';
 import { getMyPureHistory } from '@/api/me';
-import {
-  AllHistorytype,
-  GroupedHistoriesByCategory,
-  HistoryType,
-} from '@/shared/type';
+import { GroupedHistoriesByCategory, HistoryType } from '@/shared/type';
 import Chart from '@/Components/molecule/Chart';
 
 interface ChartContainerState {

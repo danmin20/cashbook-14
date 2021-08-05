@@ -20,3 +20,6 @@ export const createHistory = ({
     url: '/histories',
     body: { paymentId, categoryId, date, content, amount, type },
   });
+
+export const removeHistory = ({ historyId }: { historyId: number }) =>
+  fetchWrap({ method: 'delete', url: `/histories/${historyId}` });

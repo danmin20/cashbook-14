@@ -79,6 +79,7 @@ export default class HistoryList extends Component<
             ) {
               return jsx`<div>${
                 new List({
+                  id: history.id,
                   listType: 'large',
                   content: history.content,
                   payment: history.payment,
