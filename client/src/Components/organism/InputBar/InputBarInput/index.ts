@@ -1,6 +1,6 @@
 import Component, { StateType } from '@/core/Component';
 import jsx from '@/core/jsx';
-import { setState, subscribe } from '@/core/observer';
+import { setState } from '@/core/observer';
 import { historyInputState } from '@/Model';
 import { HistoryInputType } from '@/shared/type';
 import './style';

@@ -54,10 +54,8 @@ export default class Component<
   update(): void {
     this.willMount();
     this.willUpdate();
-    if (this.shouldUpdate) {
-      this.updateDOM();
-      this.didUpdate();
-    }
+    this.updateDOM();
+    this.didUpdate();
   }
 
   setState(newState: Partial<S>) {

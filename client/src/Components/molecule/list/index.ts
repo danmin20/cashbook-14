@@ -5,8 +5,6 @@ import CategoryTag from '@/Components/atom/CategoryTag';
 import { delete as delBtn } from '@/../assets';
 import './style';
 import { returnPrice } from '@/utils/util';
-import { removeHistory } from '@/api/history';
-import { $router } from '@/core/router';
 import Alert from '../Alert';
 
 export interface ListProps {

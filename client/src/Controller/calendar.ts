@@ -1,5 +1,5 @@
 import { dateState, userState } from '@/Model';
-import { getState, setState } from '@/core/observer';
+import { setState } from '@/core/observer';
 
 export default {
   monList: [
