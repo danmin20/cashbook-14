@@ -57,17 +57,14 @@ export default class Chart {
 
   update() {
     const $oldLinear = this.$dom.querySelector('.linear-container');
-    const $oldDayList = this.$dom.querySelector('.day-list-container');
-
     $oldLinear?.remove();
-    $oldDayList?.remove();
 
-    const $chartWrapper = this.$dom.querySelector('.chart-wrapper');
-
-    $chartWrapper?.appendChild(jsx`
+    const $newLinear = jsx`
     <div class="paper linear-container">
-      <div class="title-active">
-      ${this.data[this.selectedIndex].category} 카테고리 소비 추이
+      <div class="title-active line-chart">
+      <span class='primary'>${
+        this.data[this.selectedIndex].category
+      }</span> 카테고리 소비 추이
       </div>
 
       <div>
@@ -78,25 +75,14 @@ export default class Chart {
         }
       </div>
     </div>
-    `);
-    $chartWrapper?.appendChild(jsx`
-    <div class="day-list-container">
-      ${this.data[this.selectedIndex].histories.map((history) => {
-        return jsx`<div>${
-          new List({
-            category: {
-              name: history.category.name,
-              color: history.category.color,
-            },
-            listType: 'large',
-            type: 'outcome',
-            content: history.content,
-            amount: history.amount,
-            payment: history.payment,
-          }).$dom
-        }</div>`;
-      })}
-    </div>`);
+    `;
+
+    const $chartWrapper = this.$dom.querySelector('.chart-wrapper');
+    $chartWrapper?.appendChild($newLinear);
+    $chartWrapper?.scrollBy({
+      top: $newLinear.getBoundingClientRect().top,
+      behavior: 'smooth',
+    });
   }
 
   render() {
@@ -104,37 +90,57 @@ export default class Chart {
     this.$dom.appendChild(
       jsx`
       <div class="chart-wrapper">
-      <div class="chart paper">
-          ${this.$pieGraph}
-          <div class="chart-list">
-            <div class="title-active">
-                이번 달 지출 금액 ${returnPrice(this.totalOutcome)}원
-            </div>
-            ${this.data.map((data, index) => {
-              // 모듈로 분리해도 될듯
-              const itemList = document.createElement('div');
-              itemList.className = 'chart-item';
-              itemList.dataset.index = index.toString();
-              itemList.appendChild(
-                new List({
-                  category: {
-                    name: data.category,
-                    color: data.color,
-                  },
-                  listType: 'small',
-                  type: 'outcome',
-                  content: `${Math.floor(
-                    (data.amount / this.totalOutcome) * 100
-                  )}%`,
-                  amount: data.amount,
-                  hover: true,
-                }).$dom
-              );
-              return itemList;
-            })}
+      ${
+        this.data.length === 0
+          ? jsx`
+        <div class="chart paper">
+          <div class='no-data'>
+            <div class='title-wave'>NO DATA</div>
           </div>
-      </div>
-  </div>`
+        </div>
+        `
+          : jsx`
+        <div class="chart paper">
+          <div class="chart-pie-wrapper">
+            ${this.$pieGraph}
+          </div>
+          <div class="chart-list">
+            <div class="title-active total-outcome">
+                이번 달 지출 금액 <span class='primary'>${returnPrice(
+                  this.totalOutcome
+                )}</span>원
+            </div>
+            <div class="chart-item-wrapper">
+              ${this.data.map((data, index) => {
+                // 모듈로 분리해도 될듯
+                const itemList = document.createElement('div');
+                itemList.className = 'chart-item';
+                itemList.dataset.index = index.toString();
+                itemList.appendChild(
+                  new List({
+                    category: {
+                      name: data.category,
+                      color: data.color,
+                    },
+                    listType: 'small',
+                    type: 'outcome',
+                    content: `${Math.floor(
+                      (data.amount / this.totalOutcome) * 100
+                    )}%`,
+                    amount: data.amount,
+                    payment: { id: -1, name: '' },
+                    hover: true,
+                    percentage: data.amount / this.totalOutcome,
+                  }).$dom
+                );
+                return itemList;
+              })}
+            </div>
+          </div>
+        </div>
+        `
+      }
+      </div>`
     );
   }
 }

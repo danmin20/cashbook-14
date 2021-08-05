@@ -10,6 +10,23 @@
   top: 29rem;
   z-index: 2;
   @media (max-width: $phone-max-width) {
+    align-items: flex-end;
+  }
+  .total-num {
+    @include flex-center;
+    white-space: pre-wrap;
+    &__num {
+      @media (max-width: $phone-max-width) {
+        @include flex-center;
+        font-family: 'BMDOHYEON';
+        background-color: $primary1;
+        color: $background;
+        padding: 0.5rem 1rem;
+        border-radius: 1rem;
+      }
+    }
+  }
+  @media (max-width: $phone-max-width) {
     width: 47rem;
     top: 25rem;
   }

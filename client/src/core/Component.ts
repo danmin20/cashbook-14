@@ -21,6 +21,7 @@ export default class Component<
   $dom: Element;
 
   static ID: number = 0;
+  shouldUpdate = true;
 
   constructor(props: P) {
     ++Component.ID;
@@ -53,8 +54,10 @@ export default class Component<
   update(): void {
     this.willMount();
     this.willUpdate();
-    this.updateDOM();
-    this.didUpdate();
+    if (this.shouldUpdate) {
+      this.updateDOM();
+      this.didUpdate();
+    }
   }
 
   setState(newState: Partial<S>) {

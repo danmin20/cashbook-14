@@ -6,7 +6,8 @@ import { User } from '../models/user';
 import rs from 'randomstring';
 import QueryString from 'qs';
 import fetch from 'node-fetch';
-import { env } from '../app';
+import { env } from '../envConfig';
+import { HistoryService } from '../services/HistoryService';
 
 function githubLogin(req: Request, res: Response, next: NextFunction) {
   try {
@@ -56,6 +57,16 @@ async function login(req: Request, res: Response, next: NextFunction) {
       }
       for (const { name, type } of defaultPayments) {
         await PaymentService.createPayment({ userId, name, type });
+      }
+      for (const data of defaultHistories) {
+        const payments = await PaymentService.findPayments({ userId });
+        const categories = await CategoryService.findCategories({ userId });
+        await HistoryService.createHistory({
+          ...data,
+          userId,
+          paymentId: payments[0].id,
+          categoryId: categories[0].id,
+        });
       }
     }
 
@@ -135,6 +146,51 @@ const defaultPayments = [
   },
 ];
 
+const defaultHistories = [
+  {
+    content: '안녕하세용',
+    amount: 10000,
+    type: 'income',
+    date: '2021-08-06',
+  },
+  {
+    content: '이정민 신어진 입니다',
+    amount: 10000,
+    type: 'income',
+    date: '2021-08-05',
+  },
+  {
+    content: '저희는',
+    amount: 10000,
+    type: 'income',
+    date: '2021-08-05',
+  },
+  {
+    content: '!!~~~!!!!~!',
+    amount: 10000,
+    type: 'income',
+    date: '2021-08-04',
+  },
+  {
+    content: '예쁘게 봐주세요',
+    amount: 10000,
+    type: 'income',
+    date: '2021-08-04',
+  },
+  {
+    content: '만들었어여!!',
+    amount: 10000,
+    type: 'income',
+    date: '2021-07-06',
+  },
+  {
+    content: '열심히',
+    amount: 10000,
+    type: 'income',
+    date: '2021-07-06',
+  },
+];
+
 const defaultCategories = [
   {
     name: '생활',
@@ -167,7 +223,7 @@ const defaultCategories = [
     color: '#d092e2',
   },
   {
-    name: '기타',
+    name: '미분류',
     type: 'outcome',
     color: '#817dce',
   },

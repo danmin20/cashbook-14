@@ -1,15 +1,11 @@
 import dayjs from 'dayjs';
-import Component, { PropsType, StateType } from '@/core/Component';
+import Component, { PropsType } from '@/core/Component';
 import jsx from '@/core/jsx';
 import './style';
 import { getState, subscribe } from '@/core/observer';
 import { dateState } from '@/Model';
 import { getMyPureHistory } from '@/api/me';
-import {
-  AllHistorytype,
-  GroupedHistoriesByCategory,
-  HistoryType,
-} from '@/shared/type';
+import { GroupedHistoriesByCategory, HistoryType } from '@/shared/type';
 import Chart from '@/Components/molecule/Chart';
 
 interface ChartContainerState {
@@ -70,7 +66,7 @@ export default class ChartContainer extends Component<
       groupedDataBuilder[history.category.id].histories.push(history);
     });
     const groupedData = Object.values(groupedDataBuilder).sort(
-      (a, b) => a.amount - b.amount
+      (a, b) => b.amount - a.amount
     );
 
     this.setState({ isLoaded: true, groupedData });
@@ -82,10 +78,10 @@ export default class ChartContainer extends Component<
     // TODO: 로딩이 된 시점에 자연스러운 fade out
     if (!isLoaded) {
       return jsx`
-      <div class="chart-wrapper">
-        <div class='chart-loading'>
-          <div class="loader" />
-        </div>
+        <div class="chart-wrapper">
+          <div class='chart-loading'>
+            <div class="loader" />
+          </div>
         </div>
       `;
     }

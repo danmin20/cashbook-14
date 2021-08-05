@@ -79,7 +79,17 @@
     opacity: 0;
   }
   to {
-    width: 100%;
+    width: 80rem;
+    opacity: 1;
+  }
+}
+@keyframes slide-open-mobile {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+  to {
+    width: 45rem;
     opacity: 1;
   }
 }
@@ -90,5 +100,21 @@
   }
   100% {
     background-position: left 150rem bottom 0;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slidein {
+  from {
+    width: 0%;
   }
 }

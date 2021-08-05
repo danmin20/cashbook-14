@@ -1,5 +1,3 @@
-export { default as checkSmall } from './check-small.svg';
-export { default as checkLarge } from './check-large.svg';
 export { default as file } from './file.svg';
 export { default as calendar } from './calendar.svg';
 export { default as chart } from './chart.svg';

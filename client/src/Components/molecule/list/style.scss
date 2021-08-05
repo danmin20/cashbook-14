@@ -3,6 +3,7 @@
 .list-component {
   @include flex-center;
   @include body-medium;
+  position: relative;
   flex: 1;
   width: 37.2rem;
   box-sizing: border-box;
@@ -11,7 +12,6 @@
   border-bottom: 0.1rem;
   box-sizing: border-box;
   padding-bottom: 2rem;
-  border-bottom: 0.1rem solid $line;
   color: initial;
 
   .title {
@@ -19,8 +19,19 @@
     display: flex;
     align-items: center;
     flex: 0.55;
+    @media (max-width: $phone-max-width) {
+      flex: 0.5;
+    }
     .category-tag {
       margin-right: 1rem;
+    }
+    .text {
+      @media (max-width: $phone-max-width) {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow-y: hidden;
+        width: 10rem;
+      }
     }
   }
   .payment {
@@ -29,6 +40,7 @@
     color: $body;
     @media (max-width: $phone-max-width) {
       font-size: 1rem;
+      flex: 0.2;
     }
   }
   .amount {
@@ -36,6 +48,9 @@
     text-align: end;
     font-weight: 500;
     white-space: nowrap;
+    @media (max-width: $phone-max-width) {
+      flex: 0.3;
+    }
   }
   .outcome {
     color: $red;
@@ -43,9 +58,35 @@
   .income {
     color: $primary3;
   }
+  .del-btn {
+    width: 2rem;
+    height: 2rem;
+    margin-left: 1.5rem;
+    cursor: pointer;
+  }
+
+  .percentage {
+    position: absolute;
+
+    left: 1.5rem;
+    right: 1.5rem;
+    bottom: 0.5rem;
+    top: 6.1rem;
+
+    background-color: $line;
+    border-radius: 1rem;
+    overflow: hidden;
+  }
+
+  .progress-bar {
+    height: 100%;
+    animation-duration: 1s;
+    animation-name: slidein;
+  }
 }
 
 .list-large {
+  border-bottom: 0.1rem solid $line;
   width: 84.8rem;
   @media (max-width: $phone-max-width) {
     width: 47rem;
@@ -56,5 +97,6 @@
   cursor: pointer;
   &:hover {
     background-color: $background;
+    border-radius: 1rem;
   }
 }

@@ -2,6 +2,7 @@ import Component from '@/core/Component';
 import jsx from '@/core/jsx';
 import SaveButton from '@/Components/atom/SaveButton';
 import './style';
+import { returnPrice } from '@/utils/util';
 
 export interface InfoProps {
   totalCount: number;
@@ -66,26 +67,30 @@ export default class Info extends Component<InfoProps> {
 
     return jsx`
       <div class='info-component'>
-        <div>
-          전체 내역 ${
+        <div class='total-num'>
+          <div class='pc-only'>전체 내역 </div> <div class='total-num__num'>${
             !this.props.checked.find((i) => i === 'income')
               ? outcomeCount
               : !this.props.checked.find((i) => i === 'outcome')
               ? incomeCount
               : totalCount
-          }건
+          }</div><div class='pc-only'>건</div>
         </div>
 
         <div class='buttons'>
           <div class='buttons__button${
             this.props.checked.find((i) => i === 'income') ? ' active' : ''
           }' onClick=${this.handleCheckIncome}>
-            ${this.$incomeButton} <span>수입 ${income}</span>
+            ${this.$incomeButton} <span>수입 ${
+      income && returnPrice(income)
+    }</span>
           </div>
           <div class='buttons__button${
             this.props.checked.find((i) => i === 'outcome') ? ' active' : ''
           }' onClick=${this.handleCheckOutcome}>
-            ${this.$outcomeButton} <span>지출 ${outcome}</span>
+            ${this.$outcomeButton} <span>지출 ${
+      outcome && returnPrice(outcome)
+    }</span>
           </div>
         </div>
       </div>

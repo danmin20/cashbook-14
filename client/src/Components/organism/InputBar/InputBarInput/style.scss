@@ -1,4 +1,4 @@
-@import '../../../scss/theme';
+@import '../../../../scss/theme';
 
 .input {
   @include body-regular;
@@ -7,6 +7,7 @@
   box-sizing: border-box;
   padding: 0;
   width: 10rem;
+  color: $title-active;
   &::placeholder {
     color: $label;
   }
