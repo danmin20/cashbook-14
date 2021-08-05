@@ -13,9 +13,6 @@ interface ChartContainerState {
   groupedData: GroupedHistoriesByCategory[];
 }
 
-/*
-  주요 역할: subscribe, fetching, mount
-*/
 export default class ChartContainer extends Component<
   PropsType,
   ChartContainerState

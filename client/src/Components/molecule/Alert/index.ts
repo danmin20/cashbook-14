@@ -13,14 +13,16 @@ import {
 import { setState } from '@/core/observer';
 import { userState } from '@/Model';
 import { CategoryType, PaymentType } from '@/shared/type';
+import { deleteHistory } from '@/api/history';
+import { $router } from '@/core/router';
 
 export interface AlertProps {
-  select: 'category' | 'payment';
+  select: 'category' | 'payment' | 'history';
   type: 'delete' | 'add';
   content: string;
   closeAlert: Function;
   paymentType?: 'income' | 'outcome';
-  delItem?: CategoryType | PaymentType;
+  delItem?: CategoryType | PaymentType | { id: number; content: string };
 }
 
 export default class Alert extends Component<AlertProps> {
@@ -46,7 +48,10 @@ export default class Alert extends Component<AlertProps> {
 
     this.$textInput = new TextInput({
       invalid: type === 'delete' ? true : false,
-      defaultValue: delItem?.name,
+      defaultValue:
+        select === 'history'
+          ? (delItem as { id: number; content: string }).content
+          : (delItem as CategoryType | PaymentType)?.name,
     }).$dom;
 
     this.$colorPicker = new ColorPicker({}).$dom;
@@ -81,7 +86,7 @@ export default class Alert extends Component<AlertProps> {
             .then((res) => setOutcomeCategories(res))
             .then(() => closeAlert());
         }
-      } else {
+      } else if (select === 'payment') {
         try {
           if (type === 'add') {
             // 결제수단 추가
@@ -97,13 +102,17 @@ export default class Alert extends Component<AlertProps> {
             .then((res) => setPayments(res))
             .then(() => closeAlert());
         }
+      } else if (select === 'history') {
+        deleteHistory({ historyId: delItem?.id as number }).then(() =>
+          $router.push('/')
+        );
       }
     };
 
     this.setDom();
   }
   render() {
-    const { content, type, select, closeAlert, delItem } = this.props;
+    const { content, type, select, closeAlert } = this.props;
 
     return jsx`
       <div class='alert'>
