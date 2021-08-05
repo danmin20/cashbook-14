@@ -115,34 +115,38 @@ export default class Chart {
         `
           : jsx`
         <div class="chart paper">
-          ${this.$pieGraph}
+          <div class="chart-pie-wrapper">
+            ${this.$pieGraph}
+          </div>
           <div class="chart-list">
-            <div class="title-active">
+            <div class="title-active total-outcome">
                 이번 달 지출 금액 ${returnPrice(this.totalOutcome)}원
             </div>
-            ${this.data.map((data, index) => {
-              // 모듈로 분리해도 될듯
-              const itemList = document.createElement('div');
-              itemList.className = 'chart-item';
-              itemList.dataset.index = index.toString();
-              itemList.appendChild(
-                new List({
-                  category: {
-                    name: data.category,
-                    color: data.color,
-                  },
-                  listType: 'small',
-                  type: 'outcome',
-                  content: `${Math.floor(
-                    (data.amount / this.totalOutcome) * 100
-                  )}%`,
-                  amount: data.amount,
-                  hover: true,
-                  percentage: data.amount / this.totalOutcome,
-                }).$dom
-              );
-              return itemList;
-            })}
+            <div class="chart-item-wrapper">
+              ${this.data.map((data, index) => {
+                // 모듈로 분리해도 될듯
+                const itemList = document.createElement('div');
+                itemList.className = 'chart-item';
+                itemList.dataset.index = index.toString();
+                itemList.appendChild(
+                  new List({
+                    category: {
+                      name: data.category,
+                      color: data.color,
+                    },
+                    listType: 'small',
+                    type: 'outcome',
+                    content: `${Math.floor(
+                      (data.amount / this.totalOutcome) * 100
+                    )}%`,
+                    amount: data.amount,
+                    hover: true,
+                    percentage: data.amount / this.totalOutcome,
+                  }).$dom
+                );
+                return itemList;
+              })}
+            </div>
           </div>
         </div>
         `
