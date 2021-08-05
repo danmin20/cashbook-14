@@ -58,11 +58,39 @@ async function login(req: Request, res: Response, next: NextFunction) {
       for (const { name, type } of defaultPayments) {
         await PaymentService.createPayment({ userId, name, type });
       }
-      for (const data of defaultHistories) {
+      // 지출 더미데이터
+      for (const data of outcomeHistories) {
         const payments = await PaymentService.findPayments({ userId });
         const categories = await CategoryService.findCategories({
           userId,
           type: 'outcome',
+        });
+        await HistoryService.createHistory({
+          ...data,
+          userId,
+          paymentId: payments[1].id,
+          categoryId: categories[0].id,
+        });
+      }
+      for (const data of outcomeHistories2) {
+        const payments = await PaymentService.findPayments({ userId });
+        const categories = await CategoryService.findCategories({
+          userId,
+          type: 'outcome',
+        });
+        await HistoryService.createHistory({
+          ...data,
+          userId,
+          paymentId: payments[2].id,
+          categoryId: categories[1].id,
+        });
+      }
+      // 수입 더미데이터
+      for (const data of incomeHistories) {
+        const payments = await PaymentService.findPayments({ userId });
+        const categories = await CategoryService.findCategories({
+          userId,
+          type: 'income',
         });
         await HistoryService.createHistory({
           ...data,
@@ -149,7 +177,7 @@ const defaultPayments = [
   },
 ];
 
-const defaultHistories = [
+const outcomeHistories = [
   {
     content: '안녕하세용',
     amount: 10000,
@@ -190,6 +218,77 @@ const defaultHistories = [
     content: '열심히',
     amount: 10000,
     type: 'outcome',
+    date: '2021-07-06',
+  },
+];
+const outcomeHistories2 = [
+  {
+    content: '우와~',
+    amount: 10000,
+    type: 'outcome',
+    date: '2021-08-06',
+  },
+  {
+    content: '우와~',
+    amount: 10000,
+    type: 'outcome',
+    date: '2021-08-05',
+  },
+  {
+    content: '우와~',
+    amount: 10000,
+    type: 'outcome',
+    date: '2021-08-04',
+  },
+  {
+    content: '우와~',
+    amount: 10000,
+    type: 'outcome',
+    date: '2021-07-06',
+  },
+];
+
+const incomeHistories = [
+  {
+    content: '반가워용',
+    amount: 10000,
+    type: 'income',
+    date: '2021-08-06',
+  },
+  {
+    content: '14팀입니당',
+    amount: 10000,
+    type: 'income',
+    date: '2021-08-05',
+  },
+  {
+    content: '우아해지고싶은',
+    amount: 10000,
+    type: 'income',
+    date: '2021-08-05',
+  },
+  {
+    content: '!!~~~!!!!~!',
+    amount: 10000,
+    type: 'income',
+    date: '2021-08-04',
+  },
+  {
+    content: '히히',
+    amount: 10000,
+    type: 'income',
+    date: '2021-08-04',
+  },
+  {
+    content: '만들었어여!!',
+    amount: 10000,
+    type: 'income',
+    date: '2021-07-06',
+  },
+  {
+    content: '예쁘게',
+    amount: 10000,
+    type: 'income',
     date: '2021-07-06',
   },
 ];
