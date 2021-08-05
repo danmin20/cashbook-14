@@ -54,25 +54,24 @@ export default class InputBar extends Component<PropsType, InputBarStates> {
     getMyPayments().then((res) => setPayments(res));
 
     // 년
-    this.$yearInput = new InputBarInput({ type: 'year' })
+    this.$yearInput = new InputBarInput({ type: 'year', placeholder: 'YYYY' })
       .$dom as HTMLInputElement;
-    this.$yearInput.id = 'year-input';
     // 월
-    this.$monthInput = new InputBarInput({ type: 'month' })
+    this.$monthInput = new InputBarInput({ type: 'month', placeholder: 'MM' })
       .$dom as HTMLInputElement;
-    this.$monthInput.id = 'month-input';
     // 일
-    this.$dateInput = new InputBarInput({ type: 'date' })
+    this.$dateInput = new InputBarInput({ type: 'date', placeholder: 'DD' })
       .$dom as HTMLInputElement;
-    this.$dateInput.id = 'date-input';
     // 내용
-    this.$contentInput = new InputBarInput({ type: 'content' })
-      .$dom as HTMLInputElement;
-    this.$contentInput.id = 'content-input';
+    this.$contentInput = new InputBarInput({
+      type: 'content',
+      placeholder: '입력하세요',
+    }).$dom as HTMLInputElement;
     // 금액
-    this.$amountInput = new InputBarInput({ type: 'amount' })
-      .$dom as HTMLInputElement;
-    this.$amountInput.id = 'amount-input';
+    this.$amountInput = new InputBarInput({
+      type: 'amount',
+      placeholder: '입력하세요',
+    }).$dom as HTMLInputElement;
 
     // 날짜 체크
     this.$yearInput.addEventListener('input', () => {
@@ -141,8 +140,8 @@ export default class InputBar extends Component<PropsType, InputBarStates> {
           <div class='input-bar__input'>
             <div class='input-bar__input--label'>일자</div>
             <div class='input-bar__input--content date'>
-              ${this.$yearInput}/
-              ${this.$monthInput}/
+              ${this.$yearInput}.
+              ${this.$monthInput}.
               ${this.$dateInput}
             </div>
           </div>

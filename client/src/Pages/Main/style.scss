@@ -42,6 +42,7 @@
     position: fixed;
     top: 19rem;
     z-index: 2;
+    overflow-y: scroll;
   }
   .chart {
     @include flex-center;
