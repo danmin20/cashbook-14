@@ -1,4 +1,4 @@
-import Component, { PropsType, StateType } from '@/core/Component';
+import Component, { StateType } from '@/core/Component';
 import jsx from '@/core/jsx';
 import { setState, subscribe } from '@/core/observer';
 import { historyInputState } from '@/Model';
@@ -7,6 +7,7 @@ import './style';
 
 interface InputBarInputProps {
   type: string;
+  placeholder: string;
 }
 
 export class InputBarInput extends Component<InputBarInputProps, StateType> {
@@ -16,7 +17,7 @@ export class InputBarInput extends Component<InputBarInputProps, StateType> {
     this.setDom();
   }
   render() {
-    const { type } = this.props;
+    const { type, placeholder } = this.props;
     const handleHistoryInputState = setState(historyInputState);
     const handleInput = (value: string) => {
       handleHistoryInputState((oldState: HistoryInputType) => {
@@ -33,8 +34,11 @@ export class InputBarInput extends Component<InputBarInputProps, StateType> {
     };
 
     return jsx`
-    <input onInput=${({ target }: { target: HTMLInputElement }) =>
-      handleInput(target.value)} class='input' placeholder='입력하세요' />
+    <input id=${type} autocomplete="off" onInput=${({
+      target,
+    }: {
+      target: HTMLInputElement;
+    }) => handleInput(target.value)} class='input' placeholder=${placeholder} />
   `;
   }
 }

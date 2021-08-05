@@ -43,6 +43,12 @@
   .income {
     color: $primary3;
   }
+  .del-btn {
+    width: 2rem;
+    height: 2rem;
+    margin-left: 1.5rem;
+    cursor: pointer;
+  }
 
   .percentage {
     flex: 0.3;
@@ -58,12 +64,6 @@
     height: 0.5rem;
     animation-duration: 1s;
     animation-name: slidein;
-  }
-
-  @keyframes slidein {
-    from {
-      width: 0%;
-    }
   }
 }
 

@@ -3,6 +3,7 @@
 .calendar {
   @include flex-center;
   flex-direction: column;
+  padding-bottom: 6rem;
   width: 100%;
   &__weekbar {
     @include flex-center;
@@ -13,7 +14,6 @@
     box-shadow: $shadow;
     background-color: $off-white;
     color: $title-active;
-    border: 0.1rem solid $line;
     border-radius: 1rem;
     @media (max-width: $phone-max-width) {
       width: 47rem;
@@ -22,7 +22,6 @@
   .cal-body {
     position: relative;
     margin-top: 3.2rem;
-    box-shadow: $shadow;
     background-color: $off-white;
     color: $label;
     border: 0.1rem solid $background;

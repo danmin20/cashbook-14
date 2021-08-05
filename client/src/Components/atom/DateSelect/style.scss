@@ -2,13 +2,14 @@
 
 .date-select {
   @include body-medium;
+  border: 0.1rem solid $line;
   text-align: center;
   font-family: 'BMDOHYEON';
   border-radius: 2rem;
   z-index: 100;
   color: $title-active;
   position: absolute;
-  top: 12rem;
+  top: 11rem;
   width: 25rem;
   padding: 2rem;
   box-sizing: border-box;

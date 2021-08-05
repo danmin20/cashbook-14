@@ -2,7 +2,7 @@
 
 .input-bar {
   @include flex-center;
-  width: 90.4rem;
+  width: 89rem;
   height: 7.6rem;
   background-color: $off-white;
   border-radius: 1rem;
@@ -73,14 +73,17 @@
       flex: 1;
       margin-top: 0.5rem;
       .input-bar__input {
-        flex: 0.6;
+        position: relative;
+        flex: 0.87;
         margin-left: -0.5rem;
         img {
           display: none;
         }
         input {
+          text-align: end;
           font-size: 2rem;
           padding: 1rem;
+          padding-right: 3.5rem;
           width: 100%;
           background: $primary2;
           border-radius: 0.5rem;
@@ -95,6 +98,14 @@
           font-family: 'BMDOHYEON';
           font-size: 3rem;
           color: $primary1;
+        }
+
+        &::after {
+          content: '원';
+          position: absolute;
+          right: 3rem;
+          bottom: 1.1rem;
+          font-size: 2rem;
         }
       }
       .save-button {
@@ -117,15 +128,20 @@
     &--content {
       @include body-regular;
       &.date {
-        @include flex-center;
+        // display: flex;
         input {
+          text-align: end;
+          padding-right: 0.3rem;
           border-bottom: 0.1rem solid $line;
-          width: 2rem;
+          width: 3rem;
           &:first-child {
             width: 4rem;
           }
-          &::placeholder {
-            color: $off-white;
+          @media (max-width: $phone-max-width) {
+            width: 4rem;
+            &:first-child {
+              width: 6rem;
+            }
           }
         }
       }
