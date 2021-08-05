@@ -60,7 +60,10 @@ async function login(req: Request, res: Response, next: NextFunction) {
       }
       for (const data of defaultHistories) {
         const payments = await PaymentService.findPayments({ userId });
-        const categories = await CategoryService.findCategories({ userId });
+        const categories = await CategoryService.findCategories({
+          userId,
+          type: 'outcome',
+        });
         await HistoryService.createHistory({
           ...data,
           userId,
@@ -150,43 +153,43 @@ const defaultHistories = [
   {
     content: '안녕하세용',
     amount: 10000,
-    type: 'income',
+    type: 'outcome',
     date: '2021-08-06',
   },
   {
     content: '이정민 신어진 입니다',
     amount: 10000,
-    type: 'income',
+    type: 'outcome',
     date: '2021-08-05',
   },
   {
     content: '저희는',
     amount: 10000,
-    type: 'income',
+    type: 'outcome',
     date: '2021-08-05',
   },
   {
     content: '!!~~~!!!!~!',
     amount: 10000,
-    type: 'income',
+    type: 'outcome',
     date: '2021-08-04',
   },
   {
     content: '예쁘게 봐주세요',
     amount: 10000,
-    type: 'income',
+    type: 'outcome',
     date: '2021-08-04',
   },
   {
     content: '만들었어여!!',
     amount: 10000,
-    type: 'income',
+    type: 'outcome',
     date: '2021-07-06',
   },
   {
     content: '열심히',
     amount: 10000,
-    type: 'income',
+    type: 'outcome',
     date: '2021-07-06',
   },
 ];
