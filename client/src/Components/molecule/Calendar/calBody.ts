@@ -15,7 +15,6 @@ interface CalBodyProps {
 }
 
 interface CalBodyState {
-  // isLoading: boolean;
   totalIncome: number;
   totalOutcome: number;
 }
@@ -33,7 +32,6 @@ export default class CalBody extends Component<CalBodyProps, CalBodyState> {
     super(props);
 
     this.state = {
-      // isLoading: true,
       totalIncome: 0,
       totalOutcome: 0,
     };
@@ -43,7 +41,6 @@ export default class CalBody extends Component<CalBodyProps, CalBodyState> {
 
   willUpdate() {
     this.state = {
-      // isLoading: false,
       totalIncome: (getState(userState.myHistories) as AllHistorytype)
         .totalIncome,
       totalOutcome: (getState(userState.myHistories) as AllHistorytype)

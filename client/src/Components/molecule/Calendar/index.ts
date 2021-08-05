@@ -14,6 +14,7 @@ interface CalendarProps {
 }
 
 interface CalendarState {
+  isLoading: boolean;
   historyDetail: HistoriesType | null;
   isDetailModalOpened: boolean;
 }
@@ -27,6 +28,7 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     super(props);
 
     this.state = {
+      isLoading: true,
       historyDetail: null,
       isDetailModalOpened: false,
     };
@@ -60,6 +62,11 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
     const histories = (getState(userState.myHistories) as AllHistorytype)
       .histories;
 
+    this.state = {
+      ...this.state,
+      isLoading: false,
+    };
+
     const setHistoryDetailState = setState(historyDetailState);
     if (histories != this.histories) {
       this.$calBody = new CalBody({
@@ -78,6 +85,14 @@ export default class Calendar extends Component<CalendarProps, CalendarState> {
   render() {
     return jsx`
     <div>
+      ${
+        this.state.isLoading
+          ? jsx`
+            <div class='cal-loading'>
+              <div class="loader" />
+            </div>`
+          : ''
+      }
       ${this.$calBody}
       ${this.$detailModal}
     </div>
