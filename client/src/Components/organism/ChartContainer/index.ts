@@ -53,6 +53,9 @@ export default class ChartContainer extends Component<
       [key: string]: GroupedHistoriesByCategory;
     } = {};
     histories.forEach((history: HistoryType) => {
+      if (!history.category) {
+        return;
+      }
       if (!groupedDataBuilder[history.category.id]) {
         groupedDataBuilder[history.category.id] = {
           categoryId: history.category.id,
