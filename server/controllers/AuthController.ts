@@ -177,119 +177,141 @@ const defaultPayments = [
   },
 ];
 
+// 생활
 const outcomeHistories = [
   {
-    content: '안녕하세용',
-    amount: 10000,
+    content: '요가복',
+    amount: 63000,
     type: 'outcome',
     date: '2021-08-06',
   },
   {
-    content: '이정민 신어진 입니다',
-    amount: 10000,
+    content: '홈트레이닝용 철봉',
+    amount: 109000,
     type: 'outcome',
     date: '2021-08-05',
   },
   {
-    content: '저희는',
-    amount: 10000,
+    content: '일렉기타',
+    amount: 390000,
     type: 'outcome',
-    date: '2021-08-05',
+    date: '2021-08-03',
   },
   {
-    content: '!!~~~!!!!~!',
-    amount: 10000,
+    content: '노래방 기계',
+    amount: 230000,
     type: 'outcome',
-    date: '2021-08-04',
+    date: '2021-08-02',
   },
   {
-    content: '예쁘게 봐주세요',
-    amount: 10000,
+    content: '방음부스',
+    amount: 500000,
     type: 'outcome',
-    date: '2021-08-04',
+    date: '2021-08-01',
   },
   {
-    content: '만들었어여!!',
-    amount: 10000,
+    content: '커피머신',
+    amount: 830000,
     type: 'outcome',
     date: '2021-07-06',
   },
   {
-    content: '열심히',
-    amount: 10000,
+    content: '다이슨 청소기',
+    amount: 900000,
     type: 'outcome',
-    date: '2021-07-06',
-  },
-];
-const outcomeHistories2 = [
-  {
-    content: '우와~',
-    amount: 10000,
-    type: 'outcome',
-    date: '2021-08-06',
+    date: '2021-06-18',
   },
   {
-    content: '우와~',
-    amount: 10000,
+    content: '캣타워',
+    amount: 300000,
     type: 'outcome',
-    date: '2021-08-05',
+    date: '2021-05-10',
   },
   {
-    content: '우와~',
-    amount: 10000,
+    content: '식기세척기',
+    amount: 970000,
     type: 'outcome',
-    date: '2021-08-04',
-  },
-  {
-    content: '우와~',
-    amount: 10000,
-    type: 'outcome',
-    date: '2021-07-06',
+    date: '2021-04-20',
   },
 ];
 
-const incomeHistories = [
+// 식비
+const outcomeHistories2 = [
   {
-    content: '반가워용',
-    amount: 10000,
-    type: 'income',
+    content: '맛나 스시',
+    amount: 120000,
+    type: 'outcome',
     date: '2021-08-06',
   },
   {
-    content: '14팀입니당',
-    amount: 10000,
+    content: '물회',
+    amount: 39000,
+    type: 'outcome',
+    date: '2021-08-05',
+  },
+  {
+    content: '철판 큐브스테이크',
+    amount: 43000,
+    type: 'outcome',
+    date: '2021-08-04',
+  },
+  {
+    content: '토마토 홍합 나베',
+    amount: 90000,
+    type: 'outcome',
+    date: '2021-07-20',
+  },
+  {
+    content: '눈꽃 삼겹살',
+    amount: 20000,
+    type: 'outcome',
+    date: '2021-06-20',
+  },
+  {
+    content: '북구청 막창',
+    amount: 30000,
+    type: 'outcome',
+    date: '2021-05-20',
+  },
+  {
+    content: '백숙',
+    amount: 73000,
+    type: 'outcome',
+    date: '2021-04-20',
+  },
+];
+
+// 월급
+const incomeHistories = [
+  {
+    content: '우아한테크캠프 월급',
+    amount: 100000,
     type: 'income',
     date: '2021-08-05',
   },
   {
-    content: '우아해지고싶은',
-    amount: 10000,
+    content: '도서관 근로장학금',
+    amount: 320000,
     type: 'income',
-    date: '2021-08-05',
+    date: '2021-08-02',
   },
   {
-    content: '!!~~~!!!!~!',
-    amount: 10000,
+    content: '외주 프로젝트 정산',
+    amount: 900000,
     type: 'income',
-    date: '2021-08-04',
+    date: '2021-07-14',
   },
   {
-    content: '히히',
-    amount: 10000,
+    content: '이모티콘 판매 수익',
+    amount: 780000,
     type: 'income',
-    date: '2021-08-04',
+    date: '2021-07-01',
   },
   {
-    content: '만들었어여!!',
-    amount: 10000,
+    content: '교내 멘토링 급여',
+    amount: 800000,
     type: 'income',
-    date: '2021-07-06',
-  },
-  {
-    content: '예쁘게',
-    amount: 10000,
-    type: 'income',
-    date: '2021-07-06',
+    date: '2021-06-24',
   },
 ];
 

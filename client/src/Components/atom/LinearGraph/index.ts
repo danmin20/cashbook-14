@@ -89,7 +89,7 @@ export default class LinearGraph {
     }
 
     ctx.font = `${fontSize}px ${fontFamily}`;
-    ctx.fillStyle = dataArcColor;
+    ctx.fillStyle = backLineColor;
     ctx.textAlign = 'center';
     for (let i = 0; i < this.data.length; i++) {
       const calculatedDate = new Date(this.date);
