@@ -1,7 +1,7 @@
 # `4-5주차 14팀 정민 && 어진` [Wiki](https://github.com/woowa-techcamp-2021/cashbook-14/wiki)
 
 ### 4-5주차 14팀 - [이정민](https://github.com/danmin20) && [신어진](https://github.com/ondal1997)
-### [데모영상]()
+### [데모영상](https://youtu.be/dSMTCyDyto8)
 `Typescript` `Webpack` `Babel` `Node.js` `Express` `SCSS` `OAuth2` `MySQL` `TypeORM` `EC2` `Canvas` `jsx`
 
 <br/>
