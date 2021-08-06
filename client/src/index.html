@@ -20,7 +20,9 @@
     <div id="app" class="app"></div>
 
     <script defer type="text/javascript">
-      if (localStorage.getItem('theme') === 'dark-mode') {
+      if (localStorage.getItem('theme') === 'light-mode') {
+        document.body.classList.add('light-mode');
+      } else {
         document.body.classList.add('dark-mode');
       }
       document
