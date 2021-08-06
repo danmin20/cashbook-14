@@ -83,25 +83,32 @@ export default class DropDown extends Component<DropDownProps, DropDownState> {
       <div class='dropdown-wrapper'>
 
         <div class='dropdown'>
-          ${this.state.items.map(
-            (item) =>
-              jsx`
-              <div onClick=${() => setContent(item)} class='dropdown__item'>
-                <div class='dropdown__item--item'>
-                  ${
-                    selectType !== 'payment'
-                      ? jsx`<div class='color' style='background: ${
-                          (item as CategoryType).color
-                        }'></div>`
-                      : ''
-                  }
-                  ${item.name}
-                </div>
+        ${
+          this.state.items.length > 0
+            ? this.state.items.map(
+                (item) =>
+                  jsx`
+            <div onClick=${() => setContent(item)} class='dropdown__item'>
+              <div class='dropdown__item--item'>
+              ${
+                selectType !== 'payment'
+                  ? jsx`<div class='color' style='background: ${
+                      (item as CategoryType).color
+                    }'></div>`
+                  : ''
+              }
+                ${item.name}
+              </div>
 
-                <img onClick=${(e: Event) =>
-                  this.openDelAlert(e, item)} src=${delbtn} />
-              </div>`
-          )}
+              <img onClick=${(e: Event) =>
+                this.openDelAlert(e, item)} src=${delbtn} />
+            </div>`
+              )
+            : jsx`
+            <div class='dropdown__item none'>
+              추가해주세요
+            </div>`
+        }
         </div>
         
         <div onClick=${this.openAddAlert} class='add-btn'>+</div>

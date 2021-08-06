@@ -68,6 +68,9 @@
           }
         }
       }
+      &.none {
+        color: $line;
+      }
     }
   }
   .add-btn {
