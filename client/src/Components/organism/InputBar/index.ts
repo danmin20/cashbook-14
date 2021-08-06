@@ -22,6 +22,9 @@ export interface InputBarStates {
   isSaveable: boolean;
 }
 
+const MAX_CONTENT_LENGTH = 16;
+const MAX_AMOUNT_LENGTH = 10;
+
 export default class InputBar extends Component<PropsType, InputBarStates> {
   $saveBtn: Element = jsx``;
   $paymentTypeBtn: Element = jsx``;
@@ -56,22 +59,27 @@ export default class InputBar extends Component<PropsType, InputBarStates> {
     // 년
     this.$yearInput = new InputBarInput({ type: 'year', placeholder: 'YYYY' })
       .$dom as HTMLInputElement;
+    this.$yearInput.maxLength = 4;
     // 월
     this.$monthInput = new InputBarInput({ type: 'month', placeholder: 'MM' })
       .$dom as HTMLInputElement;
+    this.$monthInput.maxLength = 2;
     // 일
     this.$dateInput = new InputBarInput({ type: 'date', placeholder: 'DD' })
       .$dom as HTMLInputElement;
+    this.$dateInput.maxLength = 2;
     // 내용
     this.$contentInput = new InputBarInput({
       type: 'content',
       placeholder: '입력하세요',
     }).$dom as HTMLInputElement;
+    this.$contentInput.maxLength = MAX_CONTENT_LENGTH;
     // 금액
     this.$amountInput = new InputBarInput({
       type: 'amount',
       placeholder: '입력하세요',
     }).$dom as HTMLInputElement;
+    this.$amountInput.maxLength = MAX_AMOUNT_LENGTH;
 
     // 날짜 체크
     this.$yearInput.addEventListener('input', () => {

@@ -45,10 +45,12 @@
       cursor: pointer;
       &:hover {
         &:first-child {
-          border-radius: 1rem 1rem 0 0;
+          border-top-left-radius: 1rem;
+          border-top-right-radius: 1rem;
         }
         &:last-child {
-          border-radius: 0 0 1rem 1rem;
+          border-bottom-left-radius: 1rem;
+          border-bottom-right-radius: 1rem;
         }
         background-color: $background;
       }

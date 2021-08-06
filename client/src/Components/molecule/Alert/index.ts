@@ -10,9 +10,9 @@ import {
   getMyOutcomeCategories,
   getMyPayments,
 } from '@/api/me';
-import { setState } from '@/core/observer';
-import { userState } from '@/Model';
-import { CategoryType, PaymentType } from '@/shared/type';
+import { getState, setState } from '@/core/observer';
+import { historyInputState, userState } from '@/Model';
+import { CategoryType, HistoryInputType, PaymentType } from '@/shared/type';
 import { deleteHistory } from '@/api/history';
 import { $router } from '@/core/router';
 
@@ -60,7 +60,7 @@ export default class Alert extends Component<AlertProps> {
     const setOutcomeCategories = setState(userState.myOutcomeCategories);
     const setPayments = setState(userState.myPayments);
 
-    this.handleSubmit = () => {
+    this.handleSubmit = async () => {
       const $input = this.$dom
         .querySelector('#text-input')
         ?.querySelector('input');
@@ -69,14 +69,28 @@ export default class Alert extends Component<AlertProps> {
         try {
           if (type === 'add') {
             // 카테고리 추가
-            createCategory({
+            await createCategory({
               name: $input?.value as string,
               color: this.$colorPicker.querySelector('input')?.value as string,
               type: paymentType as 'income' | 'outcome',
             });
           } else {
             // 카테고리 삭제
-            deleteCategory({ categoryId: delItem?.id as number });
+            await deleteCategory({ categoryId: delItem?.id as number });
+
+            // 삭제 후 historyInputState 조건부 변경
+            const historyInput = getState(
+              historyInputState
+            ) as HistoryInputType;
+            if (historyInput.category.id === delItem?.id) {
+              const setHistoryInputState = setState(historyInputState);
+              setHistoryInputState({
+                category: {
+                  id: 0,
+                  name: '',
+                },
+              });
+            }
           }
         } finally {
           getMyIncomeCategories()
@@ -90,12 +104,26 @@ export default class Alert extends Component<AlertProps> {
         try {
           if (type === 'add') {
             // 결제수단 추가
-            createPayment({
+            await createPayment({
               name: $input?.value as string,
             });
           } else {
             // 결제수단 삭제
-            deletePayment({ paymentId: delItem?.id as number });
+            await deletePayment({ paymentId: delItem?.id as number });
+
+            // 삭제 후 historyInputState 조건부 변경
+            const historyInput = getState(
+              historyInputState
+            ) as HistoryInputType;
+            if (historyInput.category.id === delItem?.id) {
+              const setHistoryInputState = setState(historyInputState);
+              setHistoryInputState({
+                payment: {
+                  id: 0,
+                  name: '',
+                },
+              });
+            }
           }
         } finally {
           getMyPayments()
